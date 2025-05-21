@@ -269,7 +269,7 @@ export const learningPlans: LearningPlan[] = [
     description: "Avoiding the Post-Ramadan Slump.",
     icon: "trending_up",
     difficulty: "beginner",
-    coverImage: "./src/assets/post-ramadan.jpg",
+    coverImage: "/assets/post-ramadan.svg",
     lessons: [
       {
         id: "lesson-1",
