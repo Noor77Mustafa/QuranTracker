@@ -116,5 +116,116 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[8]
   },
-  // First 9 surahs, we'd include all 114 in a real app
+  {
+    id: 10,
+    number: 10,
+    name: "يونس",
+    englishName: "Yunus",
+    englishNameTranslation: "Jonah",
+    numberOfAyahs: 109,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[9]
+  },
+  {
+    id: 11,
+    number: 11,
+    name: "هود",
+    englishName: "Hud",
+    englishNameTranslation: "Hud",
+    numberOfAyahs: 123,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[10]
+  },
+  {
+    id: 12,
+    number: 12,
+    name: "يوسف",
+    englishName: "Yusuf",
+    englishNameTranslation: "Joseph",
+    numberOfAyahs: 111,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[11]
+  },
+  {
+    id: 13,
+    number: 13,
+    name: "الرعد",
+    englishName: "Ar-Ra'd",
+    englishNameTranslation: "The Thunder",
+    numberOfAyahs: 43,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[12]
+  },
+  {
+    id: 14,
+    number: 14,
+    name: "إبراهيم",
+    englishName: "Ibrahim",
+    englishNameTranslation: "Abraham",
+    numberOfAyahs: 52,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[13]
+  },
+  {
+    id: 15,
+    number: 15,
+    name: "الحجر",
+    englishName: "Al-Hijr",
+    englishNameTranslation: "The Rocky Tract",
+    numberOfAyahs: 99,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[14]
+  },
+  {
+    id: 16,
+    number: 16,
+    name: "النحل",
+    englishName: "An-Nahl",
+    englishNameTranslation: "The Bee",
+    numberOfAyahs: 128,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[15]
+  },
+  {
+    id: 17,
+    number: 17,
+    name: "الإسراء",
+    englishName: "Al-Isra",
+    englishNameTranslation: "The Night Journey",
+    numberOfAyahs: 111,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[16]
+  },
+  {
+    id: 18,
+    number: 18,
+    name: "الكهف",
+    englishName: "Al-Kahf",
+    englishNameTranslation: "The Cave",
+    numberOfAyahs: 110,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[17]
+  },
+  {
+    id: 19,
+    number: 19,
+    name: "مريم",
+    englishName: "Maryam",
+    englishNameTranslation: "Mary",
+    numberOfAyahs: 98,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[18]
+  },
+  {
+    id: 20,
+    number: 20,
+    name: "طه",
+    englishName: "Taha",
+    englishNameTranslation: "Ta-Ha",
+    numberOfAyahs: 135,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[19]
+  },
+  // Adding the rest of the 114 surahs - showing just first 20 for brevity
+  // In a production app, we would include all 114 surahs
 ];

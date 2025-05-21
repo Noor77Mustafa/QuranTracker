@@ -35,14 +35,24 @@ export const fetchSurah = async (surahNumber: number): Promise<Surah> => {
     );
     const translationData = await translationResponse.json();
     
+    // Fetch transliteration
+    const transliterationResponse = await fetch(
+      `${quranApiBaseUrl}/surah/${surahNumber}/en.transliteration`
+    );
+    const transliterationData = await transliterationResponse.json();
+    
     if (arabicData.code !== 200 || translationData.code !== 200) {
       throw new Error("Failed to fetch surah data");
     }
+    
+    // Include transliteration if available
+    const hasTransliteration = transliterationData.code === 200;
     
     const ayahs = arabicData.data.ayahs.map((ayah: any, index: number) => ({
       number: ayah.numberInSurah,
       text: ayah.text,
       translation: translationData.data.ayahs[index].text,
+      transliteration: hasTransliteration ? transliterationData.data.ayahs[index].text : undefined,
       audioUrl: `https://cdn.islamic.network/quran/audio/128/ar.alafasy/${ayah.number}.mp3`,
     }));
     
