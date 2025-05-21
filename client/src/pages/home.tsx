@@ -6,6 +6,7 @@ import QuranInYear from "@/components/home/quran-in-year";
 import LearningPlans from "@/components/home/learning-plans";
 import QuranGrowthJourney from "@/components/home/quran-growth-journey";
 import SurahExplorer from "@/components/home/surah-explorer";
+import WeeklyReading from "@/components/home/weekly-reading";
 import { useEffect } from "react";
 
 export default function Home() {
@@ -24,7 +25,10 @@ export default function Home() {
       </div>
       
       <ExploreTopics />
-      <QuranInYear />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <WeeklyReading />
+        <QuranInYear />
+      </div>
       <LearningPlans />
       <QuranGrowthJourney />
       <SurahExplorer />

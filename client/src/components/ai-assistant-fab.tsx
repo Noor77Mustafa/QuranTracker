@@ -41,31 +41,20 @@ export default function AIAssistantFAB() {
       timestamp: new Date(),
     };
     
+    // Store current input for API call
+    const currentQuery = input;
+    
     // Add the user message to messages
     setMessages(prev => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
     
-    // Simulate a response (In a real app, this would make an API call to the Perplexity API)
-    setTimeout(() => {
-      // Sample responses based on keywords in the user's message
-      let responseContent = "I'll need to learn more about that topic to provide a better answer. The Quran is a vast source of knowledge with many dimensions.";
+    try {
+      // Import dynamically to prevent early loading of OpenAI client
+      const { getQuranAIResponse } = await import('@/lib/openai-service');
       
-      const lowerCaseInput = input.toLowerCase();
-      
-      if (lowerCaseInput.includes("surah") || lowerCaseInput.includes("chapter")) {
-        responseContent = "The Quran has 114 surahs (chapters), each with unique themes and teachings. You can explore them in the 'Read' section of this app. Would you like me to tell you more about a specific surah?";
-      } else if (lowerCaseInput.includes("ramadan") || lowerCaseInput.includes("fasting")) {
-        responseContent = "Ramadan is the ninth month of the Islamic calendar, during which Muslims fast from dawn until sunset. The Quran was first revealed during this month. Fasting teaches self-discipline, empathy, and God-consciousness (taqwa).";
-      } else if (lowerCaseInput.includes("prayer") || lowerCaseInput.includes("salah") || lowerCaseInput.includes("salat")) {
-        responseContent = "Prayer (Salah) is one of the Five Pillars of Islam. Muslims pray five times daily: Fajr (dawn), Dhuhr (noon), Asr (afternoon), Maghrib (sunset), and Isha (night).";
-      } else if (lowerCaseInput.includes("hajj") || lowerCaseInput.includes("pilgrimage")) {
-        responseContent = "Hajj is the annual Islamic pilgrimage to Mecca, Saudi Arabia, and is mandatory for Muslims to perform at least once in their lifetime if they are physically and financially able.";
-      } else if (lowerCaseInput.includes("zakat") || lowerCaseInput.includes("charity")) {
-        responseContent = "Zakat is one of the Five Pillars of Islam, requiring Muslims to give 2.5% of their qualifying wealth to those in need annually.";
-      } else if (lowerCaseInput.includes("prophet") || lowerCaseInput.includes("muhammad")) {
-        responseContent = "Prophet Muhammad ﷺ was the final prophet of Islam who received the revelations of the Quran from Allah through the angel Gabriel over 23 years. His life and teachings (Sunnah) serve as a model for Muslims.";
-      }
+      // Get response from OpenAI
+      const responseContent = await getQuranAIResponse(currentQuery);
       
       const assistantMessage: Message = {
         id: Date.now().toString(),
@@ -75,8 +64,21 @@ export default function AIAssistantFAB() {
       };
       
       setMessages(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      console.error("Error getting AI response:", error);
+      
+      // Fallback response in case of API error
+      const errorMessage: Message = {
+        id: Date.now().toString(),
+        role: "assistant",
+        content: "I apologize, but I encountered an error while processing your question. Please try again later.",
+        timestamp: new Date(),
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   return (
