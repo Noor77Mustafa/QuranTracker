@@ -29,16 +29,18 @@ export default function ReadingGoalDialog({
 }: ReadingGoalProps) {
   const [pagesPerDay, setPagesPerDay] = useState<number>(currentGoal?.pagesPerDay || 5);
   const [minutesPerDay, setMinutesPerDay] = useState<number>(currentGoal?.minutesPerDay || 15);
-  const [completionTarget, setCompletionTarget] = useState<string>(currentGoal?.completionTarget || "");
+  const [completionTarget, setCompletionTarget] = useState<string>(currentGoal?.completionTarget || "none");
   
   const { toast } = useToast();
   
   const handleSave = () => {
-    onSaveGoal({
+    const goalData = {
       pagesPerDay,
       minutesPerDay,
-      completionTarget: completionTarget || undefined
-    });
+      completionTarget: completionTarget === "none" ? undefined : completionTarget
+    };
+    
+    onSaveGoal(goalData);
     
     toast({
       title: "Goal saved successfully",
@@ -48,12 +50,21 @@ export default function ReadingGoalDialog({
     setOpen(false);
   };
   
+  useEffect(() => {
+    // Reset form values when dialog opens or currentGoal changes
+    if (open) {
+      setPagesPerDay(currentGoal?.pagesPerDay || 5);
+      setMinutesPerDay(currentGoal?.minutesPerDay || 15);
+      setCompletionTarget(currentGoal?.completionTarget || "none");
+    }
+  }, [open, currentGoal]);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px]" aria-describedby="dialog-description">
         <DialogHeader>
           <DialogTitle>Set Reading Goal</DialogTitle>
-          <DialogDescription>
+          <DialogDescription id="dialog-description">
             Set daily targets to help you stay consistent with your Quran reading.
           </DialogDescription>
         </DialogHeader>
@@ -101,7 +112,7 @@ export default function ReadingGoalDialog({
                 <SelectValue placeholder="No specific target" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">No specific target</SelectItem>
+                <SelectItem value="none">No specific target</SelectItem>
                 <SelectItem value="Ramadan">By next Ramadan</SelectItem>
                 <SelectItem value="3_months">In 3 months</SelectItem>
                 <SelectItem value="6_months">In 6 months</SelectItem>
