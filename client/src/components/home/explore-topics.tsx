@@ -24,10 +24,12 @@ export default function ExploreTopics() {
       <h2 className="text-lg font-semibold mb-4">Explore Topics</h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {topics.map((topic) => (
-          <Link key={topic.id} href={topic.path}>
-            <a className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 hover:shadow-md transition">
-              <h3 className="font-medium">{topic.title}</h3>
-            </a>
+          <Link 
+            key={topic.id} 
+            href={topic.path}
+            className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 hover:shadow-md transition"
+          >
+            <h3 className="font-medium">{topic.title}</h3>
           </Link>
         ))}
       </div>

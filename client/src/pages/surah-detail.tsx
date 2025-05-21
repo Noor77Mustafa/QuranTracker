@@ -115,7 +115,20 @@ export default function SurahDetail() {
           <Button 
             variant="outline" 
             className="mt-4" 
-            onClick={() => window.location.reload()}
+            onClick={() => {
+              setIsLoading(true);
+              setError(null);
+              getSurah(surahId)
+                .then((data) => {
+                  setSurah(data);
+                  setIsLoading(false);
+                })
+                .catch((err) => {
+                  setError("Failed to load surah. Please try again.");
+                  setIsLoading(false);
+                  console.error("Error loading surah:", err);
+                });
+            }}
           >
             Retry
           </Button>
