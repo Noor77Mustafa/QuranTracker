@@ -153,23 +153,25 @@ export default function LearningPlanDetail() {
                           <p key={pIndex} className="mb-4 last:mb-0">{paragraph}</p>
                         ))}
                         
-                        <div className="mt-4 rounded-lg overflow-hidden">
-                          <img 
-                            src={section.imageUrl || "./src/assets/placeholder.svg"} 
-                            alt={`Illustration for ${section.title}`}
-                            className="w-full h-auto object-cover"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.onerror = null;
-                              target.src = "./src/assets/placeholder.svg";
-                            }}
-                          />
-                        </div>
+                        {section.imageUrl && (
+                          <div className="mt-4 rounded-lg overflow-hidden">
+                            <img 
+                              src={section.imageUrl || "/assets/placeholder.svg"} 
+                              alt={`Illustration for ${section.title}`}
+                              className="w-full h-auto object-cover"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.onerror = null;
+                                target.src = "/assets/placeholder.svg";
+                              }}
+                            />
+                          </div>
+                        )}
                         
                         {section.videoUrl && (
                           <div className="mt-4 rounded-lg overflow-hidden relative" style={{ paddingBottom: '56.25%', height: 0 }}>
                             <iframe
-                              src={section.videoUrl}
+                              src={section.videoUrl.replace("watch?v=", "embed/")}
                               title={`Video for ${section.title}`}
                               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                               allowFullScreen
