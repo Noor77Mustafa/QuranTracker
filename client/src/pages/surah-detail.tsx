@@ -1,20 +1,28 @@
 import { useEffect, useState, useRef } from "react";
-import { useRoute } from "wouter";
+import { useRoute, useLocation } from "wouter";
 import { Surah, getSurah, Ayah } from "@/lib/quran-data";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import { useStreak } from "@/hooks/use-streak";
 import { useAchievements } from "@/hooks/use-achievements";
 import { motion } from "framer-motion";
+import { SurahSearchIndex } from "@/components/surah/surah-search-index";
 
 export default function SurahDetail() {
   const [, params] = useRoute("/surah/:id");
+  const [location] = useLocation();
   const surahId = params?.id ? parseInt(params.id) : 1;
+  
+  // Get ayah from URL query parameter if present
+  const ayahParam = new URLSearchParams(location.split('?')[1]).get('ayah');
   
   const [surah, setSurah] = useState<Surah | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [currentAyah, setCurrentAyah] = useState(1);
+  const [currentAyah, setCurrentAyah] = useState(ayahParam ? parseInt(ayahParam) : 1);
   const [showTranslation, setShowTranslation] = useState(true);
+  const [showTransliteration, setShowTransliteration] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -144,7 +152,12 @@ export default function SurahDetail() {
   const currentAyahData = surah.ayahs[currentAyah - 1];
   
   return (
-    <main className="container mx-auto px-4 py-4">
+    <main id="main-content" className="container mx-auto px-4 py-4">
+      {/* Search component */}
+      <div className="mb-4">
+        <SurahSearchIndex />
+      </div>
+      
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden mb-6">
         <div className="bg-primary text-white p-4">
           <div className="flex justify-between items-center">
@@ -154,24 +167,40 @@ export default function SurahDetail() {
             </div>
             <div className="text-right">
               <p className="font-amiri text-2xl">{surah.name}</p>
-              <p className="text-white/80 text-sm">{surah.numberOfAyahs} Ayahs • {surah.revelationType}</p>
+              <p className="text-white/80 text-sm" aria-label={`${surah.numberOfAyahs} Ayahs, ${surah.revelationType} revelation`}>
+                {surah.numberOfAyahs} Ayahs • {surah.revelationType}
+              </p>
             </div>
           </div>
         </div>
         
         {/* Current Ayah Display */}
         <div className="p-6">
-          <div className="mb-6 flex justify-between items-center">
+          <div className="mb-6 flex flex-wrap justify-between items-center gap-2">
             <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">
               Ayah {currentAyah} of {surah.numberOfAyahs}
             </h2>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowTranslation(!showTranslation)}
-            >
-              {showTranslation ? "Hide" : "Show"} Translation
-            </Button>
+            <div className="flex flex-wrap gap-2">
+              <div className="flex items-center space-x-2">
+                <Switch 
+                  id="translation-toggle" 
+                  checked={showTranslation} 
+                  onCheckedChange={setShowTranslation}
+                  aria-label="Toggle translation"
+                />
+                <Label htmlFor="translation-toggle">Translation</Label>
+              </div>
+              
+              <div className="flex items-center space-x-2">
+                <Switch 
+                  id="transliteration-toggle" 
+                  checked={showTransliteration} 
+                  onCheckedChange={setShowTransliteration}
+                  aria-label="Toggle transliteration"
+                />
+                <Label htmlFor="transliteration-toggle">Transliteration</Label>
+              </div>
+            </div>
           </div>
           
           {/* Arabic Text */}
@@ -181,9 +210,24 @@ export default function SurahDetail() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             className="font-amiri text-2xl md:text-3xl leading-loose text-right mb-4 arabic-text"
+            lang="ar"
+            dir="rtl"
           >
             {currentAyahData.text}
           </motion.p>
+          
+          {/* Transliteration */}
+          {showTransliteration && (
+            <motion.p 
+              key={`transliteration-${currentAyah}`}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.05 }}
+              className="text-gray-600 dark:text-gray-400 italic mb-3 text-lg"
+            >
+              {currentAyahData.transliteration || "Transliteration not available for this ayah"}
+            </motion.p>
+          )}
           
           {/* Translation */}
           {showTranslation && (
@@ -193,6 +237,7 @@ export default function SurahDetail() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.1 }}
               className="text-gray-700 dark:text-gray-300 mb-6"
+              lang="en"
             >
               {currentAyahData.translation}
             </motion.p>

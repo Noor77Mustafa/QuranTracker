@@ -152,19 +152,27 @@ export default function Header() {
       </div>
       
       {/* Search Bar */}
-      <div className={`border-t border-gray-100 dark:border-gray-800 px-4 py-2 transition-all duration-300 ease-in-out overflow-hidden ${
-        isSearchExpanded ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0'
-      }`}>
+      <div 
+        id="search-bar"
+        className={`border-t border-gray-100 dark:border-gray-800 px-4 py-2 transition-all duration-300 ease-in-out overflow-hidden ${
+          isSearchExpanded ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+        aria-hidden={!isSearchExpanded}
+      >
         <div className="relative">
+          <label htmlFor="quran-search" className="sr-only">Search the Quran</label>
           <input 
             ref={searchInputRef}
+            id="quran-search"
             type="text" 
             placeholder="Search the Quran..." 
-            className="w-full py-2 pl-10 pr-10 bg-gray-100 dark:bg-gray-800 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full py-2 pl-10 pr-10 bg-gray-100 dark:bg-gray-800 rounded-full text-sm focus-visible"
+            aria-label="Search the Quran"
           />
-          <span className="material-symbols-rounded absolute left-3 top-2 text-gray-400">search</span>
+          <span className="material-symbols-rounded absolute left-3 top-2 text-gray-400" aria-hidden="true">search</span>
           <button 
-            className="absolute right-3 top-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+            className="absolute right-3 top-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors focus-visible"
+            aria-label="Voice search"
             onClick={() => {
               // Handle voice search
               if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
@@ -174,7 +182,7 @@ export default function Header() {
               }
             }}
           >
-            <span className="material-symbols-rounded">mic</span>
+            <span className="material-symbols-rounded" aria-hidden="true">mic</span>
           </button>
         </div>
       </div>
