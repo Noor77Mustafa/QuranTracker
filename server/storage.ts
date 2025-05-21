@@ -15,6 +15,18 @@ export interface IStorage {
   getAchievementsByUserId(userId: number): Promise<Achievement[]>;
   createOrUpdateReadingGoal(goal: InsertReadingGoal): Promise<ReadingGoal>;
   getReadingGoalByUserId(userId: number): Promise<ReadingGoal | undefined>;
+  createBookmark(bookmark: InsertBookmark): Promise<Bookmark>;
+  getBookmarksByUserId(userId: number): Promise<Bookmark[]>;
+  deleteBookmark(id: number): Promise<boolean>;
+  createReflection(reflection: InsertReflection): Promise<Reflection>;
+  getReflectionsByUserId(userId: number): Promise<Reflection[]>;
+  updateReflection(id: number, reflection: Partial<InsertReflection>): Promise<Reflection | undefined>;
+  deleteReflection(id: number): Promise<boolean>;
+  createQuest(quest: InsertQuest): Promise<Quest>;
+  getActiveQuests(): Promise<Quest[]>;
+  getQuestById(id: number): Promise<Quest | undefined>;
+  createOrUpdateUserQuest(userQuest: InsertUserQuest): Promise<UserQuest>;
+  getUserQuestsByUserId(userId: number): Promise<UserQuest[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -23,10 +35,19 @@ export class MemStorage implements IStorage {
   private streaks: Map<number, Streak>;
   private achievements: Map<number, Achievement[]>;
   private readingGoals: Map<number, ReadingGoal>;
+  private bookmarks: Map<number, Bookmark>;
+  private reflections: Map<number, Reflection>;
+  private quests: Map<number, Quest>;
+  private userQuests: Map<number, UserQuest[]>;
+  
   currentId: number;
   currentProgressId: number;
   currentAchievementId: number;
   currentGoalId: number;
+  currentBookmarkId: number;
+  currentReflectionId: number;
+  currentQuestId: number;
+  currentUserQuestId: number;
 
   constructor() {
     this.users = new Map();
@@ -34,10 +55,19 @@ export class MemStorage implements IStorage {
     this.streaks = new Map();
     this.achievements = new Map();
     this.readingGoals = new Map();
+    this.bookmarks = new Map();
+    this.reflections = new Map();
+    this.quests = new Map();
+    this.userQuests = new Map();
+    
     this.currentId = 1;
     this.currentProgressId = 1;
     this.currentAchievementId = 1;
     this.currentGoalId = 1;
+    this.currentBookmarkId = 1;
+    this.currentReflectionId = 1;
+    this.currentQuestId = 1;
+    this.currentUserQuestId = 1;
   }
 
   async getUser(id: number): Promise<User | undefined> {
@@ -57,7 +87,13 @@ export class MemStorage implements IStorage {
       id,
       displayName: insertUser.displayName || null,
       email: insertUser.email || null,
-      createdAt: new Date() 
+      createdAt: new Date(),
+      level: insertUser.level || 1,
+      xp: insertUser.xp || 0,
+      points: insertUser.points || 0,
+      avatarUrl: insertUser.avatarUrl || null,
+      lastActive: null,
+      preferences: insertUser.preferences || null
     };
     this.users.set(id, user);
     return user;
@@ -188,6 +224,157 @@ export class MemStorage implements IStorage {
 
   async getReadingGoalByUserId(userId: number): Promise<ReadingGoal | undefined> {
     return this.readingGoals.get(userId);
+  }
+
+  // Bookmark methods
+  async createBookmark(bookmark: InsertBookmark): Promise<Bookmark> {
+    const id = this.currentBookmarkId++;
+    const newBookmark: Bookmark = {
+      id,
+      userId: bookmark.userId,
+      surahId: bookmark.surahId,
+      ayahNumber: bookmark.ayahNumber,
+      note: bookmark.note || null,
+      color: bookmark.color || null,
+      createdAt: new Date()
+    };
+    
+    this.bookmarks.set(id, newBookmark);
+    return newBookmark;
+  }
+
+  async getBookmarksByUserId(userId: number): Promise<Bookmark[]> {
+    return Array.from(this.bookmarks.values()).filter(
+      bookmark => bookmark.userId === userId
+    );
+  }
+
+  async deleteBookmark(id: number): Promise<boolean> {
+    return this.bookmarks.delete(id);
+  }
+
+  // Reflection methods
+  async createReflection(reflection: InsertReflection): Promise<Reflection> {
+    const id = this.currentReflectionId++;
+    const newReflection: Reflection = {
+      id,
+      userId: reflection.userId,
+      surahId: reflection.surahId || null,
+      ayahNumber: reflection.ayahNumber || null,
+      title: reflection.title || null,
+      content: reflection.content,
+      isPrivate: reflection.isPrivate !== undefined ? reflection.isPrivate : true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    
+    this.reflections.set(id, newReflection);
+    return newReflection;
+  }
+
+  async getReflectionsByUserId(userId: number): Promise<Reflection[]> {
+    return Array.from(this.reflections.values()).filter(
+      reflection => reflection.userId === userId
+    );
+  }
+
+  async updateReflection(id: number, reflection: Partial<InsertReflection>): Promise<Reflection | undefined> {
+    const existingReflection = this.reflections.get(id);
+    
+    if (!existingReflection) {
+      return undefined;
+    }
+    
+    const updatedReflection: Reflection = {
+      ...existingReflection,
+      surahId: reflection.surahId !== undefined ? reflection.surahId : existingReflection.surahId,
+      ayahNumber: reflection.ayahNumber !== undefined ? reflection.ayahNumber : existingReflection.ayahNumber,
+      title: reflection.title !== undefined ? reflection.title : existingReflection.title,
+      content: reflection.content || existingReflection.content,
+      isPrivate: reflection.isPrivate !== undefined ? reflection.isPrivate : existingReflection.isPrivate,
+      updatedAt: new Date()
+    };
+    
+    this.reflections.set(id, updatedReflection);
+    return updatedReflection;
+  }
+
+  async deleteReflection(id: number): Promise<boolean> {
+    return this.reflections.delete(id);
+  }
+
+  // Quest methods
+  async createQuest(quest: InsertQuest): Promise<Quest> {
+    const id = this.currentQuestId++;
+    const newQuest: Quest = {
+      id,
+      title: quest.title,
+      description: quest.description,
+      type: quest.type,
+      requiredAction: quest.requiredAction,
+      targetValue: quest.targetValue,
+      rewardXp: quest.rewardXp,
+      rewardPoints: quest.rewardPoints,
+      isActive: quest.isActive !== undefined ? quest.isActive : true
+    };
+    
+    this.quests.set(id, newQuest);
+    return newQuest;
+  }
+
+  async getActiveQuests(): Promise<Quest[]> {
+    return Array.from(this.quests.values()).filter(quest => quest.isActive);
+  }
+
+  async getQuestById(id: number): Promise<Quest | undefined> {
+    return this.quests.get(id);
+  }
+
+  // User Quest methods
+  async createOrUpdateUserQuest(userQuest: InsertUserQuest): Promise<UserQuest> {
+    // Get existing user quests
+    const userQuestList = this.userQuests.get(userQuest.userId) || [];
+    
+    // Find if this user has this quest already
+    const existingQuestIndex = userQuestList.findIndex(
+      q => q.questId === userQuest.questId
+    );
+    
+    if (existingQuestIndex !== -1) {
+      // Update existing user quest
+      const existingUserQuest = userQuestList[existingQuestIndex];
+      const updatedUserQuest: UserQuest = {
+        ...existingUserQuest,
+        progress: userQuest.progress !== undefined ? userQuest.progress : existingUserQuest.progress,
+        completed: userQuest.completed !== undefined ? userQuest.completed : existingUserQuest.completed,
+        completedAt: userQuest.completedAt !== undefined ? userQuest.completedAt : existingUserQuest.completedAt,
+        updatedAt: new Date()
+      };
+      
+      userQuestList[existingQuestIndex] = updatedUserQuest;
+      this.userQuests.set(userQuest.userId, userQuestList);
+      return updatedUserQuest;
+    } else {
+      // Create new user quest
+      const id = this.currentUserQuestId++;
+      const newUserQuest: UserQuest = {
+        id,
+        userId: userQuest.userId,
+        questId: userQuest.questId,
+        progress: userQuest.progress || 0,
+        completed: userQuest.completed || false,
+        completedAt: userQuest.completedAt || null,
+        updatedAt: new Date()
+      };
+      
+      userQuestList.push(newUserQuest);
+      this.userQuests.set(userQuest.userId, userQuestList);
+      return newUserQuest;
+    }
+  }
+
+  async getUserQuestsByUserId(userId: number): Promise<UserQuest[]> {
+    return this.userQuests.get(userId) || [];
   }
 }
 
