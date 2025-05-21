@@ -1,0 +1,7 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#f9f5ff"/>
+  <path d="M 250,250 L 400,100 L 550,250 L 400,400 Z" fill="#7E57C2" opacity="0.8"/>
+  <text x="400" y="190" font-family="Arial" font-size="24" fill="#fff" text-anchor="middle">Maintaining</text>
+  <text x="400" y="230" font-family="Arial" font-size="24" fill="#fff" text-anchor="middle">Your</text>
+  <text x="400" y="270" font-family="Arial" font-size="24" fill="#fff" text-anchor="middle">Momentum</text>
+</svg>
