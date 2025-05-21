@@ -153,15 +153,18 @@ export default function LearningPlanDetail() {
                           <p key={pIndex} className="mb-4 last:mb-0">{paragraph}</p>
                         ))}
                         
-                        {section.imageUrl && (
-                          <div className="mt-4 rounded-lg overflow-hidden">
-                            <img 
-                              src={section.imageUrl} 
-                              alt={`Illustration for ${section.title}`}
-                              className="w-full h-auto object-cover"
-                            />
-                          </div>
-                        )}
+                        <div className="mt-4 rounded-lg overflow-hidden">
+                          <img 
+                            src={section.imageUrl || "./src/assets/placeholder.svg"} 
+                            alt={`Illustration for ${section.title}`}
+                            className="w-full h-auto object-cover"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.onerror = null;
+                              target.src = "./src/assets/placeholder.svg";
+                            }}
+                          />
+                        </div>
                         
                         {section.videoUrl && (
                           <div className="mt-4 rounded-lg overflow-hidden relative" style={{ paddingBottom: '56.25%', height: 0 }}>
