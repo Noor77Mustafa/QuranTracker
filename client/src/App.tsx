@@ -16,6 +16,7 @@ import Learning from "@/pages/learning";
 import Explore from "@/pages/explore";
 import Profile from "@/pages/profile";
 import LearningPlanDetail from "@/pages/learn-plan-detail";
+import Bookmarks from "@/pages/bookmarks";
 
 // Import for explore category pages
 import ExploreCategory from "@/pages/explore-category";
@@ -34,6 +35,7 @@ function Router() {
           <Route path="/explore" component={Explore} />
           <Route path="/explore/:id" component={ExploreCategory} />
           <Route path="/profile" component={Profile} />
+          <Route path="/bookmarks" component={Bookmarks} />
           <Route component={NotFound} />
         </Switch>
       </div>

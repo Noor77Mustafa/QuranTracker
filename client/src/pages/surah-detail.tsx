@@ -4,10 +4,23 @@ import { Surah, getSurah, Ayah } from "@/lib/quran-data";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { 
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogTrigger,
+  DialogClose
+} from "@/components/ui/dialog";
 import { useStreak } from "@/hooks/use-streak";
 import { useAchievements } from "@/hooks/use-achievements";
+import { useBookmarks } from "@/hooks/use-bookmarks";
 import { motion } from "framer-motion";
 import { SurahSearchIndex } from "@/components/surah/surah-search-index";
+import { useToast } from "@/hooks/use-toast";
 
 export default function SurahDetail() {
   const [, params] = useRoute("/surah/:id");
@@ -15,7 +28,7 @@ export default function SurahDetail() {
   const surahId = params?.id ? parseInt(params.id) : 1;
   
   // Get ayah from URL query parameter if present
-  const ayahParam = new URLSearchParams(location.split('?')[1]).get('ayah');
+  const ayahParam = new URLSearchParams(location.split('?')[1] || '').get('ayah');
   
   const [surah, setSurah] = useState<Surah | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,10 +37,14 @@ export default function SurahDetail() {
   const [showTranslation, setShowTranslation] = useState(true);
   const [showTransliteration, setShowTransliteration] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [bookmarkNote, setBookmarkNote] = useState("");
+  const [showBookmarkDialog, setShowBookmarkDialog] = useState(false);
   
   const audioRef = useRef<HTMLAudioElement>(null);
   const { updateStreak, incrementPagesRead } = useStreak();
   const { checkForAchievements } = useAchievements();
+  const { bookmarks, addBookmark, removeBookmark, isBookmarked, getBookmark } = useBookmarks();
+  const { toast } = useToast();
   
   // Fetch surah data
   useEffect(() => {
@@ -103,6 +120,78 @@ export default function SurahDetail() {
     if (currentAyah > 1) {
       setCurrentAyah(currentAyah - 1);
     }
+  };
+  
+  // Bookmark management
+  const handleBookmarkClick = () => {
+    // If already bookmarked, load existing note
+    if (surah && isBookmarked(surahId, currentAyah)) {
+      const bookmark = getBookmark(surahId, currentAyah);
+      if (bookmark?.notes) {
+        setBookmarkNote(bookmark.notes);
+      }
+    } else {
+      setBookmarkNote("");
+    }
+    setShowBookmarkDialog(true);
+  };
+  
+  const saveBookmark = () => {
+    if (!surah) return;
+    
+    const isAlreadyBookmarked = isBookmarked(surahId, currentAyah);
+    
+    if (isAlreadyBookmarked) {
+      // Get the existing bookmark
+      const bookmark = getBookmark(surahId, currentAyah);
+      if (bookmark) {
+        // Update the note
+        removeBookmark(bookmark.id);
+        addBookmark({
+          surahId,
+          surahName: surah.englishName,
+          ayahNumber: currentAyah,
+          notes: bookmarkNote
+        });
+        
+        toast({
+          title: "Bookmark updated",
+          description: `Updated bookmark for ${surah.englishName} (${currentAyah})`,
+        });
+      }
+    } else {
+      // Add new bookmark
+      addBookmark({
+        surahId,
+        surahName: surah.englishName,
+        ayahNumber: currentAyah,
+        notes: bookmarkNote
+      });
+      
+      toast({
+        title: "Bookmark added",
+        description: `Bookmarked ${surah.englishName} (${currentAyah})`,
+      });
+    }
+    
+    setShowBookmarkDialog(false);
+  };
+  
+  const deleteBookmark = () => {
+    if (!surah) return;
+    
+    const bookmark = getBookmark(surahId, currentAyah);
+    if (bookmark) {
+      removeBookmark(bookmark.id);
+      
+      toast({
+        title: "Bookmark removed",
+        description: `Removed bookmark for ${surah.englishName} (${currentAyah})`,
+        variant: "destructive"
+      });
+    }
+    
+    setShowBookmarkDialog(false);
   };
   
   if (isLoading) {
@@ -283,14 +372,13 @@ export default function SurahDetail() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-gray-500 dark:text-gray-400"
-                onClick={() => {
-                  // Handle bookmark logic here
-                  alert('Ayah bookmarked');
-                }}
-                aria-label="Bookmark this ayah"
+                className={`${isBookmarked(surahId, currentAyah) ? 'text-primary' : 'text-gray-500 dark:text-gray-400'}`}
+                onClick={handleBookmarkClick}
+                aria-label={isBookmarked(surahId, currentAyah) ? "Edit bookmark" : "Bookmark this ayah"}
               >
-                <span className="material-symbols-rounded">bookmark_add</span>
+                <span className="material-symbols-rounded">
+                  {isBookmarked(surahId, currentAyah) ? "bookmark" : "bookmark_add"}
+                </span>
               </Button>
               
               <Button
@@ -317,6 +405,52 @@ export default function SurahDetail() {
           </div>
         </div>
       </div>
+      
+      {/* Bookmark Dialog */}
+      <Dialog open={showBookmarkDialog} onOpenChange={setShowBookmarkDialog}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>
+              {isBookmarked(surahId, currentAyah) ? "Edit Bookmark" : "Add Bookmark"}
+            </DialogTitle>
+            <DialogDescription>
+              {surah?.englishName} - Ayah {currentAyah}
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="py-4">
+            <Label htmlFor="bookmark-notes" className="mb-2 block">Add Notes (Optional)</Label>
+            <Textarea
+              id="bookmark-notes"
+              placeholder="Add your notes or reflections about this ayah..."
+              className="h-32"
+              value={bookmarkNote}
+              onChange={(e) => setBookmarkNote(e.target.value)}
+            />
+          </div>
+          
+          <DialogFooter className="flex space-x-2 justify-between sm:justify-between">
+            {isBookmarked(surahId, currentAyah) && (
+              <Button 
+                variant="destructive" 
+                onClick={deleteBookmark}
+                aria-label="Delete bookmark"
+              >
+                <span className="material-symbols-rounded mr-2">delete</span>
+                Delete
+              </Button>
+            )}
+            <div className="flex space-x-2">
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button onClick={saveBookmark}>
+                {isBookmarked(surahId, currentAyah) ? "Update" : "Save"}
+              </Button>
+            </div>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       
       {/* Ayah Navigation */}
       <div className="mb-8">
