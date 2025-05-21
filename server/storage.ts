@@ -1,4 +1,15 @@
-import { users, type User, type InsertUser, type ReadingProgress, type InsertReadingProgress, type Streak, type InsertStreak, type Achievement, type InsertAchievement, type ReadingGoal, type InsertReadingGoal } from "@shared/schema";
+import { 
+  users, 
+  type User, type InsertUser, 
+  type ReadingProgress, type InsertReadingProgress, 
+  type Streak, type InsertStreak, 
+  type Achievement, type InsertAchievement, 
+  type ReadingGoal, type InsertReadingGoal,
+  type Bookmark, type InsertBookmark,
+  type Reflection, type InsertReflection,
+  type Quest, type InsertQuest,
+  type UserQuest, type InsertUserQuest
+} from "@shared/schema";
 
 // modify the interface with any CRUD methods
 // you might need
