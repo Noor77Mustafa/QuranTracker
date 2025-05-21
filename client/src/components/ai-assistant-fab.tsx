@@ -1,82 +1,162 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { useLocation } from "wouter";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
+type Message = {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  timestamp: Date;
+};
 
 export default function AIAssistantFAB() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [, navigate] = useLocation();
-  
-  const toggleOpen = () => setIsOpen(!isOpen);
-  
-  return (
-    <div className="fixed right-4 bottom-20 md:bottom-4 z-50">
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div 
-            className="bg-white dark:bg-gray-800 rounded-lg shadow-lg mb-4 w-64 md:w-80 overflow-hidden"
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="p-4 border-b border-gray-100 dark:border-gray-700">
-              <h3 className="font-medium text-lg">Quran Assistant</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">How can I help you today?</p>
-            </div>
-            <div className="p-4">
-              <div className="flex flex-col gap-2">
-                <Button 
-                  variant="outline" 
-                  className="justify-start text-left btn-tap-effect" 
-                  onClick={() => {
-                    // Handle search for patience verses
-                    navigate("/surah/2");  // Navigate to Surah Al-Baqarah which contains verses about patience
-                    setIsOpen(false);  // Close the assistant after selection
-                  }}
-                >
-                  <span className="material-symbols-rounded mr-2">search</span>
-                  Find verses about patience
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="justify-start text-left btn-tap-effect"
-                  onClick={() => {
-                    // Handle explanation request
-                    navigate("/surah/1");  // Navigate to Surah Al-Fatihah
-                    setIsOpen(false);  // Close the assistant after selection
-                  }}
-                >
-                  <span className="material-symbols-rounded mr-2">menu_book</span>
-                  Explain Surah Al-Fatihah
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="justify-start text-left btn-tap-effect"
-                  onClick={() => {
-                    // Handle reading plan suggestion
-                    navigate("/learn");  // Navigate to learning plans page
-                    setIsOpen(false);  // Close the assistant after selection
-                  }}
-                >
-                  <span className="material-symbols-rounded mr-2">psychology</span>
-                  Suggest a daily reading plan
-                </Button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+  const [open, setOpen] = useState(false);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: "welcome",
+      role: "assistant",
+      content: "Assalamu alaikum! I'm your Quran companion. How can I help with your Quranic studies today?",
+      timestamp: new Date(),
+    },
+  ]);
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to the latest message
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const handleSendMessage = async () => {
+    if (!input.trim()) return;
+    
+    // Create a user message
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      role: "user",
+      content: input,
+      timestamp: new Date(),
+    };
+    
+    // Add the user message to messages
+    setMessages(prev => [...prev, userMessage]);
+    setInput("");
+    setIsLoading(true);
+    
+    // Simulate a response (In a real app, this would make an API call to the Perplexity API)
+    setTimeout(() => {
+      // Sample responses based on keywords in the user's message
+      let responseContent = "I'll need to learn more about that topic to provide a better answer. The Quran is a vast source of knowledge with many dimensions.";
       
-      <motion.button
-        className="bg-primary text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center hover:bg-primary/90"
-        onClick={toggleOpen}
-        whileTap={{ scale: 0.9 }}
+      const lowerCaseInput = input.toLowerCase();
+      
+      if (lowerCaseInput.includes("surah") || lowerCaseInput.includes("chapter")) {
+        responseContent = "The Quran has 114 surahs (chapters), each with unique themes and teachings. You can explore them in the 'Read' section of this app. Would you like me to tell you more about a specific surah?";
+      } else if (lowerCaseInput.includes("ramadan") || lowerCaseInput.includes("fasting")) {
+        responseContent = "Ramadan is the ninth month of the Islamic calendar, during which Muslims fast from dawn until sunset. The Quran was first revealed during this month. Fasting teaches self-discipline, empathy, and God-consciousness (taqwa).";
+      } else if (lowerCaseInput.includes("prayer") || lowerCaseInput.includes("salah") || lowerCaseInput.includes("salat")) {
+        responseContent = "Prayer (Salah) is one of the Five Pillars of Islam. Muslims pray five times daily: Fajr (dawn), Dhuhr (noon), Asr (afternoon), Maghrib (sunset), and Isha (night).";
+      } else if (lowerCaseInput.includes("hajj") || lowerCaseInput.includes("pilgrimage")) {
+        responseContent = "Hajj is the annual Islamic pilgrimage to Mecca, Saudi Arabia, and is mandatory for Muslims to perform at least once in their lifetime if they are physically and financially able.";
+      } else if (lowerCaseInput.includes("zakat") || lowerCaseInput.includes("charity")) {
+        responseContent = "Zakat is one of the Five Pillars of Islam, requiring Muslims to give 2.5% of their qualifying wealth to those in need annually.";
+      } else if (lowerCaseInput.includes("prophet") || lowerCaseInput.includes("muhammad")) {
+        responseContent = "Prophet Muhammad ﷺ was the final prophet of Islam who received the revelations of the Quran from Allah through the angel Gabriel over 23 years. His life and teachings (Sunnah) serve as a model for Muslims.";
+      }
+      
+      const assistantMessage: Message = {
+        id: Date.now().toString(),
+        role: "assistant",
+        content: responseContent,
+        timestamp: new Date(),
+      };
+      
+      setMessages(prev => [...prev, assistantMessage]);
+      setIsLoading(false);
+    }, 1500);
+  };
+
+  return (
+    <>
+      {/* Floating Action Button */}
+      <Button 
+        onClick={() => setOpen(true)} 
+        className="fixed bottom-20 right-4 rounded-full shadow-lg h-14 w-14 p-3 md:bottom-8 md:right-8"
       >
-        <span className="material-symbols-rounded">
-          {isOpen ? "close" : "smart_toy"}
-        </span>
-      </motion.button>
-    </div>
+        <span className="material-symbols-rounded text-2xl">chat</span>
+      </Button>
+      
+      {/* Chat Dialog */}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-[500px] h-[70vh] flex flex-col p-0" aria-describedby="chat-description">
+          <DialogHeader className="px-6 pt-6 pb-2">
+            <DialogTitle>Quran Assistant</DialogTitle>
+            <DialogDescription id="chat-description">Ask me anything about the Quran or Islamic teachings</DialogDescription>
+          </DialogHeader>
+          
+          {/* Chat Messages */}
+          <ScrollArea className="flex-1 px-6 py-4">
+            <div className="space-y-4">
+              {messages.map((message) => (
+                <div
+                  key={message.id}
+                  className={`flex ${
+                    message.role === "user" ? "justify-end" : "justify-start"
+                  }`}
+                >
+                  <div
+                    className={`max-w-[80%] rounded-lg px-4 py-2 ${
+                      message.role === "user"
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted"
+                    }`}
+                  >
+                    <p className="text-sm">{message.content}</p>
+                  </div>
+                </div>
+              ))}
+              
+              {isLoading && (
+                <div className="flex justify-start">
+                  <div className="max-w-[80%] rounded-lg px-4 py-2 bg-muted">
+                    <div className="flex space-x-2">
+                      <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"></div>
+                      <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+                      <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "0.4s" }}></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              <div ref={messagesEndRef} />
+            </div>
+          </ScrollArea>
+          
+          {/* Input Area */}
+          <div className="p-4 border-t">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSendMessage();
+              }}
+              className="flex space-x-2"
+            >
+              <Input
+                placeholder="Ask a question about the Quran..."
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                className="flex-1"
+              />
+              <Button type="submit" disabled={isLoading || !input.trim()}>
+                <span className="material-symbols-rounded">send</span>
+              </Button>
+            </form>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

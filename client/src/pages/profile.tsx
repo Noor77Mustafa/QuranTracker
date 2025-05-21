@@ -224,7 +224,8 @@ export default function Profile() {
                   )}
                 </div>
                 
-                <div>
+                {/* ReadingGoalDialog Component */}
+                {isGoalDialogOpen && (
                   <ReadingGoalDialog 
                     open={isGoalDialogOpen} 
                     setOpen={setIsGoalDialogOpen}
@@ -234,7 +235,7 @@ export default function Profile() {
                       setReadingGoal(goal);
                     }}
                   />
-                </div>
+                )}
               </div>
             </div>
           )}

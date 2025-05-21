@@ -53,7 +53,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "Physical and Psychological Dimensions",
             content: "While many focus on the physical aspects of fasting—abstaining from food and drink—Islamic fasting encompasses much more. During the fast, Muslims are encouraged to refrain from negative behaviors such as lying, backbiting, arguing, and other moral transgressions.\n\nThis holistic approach transforms fasting from merely a physical exercise into a comprehensive spiritual regimen. It trains the mind to be conscious of actions, words, and even thoughts throughout the day.\n\nModern science has also begun to recognize the health benefits of intermittent fasting, which aligns with the Islamic practice. These benefits include improved metabolic health, enhanced cellular repair processes, and potential longevity benefits.",
-            videoUrl: "https://www.youtube.com/embed/R-5S_GtiTTw"
+            videoUrl: "https://www.youtube.com/embed/ifllgTA2pmY"
           }
         ]
       },
@@ -76,7 +76,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "Self-Discipline and Willpower",
             content: "The consistent daily practice of denying immediate gratification for a higher purpose strengthens one's willpower and self-discipline. This enhanced self-control often extends beyond the month of Ramadan, helping Muslims make better choices in various aspects of life.\n\nThis spiritual training helps overcome harmful habits and inclinations, leading to personal growth and development. Many Muslims report breaking negative habits during Ramadan and establishing positive ones that continue throughout the year.",
-            videoUrl: "https://www.youtube.com/embed/mIYaCDrTTkU"
+            videoUrl: "https://www.youtube.com/embed/ifllgTA2pmY"
           }
         ]
       },
@@ -99,7 +99,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "Managing Emotions and Responses",
             content: "Hunger and thirst can sometimes lead to irritability, making emotional management an essential aspect of mindful fasting. The Prophet Muhammad ﷺ taught that when fasting, if someone tries to argue or fight with you, you should say, 'I am fasting.'\n\nThis simple reminder serves as a pattern interrupt, helping the fasting person maintain composure and mindfulness even in challenging situations. It transforms potential negative interactions into opportunities for spiritual growth and self-control.",
-            videoUrl: "https://www.youtube.com/embed/6ErB0AiMGFU"
+            videoUrl: "https://www.youtube.com/embed/ramO7E8r-8Y"
           }
         ]
       }
@@ -132,7 +132,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "Case Study: Surah Al-Asr",
             content: "Let's examine Surah Al-Asr (Chapter 103) through a historical lens. This short yet profound surah was revealed in Mecca during a time when the early Muslims faced significant persecution.\n\nThe surah's emphasis on the passage of time, righteous deeds, and mutual encouragement to persevere in truth directly addressed the challenges faced by the small Muslim community. Understanding this context deepens our appreciation of the surah's message about the importance of faith, good deeds, and community support during difficult times.",
-            videoUrl: "https://www.youtube.com/embed/m9pP3yZFGAE"
+            videoUrl: "https://www.youtube.com/embed/XW0CO2F-q60"
           }
         ]
       },
@@ -155,7 +155,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "Word Choice and Precision",
             content: "The Quran is known for its precise word choices, where seemingly synonymous terms actually carry subtle but significant differences in meaning. For instance, the Quran uses different words for 'fear' (khawf, khashya, taqwa) each conveying distinct psychological states.\n\nThis precision extends to grammatical structures, verb tenses, and pronoun usage. When analyzed carefully, these linguistic features often reveal insights that enhance our understanding of the text's message.",
-            videoUrl: "https://www.youtube.com/embed/E-SPpULDY8Y"
+            videoUrl: "https://www.youtube.com/embed/kUzM0R1O8kg"
           }
         ]
       },
