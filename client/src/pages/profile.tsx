@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
+import ReadingGoalDialog from "@/components/ReadingGoalDialog";
 
 // Mock user data - in a real app, this would come from the API
 interface UserProfile {
@@ -25,6 +26,12 @@ export default function Profile() {
   const { badges } = useAchievements();
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
   const [activeTab, setActiveTab] = useState<'progress' | 'achievements' | 'quests' | 'settings'>('progress');
+  const [isGoalDialogOpen, setIsGoalDialogOpen] = useState(false);
+  const [readingGoal, setReadingGoal] = useState<{
+    pagesPerDay: number;
+    minutesPerDay: number;
+    completionTarget?: string;
+  } | null>(null);
   
   // Fetch user profile data
   const { data: user } = useQuery<UserProfile>({
@@ -170,37 +177,52 @@ export default function Profile() {
               </div>
               
               <div className="mb-4">
+                {/* Import the ReadingGoalDialog component at the top of the file */}
+                <ReadingGoalDialog 
+                  open={isGoalDialogOpen} 
+                  setOpen={setIsGoalDialogOpen}
+                  currentGoal={readingGoal}
+                  onSaveGoal={(goal) => {
+                    setReadingGoal(goal);
+                    // In a real app, this would save to the API
+                  }}
+                />
+                
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-4">
+                  {readingGoal ? (
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <p className="font-medium">Read {readingGoal.pagesPerDay} pages daily</p>
+                        <span className="text-xs bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-400 px-2 py-1 rounded">Active</span>
+                      </div>
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                        Daily commitment: {readingGoal.pagesPerDay} pages or {readingGoal.minutesPerDay} minutes
+                      </p>
+                      {readingGoal.completionTarget && (
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                          Target completion: {
+                            readingGoal.completionTarget === "3_months" ? "In 3 months" :
+                            readingGoal.completionTarget === "6_months" ? "In 6 months" :
+                            readingGoal.completionTarget === "1_year" ? "In 1 year" :
+                            readingGoal.completionTarget === "Ramadan" ? "By next Ramadan" : 
+                            readingGoal.completionTarget
+                          }
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <p className="text-gray-600 dark:text-gray-300">
+                      No reading goal set yet. Set a goal to track your progress.
+                    </p>
+                  )}
+                </div>
+                
                 <Button 
                   className="w-full"
-                  onClick={() => {
-                    // Create a fixed goal for demonstration
-                    const goal = {
-                      pagesPerDay: 5,
-                      minutesPerDay: 15,
-                      completionTarget: "3_months"
-                    };
-                    
-                    // Update UI to show the goal is set
-                    const goalStatusEl = document.getElementById('goal-status');
-                    if (goalStatusEl) {
-                      goalStatusEl.textContent = `Goal set: ${goal.pagesPerDay} pages or ${goal.minutesPerDay} minutes daily · Target: ${
-                        goal.completionTarget === "3_months" ? "In 3 months" : 
-                        goal.completionTarget === "6_months" ? "In 6 months" :
-                        goal.completionTarget === "1_year" ? "In 1 year" :
-                        goal.completionTarget === "Ramadan" ? "By next Ramadan" : "No specific target"
-                      }`;
-                      
-                      // Show success notification
-                      alert("Reading goal set successfully!");
-                    }
-                  }}
+                  onClick={() => setIsGoalDialogOpen(true)}
                 >
-                  Set a New Goal
+                  {readingGoal ? "Edit Goal" : "Set a New Goal"}
                 </Button>
-                
-                <div id="goal-status" className="text-sm text-gray-600 dark:text-gray-400 mt-2 text-center">
-                  No reading goal set yet
-                </div>
               </div>
             </div>
           )}

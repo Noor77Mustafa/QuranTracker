@@ -1,6 +1,8 @@
-<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
-  <rect width="100%" height="100%" fill="#f0f7ff"/>
-  <circle cx="400" cy="200" r="150" fill="#43a047" opacity="0.8"/>
-  <text x="400" y="190" font-family="Arial" font-size="28" fill="#fff" text-anchor="middle">Fasting</text>
-  <text x="400" y="230" font-family="Arial" font-size="28" fill="#fff" text-anchor="middle">in Islam</text>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="250" height="200" viewBox="0 0 250 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="250" height="200" fill="#f8f9fa"/>
+  <circle cx="125" cy="100" r="60" fill="#e1f5fe"/>
+  <path d="M125 50 Q 85 100 125 150 Q 165 100 125 50" fill="#b3e5fc"/>
+  <text x="125" y="105" font-family="Arial" font-size="14" fill="#0277bd" text-anchor="middle">Mindful Fasting</text>
+  <text x="125" y="125" font-family="Arial" font-size="10" fill="#0277bd" text-anchor="middle">Spiritual Growth Through Restraint</text>
 </svg>
