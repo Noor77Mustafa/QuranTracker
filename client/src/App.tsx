@@ -14,8 +14,10 @@ import Read from "@/pages/read";
 import SurahDetail from "@/pages/surah-detail";
 import Learning from "@/pages/learning";
 import Explore from "@/pages/explore";
-import ExploreCategory from "@/pages/explore-category";
 import Profile from "@/pages/profile";
+
+// Import for explore category pages
+import ExploreCategory from "@/pages/explore-category";
 
 function Router() {
   return (
