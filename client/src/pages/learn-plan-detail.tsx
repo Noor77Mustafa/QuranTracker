@@ -133,8 +133,51 @@ export default function LearningPlanDetail() {
             </div>
             
             <div className="prose dark:prose-invert max-w-none mb-6">
-              {currentLesson.content ? (
-                <div dangerouslySetInnerHTML={{ __html: currentLesson.content }} />
+              {currentLesson.summary && (
+                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg mb-6">
+                  <h4 className="text-blue-700 dark:text-blue-300 font-medium mb-1">Lesson Summary</h4>
+                  <p className="text-blue-800 dark:text-blue-200 m-0">{currentLesson.summary}</p>
+                </div>
+              )}
+              
+              {currentLesson.sections && currentLesson.sections.length > 0 ? (
+                <div className="space-y-8">
+                  {currentLesson.sections.map((section, index) => (
+                    <div key={index} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
+                      <div className="bg-gray-50 dark:bg-gray-700 p-3 border-b border-gray-100 dark:border-gray-600">
+                        <h4 className="font-medium text-lg m-0">{section.title}</h4>
+                      </div>
+                      
+                      <div className="p-4">
+                        {section.content.split('\n\n').map((paragraph, pIndex) => (
+                          <p key={pIndex} className="mb-4 last:mb-0">{paragraph}</p>
+                        ))}
+                        
+                        {section.imageUrl && (
+                          <div className="mt-4 rounded-lg overflow-hidden">
+                            <img 
+                              src={section.imageUrl} 
+                              alt={`Illustration for ${section.title}`}
+                              className="w-full h-auto object-cover"
+                            />
+                          </div>
+                        )}
+                        
+                        {section.videoUrl && (
+                          <div className="mt-4 rounded-lg overflow-hidden relative" style={{ paddingBottom: '56.25%', height: 0 }}>
+                            <iframe
+                              src={section.videoUrl}
+                              title={`Video for ${section.title}`}
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              className="absolute top-0 left-0 w-full h-full"
+                            ></iframe>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               ) : (
                 <div>
                   <p>This is a sample lesson content. In an actual implementation, this would contain the full lesson material including text, images, and potentially embedded videos.</p>
