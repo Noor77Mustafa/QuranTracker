@@ -154,30 +154,34 @@ export default function LearningPlanDetail() {
                         ))}
                         
                         {section.imageUrl && (
-                          <div className="mt-4 rounded-lg overflow-hidden">
-                            <img 
-                              src={section.imageUrl} 
-                              alt={`Illustration for ${section.title}`}
-                              className="w-full h-auto object-cover max-h-64"
-                              onError={(e) => {
-                                const target = e.target as HTMLImageElement;
-                                target.onerror = null;
-                                target.src = "/assets/placeholder.svg";
-                                console.log("Image failed to load:", section.imageUrl);
-                              }}
-                            />
+                          <div className="mt-4 rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-700 p-4 flex justify-center">
+                            <svg width="250" height="200" viewBox="0 0 250 200" xmlns="http://www.w3.org/2000/svg">
+                              <rect width="250" height="200" fill="#f8f9fa"/>
+                              <circle cx="125" cy="80" r="50" fill="#e3f2fd"/>
+                              <path d="M125 130 Q 75 180 125 180 Q 175 180 125 130" fill="#bbdefb"/>
+                              <text x="125" y="85" fontFamily="Arial" fontSize="14" fill="#1565c0" textAnchor="middle">{section.title}</text>
+                              <text x="125" y="105" fontFamily="Arial" fontSize="10" fill="#1565c0" textAnchor="middle">
+                                {`Illustration for ${section.title}`}
+                              </text>
+                            </svg>
                           </div>
                         )}
                         
                         {section.videoUrl && (
-                          <div className="mt-4 rounded-lg overflow-hidden relative" style={{ paddingBottom: '56.25%', height: 0 }}>
-                            <iframe
-                              src={section.videoUrl.replace("watch?v=", "embed/")}
-                              title={`Video for ${section.title}`}
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                              className="absolute top-0 left-0 w-full h-full"
-                            ></iframe>
+                          <div className="mt-4 rounded-lg overflow-hidden">
+                            <div className="relative" style={{ paddingBottom: '56.25%', height: 0 }}>
+                              <iframe
+                                src={section.videoUrl.includes("youtube") ? section.videoUrl.replace("watch?v=", "embed/") : section.videoUrl}
+                                title={`Video for ${section.title}`}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                className="absolute top-0 left-0 w-full h-full border-0"
+                                loading="lazy"
+                              ></iframe>
+                            </div>
+                            <div className="bg-gray-50 dark:bg-gray-700 p-2 text-center text-sm text-gray-600 dark:text-gray-400">
+                              Video: {section.title}
+                            </div>
                           </div>
                         )}
                       </div>

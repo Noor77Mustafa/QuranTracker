@@ -177,18 +177,9 @@ export default function Profile() {
               </div>
               
               <div className="mb-4">
-                {/* Import the ReadingGoalDialog component at the top of the file */}
-                <ReadingGoalDialog 
-                  open={isGoalDialogOpen} 
-                  setOpen={setIsGoalDialogOpen}
-                  currentGoal={readingGoal}
-                  onSaveGoal={(goal) => {
-                    setReadingGoal(goal);
-                    // In a real app, this would save to the API
-                  }}
-                />
-                
-                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-4">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 mb-4">
+                  <h3 className="font-semibold text-lg mb-3">Reading Goal</h3>
+                  
                   {readingGoal ? (
                     <div>
                       <div className="flex justify-between items-center mb-2">
@@ -209,20 +200,41 @@ export default function Profile() {
                           }
                         </p>
                       )}
+                      
+                      <Button 
+                        className="w-full mt-4"
+                        onClick={() => setIsGoalDialogOpen(true)}
+                      >
+                        Edit Goal
+                      </Button>
                     </div>
                   ) : (
-                    <p className="text-gray-600 dark:text-gray-300">
-                      No reading goal set yet. Set a goal to track your progress.
-                    </p>
+                    <div>
+                      <p className="text-gray-600 dark:text-gray-300 mb-4">
+                        No reading goal set yet. Setting a goal helps you maintain consistency in your Quran reading journey.
+                      </p>
+                      
+                      <Button 
+                        className="w-full"
+                        onClick={() => setIsGoalDialogOpen(true)}
+                      >
+                        Set a New Goal
+                      </Button>
+                    </div>
                   )}
                 </div>
                 
-                <Button 
-                  className="w-full"
-                  onClick={() => setIsGoalDialogOpen(true)}
-                >
-                  {readingGoal ? "Edit Goal" : "Set a New Goal"}
-                </Button>
+                <div>
+                  <ReadingGoalDialog 
+                    open={isGoalDialogOpen} 
+                    setOpen={setIsGoalDialogOpen}
+                    currentGoal={readingGoal || undefined}
+                    onSaveGoal={(goal) => {
+                      console.log("Saving goal:", goal);
+                      setReadingGoal(goal);
+                    }}
+                  />
+                </div>
               </div>
             </div>
           )}
