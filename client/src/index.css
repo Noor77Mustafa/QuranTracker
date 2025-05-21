@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Base colors from design guide */
+    --primary: 187 100% 38%; /* #00ACC1 - peaceful blue */
+    --secondary: 122 41% 45%; /* #43A047 - forest green */
+    --text: 0 0% 13%; /* #212121 - deep black */
+    --background: 0 0% 100%; /* #FFFFFF - pure white */
+    --accent: 40 100% 50%; /* #FFB300 - warm gold */
+    
+    /* Theme colors for shadcn */
+    --foreground: var(--text);
+    --card: 0 0% 100%;
+    --card-foreground: var(--text);
+    --popover: 0 0% 100%;
+    --popover-foreground: var(--text);
+    --primary-foreground: 0 0% 100%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 60 5% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent-foreground: 0 0% 13%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: var(--primary);
+    --radius: 0.5rem;
+    
+    /* Chart colors */
+    --chart-1: var(--primary);
+    --chart-2: var(--secondary);
+    --chart-3: var(--accent);
+    --chart-4: 215 100% 50%;
+    --chart-5: 280 100% 50%;
+    
+    /* Sidebar colors */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: var(--text);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: var(--accent);
+    --sidebar-accent-foreground: 0 0% 13%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: var(--primary);
+  }
+
+  .dark {
+    --foreground: 0 0% 98%;
+    --background: 0 0% 10%;
+    --card: 0 0% 15%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 15%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 187 100% 38%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 122 41% 45%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 40 100% 50%;
+    --accent-foreground: 0 0% 13%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 60%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: var(--primary);
+    
+    /* Chart colors */
+    --chart-1: var(--primary);
+    --chart-2: var(--secondary);
+    --chart-3: var(--accent);
+    --chart-4: 215 100% 50%;
+    --chart-5: 280 100% 50%;
+    
+    /* Sidebar colors */
+    --sidebar-background: 0 0% 15%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: var(--accent);
+    --sidebar-accent-foreground: 0 0% 13%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: var(--primary);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-gray-50 text-foreground;
+  }
+  
+  /* Custom utility class for removing scrollbars */
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+  
+  /* Arabic text class */
+  .arabic-text {
+    font-family: 'Amiri', serif;
+  }
+}
+
+@layer components {
+  .card-shadow {
+    @apply shadow-sm hover:shadow-md transition-shadow;
+  }
+  
+  .nav-item {
+    @apply flex flex-col items-center p-3;
+  }
+  
+  .nav-item-active {
+    @apply text-primary;
+  }
+  
+  .nav-item-inactive {
+    @apply text-gray-500;
+  }
+}
