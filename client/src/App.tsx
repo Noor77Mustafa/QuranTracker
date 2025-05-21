@@ -14,6 +14,7 @@ import Read from "@/pages/read";
 import SurahDetail from "@/pages/surah-detail";
 import Learning from "@/pages/learning";
 import Explore from "@/pages/explore";
+import ExploreCategory from "@/pages/explore-category";
 import Profile from "@/pages/profile";
 
 function Router() {
@@ -27,6 +28,7 @@ function Router() {
           <Route path="/surah/:id" component={SurahDetail} />
           <Route path="/learn" component={Learning} />
           <Route path="/explore" component={Explore} />
+          <Route path="/explore/:id" component={ExploreCategory} />
           <Route path="/profile" component={Profile} />
           <Route component={NotFound} />
         </Switch>
