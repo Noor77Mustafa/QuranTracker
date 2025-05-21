@@ -1,7 +1,9 @@
-<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
-  <rect width="100%" height="100%" fill="#fff8e1"/>
-  <circle cx="300" cy="200" r="100" fill="#ffb300" opacity="0.7"/>
-  <circle cx="500" cy="200" r="100" fill="#ffb300" opacity="0.7"/>
-  <path d="M 350,230 Q 400,280 450,230" stroke="#fff" stroke-width="8" fill="none"/>
-  <text x="400" y="330" font-family="Arial" font-size="28" fill="#212121" text-anchor="middle">Empathy &amp; Compassion</text>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="250" height="200" viewBox="0 0 250 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="250" height="200" fill="#f8f9fa"/>
+  <circle cx="85" cy="80" r="35" fill="#e8f5e9"/>
+  <circle cx="165" cy="80" r="35" fill="#e8f5e9"/>
+  <path d="M125 120 Q 100 150 125 150 Q 150 150 125 120" fill="#c8e6c9"/>
+  <text x="125" y="85" font-family="Arial" font-size="14" fill="#2e7d32" text-anchor="middle">Empathy</text>
+  <text x="125" y="105" font-family="Arial" font-size="10" fill="#2e7d32" text-anchor="middle">Compassion for Others</text>
 </svg>

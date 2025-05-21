@@ -169,111 +169,39 @@ export default function Profile() {
                 </p>
               </div>
               
-              <Button 
-                className="w-full"
-                onClick={() => {
-                  // Open goal setting dialog
-                  const goalDialog = document.getElementById('goal-setting-dialog');
-                  if (goalDialog) {
-                    (goalDialog as any).showModal();
-                  }
-                }}
-              >
-                Set a New Goal
-              </Button>
-              
-              {/* Goal Setting Dialog */}
-              <dialog id="goal-setting-dialog" className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-0 max-w-md w-full">
-                <div className="p-6">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-semibold">Set Reading Goal</h3>
-                    <button 
-                      onClick={() => {
-                        const dialog = document.getElementById('goal-setting-dialog');
-                        if (dialog) {
-                          (dialog as any).close();
-                        }
-                      }}
-                      className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                    >
-                      <span className="material-symbols-rounded">close</span>
-                    </button>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <label htmlFor="pages-per-day" className="block text-sm font-medium mb-1">
-                        Pages per day
-                      </label>
-                      <input
-                        type="number"
-                        id="pages-per-day"
-                        min="1"
-                        max="50"
-                        defaultValue="5"
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700"
-                      />
-                    </div>
+              <div className="mb-4">
+                <Button 
+                  className="w-full"
+                  onClick={() => {
+                    // Create a fixed goal for demonstration
+                    const goal = {
+                      pagesPerDay: 5,
+                      minutesPerDay: 15,
+                      completionTarget: "3_months"
+                    };
                     
-                    <div>
-                      <label htmlFor="minutes-per-day" className="block text-sm font-medium mb-1">
-                        Minutes per day
-                      </label>
-                      <input
-                        type="number"
-                        id="minutes-per-day"
-                        min="5"
-                        max="120"
-                        defaultValue="15"
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label htmlFor="completion-target" className="block text-sm font-medium mb-1">
-                        Target completion date (optional)
-                      </label>
-                      <select 
-                        id="completion-target"
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700"
-                      >
-                        <option value="">No specific target</option>
-                        <option value="Ramadan">By next Ramadan</option>
-                        <option value="3_months">In 3 months</option>
-                        <option value="6_months">In 6 months</option>
-                        <option value="1_year">In 1 year</option>
-                      </select>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-6 flex justify-end space-x-2">
-                    <Button 
-                      variant="outline"
-                      onClick={() => {
-                        const dialog = document.getElementById('goal-setting-dialog');
-                        if (dialog) {
-                          (dialog as any).close();
-                        }
-                      }}
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        // Save the goal
-                        const dialog = document.getElementById('goal-setting-dialog');
-                        if (dialog) {
-                          (dialog as any).close();
-                          // Show success notification
-                          alert("Reading goal saved successfully!");
-                        }
-                      }}
-                    >
-                      Save Goal
-                    </Button>
-                  </div>
+                    // Update UI to show the goal is set
+                    const goalStatusEl = document.getElementById('goal-status');
+                    if (goalStatusEl) {
+                      goalStatusEl.textContent = `Goal set: ${goal.pagesPerDay} pages or ${goal.minutesPerDay} minutes daily · Target: ${
+                        goal.completionTarget === "3_months" ? "In 3 months" : 
+                        goal.completionTarget === "6_months" ? "In 6 months" :
+                        goal.completionTarget === "1_year" ? "In 1 year" :
+                        goal.completionTarget === "Ramadan" ? "By next Ramadan" : "No specific target"
+                      }`;
+                      
+                      // Show success notification
+                      alert("Reading goal set successfully!");
+                    }
+                  }}
+                >
+                  Set a New Goal
+                </Button>
+                
+                <div id="goal-status" className="text-sm text-gray-600 dark:text-gray-400 mt-2 text-center">
+                  No reading goal set yet
                 </div>
-              </dialog>
+              </div>
             </div>
           )}
           

@@ -156,13 +156,14 @@ export default function LearningPlanDetail() {
                         {section.imageUrl && (
                           <div className="mt-4 rounded-lg overflow-hidden">
                             <img 
-                              src={section.imageUrl || "/assets/placeholder.svg"} 
+                              src={section.imageUrl} 
                               alt={`Illustration for ${section.title}`}
-                              className="w-full h-auto object-cover"
+                              className="w-full h-auto object-cover max-h-64"
                               onError={(e) => {
                                 const target = e.target as HTMLImageElement;
                                 target.onerror = null;
                                 target.src = "/assets/placeholder.svg";
+                                console.log("Image failed to load:", section.imageUrl);
                               }}
                             />
                           </div>
