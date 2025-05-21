@@ -226,6 +226,944 @@ export const surahs: Surah[] = [
     revelationType: "Meccan",
     arabicNumber: arabicNumbers[19]
   },
-  // Adding the rest of the 114 surahs - showing just first 20 for brevity
-  // In a production app, we would include all 114 surahs
+  {
+    id: 21,
+    number: 21,
+    name: "الأنبياء",
+    englishName: "Al-Anbya",
+    englishNameTranslation: "The Prophets",
+    numberOfAyahs: 112,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[20]
+  },
+  {
+    id: 22,
+    number: 22,
+    name: "الحج",
+    englishName: "Al-Hajj",
+    englishNameTranslation: "The Pilgrimage",
+    numberOfAyahs: 78,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[21]
+  },
+  {
+    id: 23,
+    number: 23,
+    name: "المؤمنون",
+    englishName: "Al-Mu'minun",
+    englishNameTranslation: "The Believers",
+    numberOfAyahs: 118,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[22]
+  },
+  {
+    id: 24,
+    number: 24,
+    name: "النور",
+    englishName: "An-Nur",
+    englishNameTranslation: "The Light",
+    numberOfAyahs: 64,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[23]
+  },
+  {
+    id: 25,
+    number: 25,
+    name: "الفرقان",
+    englishName: "Al-Furqan",
+    englishNameTranslation: "The Criterion",
+    numberOfAyahs: 77,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[24]
+  },
+  {
+    id: 26,
+    number: 26,
+    name: "الشعراء",
+    englishName: "Ash-Shu'ara",
+    englishNameTranslation: "The Poets",
+    numberOfAyahs: 227,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[25]
+  },
+  {
+    id: 27,
+    number: 27,
+    name: "النمل",
+    englishName: "An-Naml",
+    englishNameTranslation: "The Ant",
+    numberOfAyahs: 93,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[26]
+  },
+  {
+    id: 28,
+    number: 28,
+    name: "القصص",
+    englishName: "Al-Qasas",
+    englishNameTranslation: "The Stories",
+    numberOfAyahs: 88,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[27]
+  },
+  {
+    id: 29,
+    number: 29,
+    name: "العنكبوت",
+    englishName: "Al-Ankabut",
+    englishNameTranslation: "The Spider",
+    numberOfAyahs: 69,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[28]
+  },
+  {
+    id: 30,
+    number: 30,
+    name: "الروم",
+    englishName: "Ar-Rum",
+    englishNameTranslation: "The Romans",
+    numberOfAyahs: 60,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[29]
+  },
+  {
+    id: 31,
+    number: 31,
+    name: "لقمان",
+    englishName: "Luqman",
+    englishNameTranslation: "Luqman",
+    numberOfAyahs: 34,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[30]
+  },
+  {
+    id: 32,
+    number: 32,
+    name: "السجدة",
+    englishName: "As-Sajda",
+    englishNameTranslation: "The Prostration",
+    numberOfAyahs: 30,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[31]
+  },
+  {
+    id: 33,
+    number: 33,
+    name: "الأحزاب",
+    englishName: "Al-Ahzab",
+    englishNameTranslation: "The Combined Forces",
+    numberOfAyahs: 73,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[32]
+  },
+  {
+    id: 34,
+    number: 34,
+    name: "سبإ",
+    englishName: "Saba",
+    englishNameTranslation: "Sheba",
+    numberOfAyahs: 54,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[33]
+  },
+  {
+    id: 35,
+    number: 35,
+    name: "فاطر",
+    englishName: "Fatir",
+    englishNameTranslation: "Originator",
+    numberOfAyahs: 45,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[34]
+  },
+  {
+    id: 36,
+    number: 36,
+    name: "يس",
+    englishName: "Ya-Sin",
+    englishNameTranslation: "Ya Sin",
+    numberOfAyahs: 83,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[35]
+  },
+  {
+    id: 37,
+    number: 37,
+    name: "الصافات",
+    englishName: "As-Saffat",
+    englishNameTranslation: "Those who set the Ranks",
+    numberOfAyahs: 182,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[36]
+  },
+  {
+    id: 38,
+    number: 38,
+    name: "ص",
+    englishName: "Sad",
+    englishNameTranslation: "The Letter Sad",
+    numberOfAyahs: 88,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[37]
+  },
+  {
+    id: 39,
+    number: 39,
+    name: "الزمر",
+    englishName: "Az-Zumar",
+    englishNameTranslation: "The Troops",
+    numberOfAyahs: 75,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[38]
+  },
+  {
+    id: 40,
+    number: 40,
+    name: "غافر",
+    englishName: "Ghafir",
+    englishNameTranslation: "The Forgiver",
+    numberOfAyahs: 85,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[39]
+  },
+  {
+    id: 41,
+    number: 41,
+    name: "فصلت",
+    englishName: "Fussilat",
+    englishNameTranslation: "Explained in Detail",
+    numberOfAyahs: 54,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[40]
+  },
+  {
+    id: 42,
+    number: 42,
+    name: "الشورى",
+    englishName: "Ash-Shura",
+    englishNameTranslation: "The Consultation",
+    numberOfAyahs: 53,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[41]
+  },
+  {
+    id: 43,
+    number: 43,
+    name: "الزخرف",
+    englishName: "Az-Zukhruf",
+    englishNameTranslation: "The Ornaments of Gold",
+    numberOfAyahs: 89,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[42]
+  },
+  {
+    id: 44,
+    number: 44,
+    name: "الدخان",
+    englishName: "Ad-Dukhan",
+    englishNameTranslation: "The Smoke",
+    numberOfAyahs: 59,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[43]
+  },
+  {
+    id: 45,
+    number: 45,
+    name: "الجاثية",
+    englishName: "Al-Jathiya",
+    englishNameTranslation: "The Crouching",
+    numberOfAyahs: 37,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[44]
+  },
+  {
+    id: 46,
+    number: 46,
+    name: "الأحقاف",
+    englishName: "Al-Ahqaf",
+    englishNameTranslation: "The Wind-Curved Sandhills",
+    numberOfAyahs: 35,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[45]
+  },
+  {
+    id: 47,
+    number: 47,
+    name: "محمد",
+    englishName: "Muhammad",
+    englishNameTranslation: "Muhammad",
+    numberOfAyahs: 38,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[46]
+  },
+  {
+    id: 48,
+    number: 48,
+    name: "الفتح",
+    englishName: "Al-Fath",
+    englishNameTranslation: "The Victory",
+    numberOfAyahs: 29,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[47]
+  },
+  {
+    id: 49,
+    number: 49,
+    name: "الحجرات",
+    englishName: "Al-Hujurat",
+    englishNameTranslation: "The Rooms",
+    numberOfAyahs: 18,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[48]
+  },
+  {
+    id: 50,
+    number: 50,
+    name: "ق",
+    englishName: "Qaf",
+    englishNameTranslation: "The Letter Qaf",
+    numberOfAyahs: 45,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[49]
+  },
+  {
+    id: 51,
+    number: 51,
+    name: "الذاريات",
+    englishName: "Adh-Dhariyat",
+    englishNameTranslation: "The Winnowing Winds",
+    numberOfAyahs: 60,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[50]
+  },
+  {
+    id: 52,
+    number: 52,
+    name: "الطور",
+    englishName: "At-Tur",
+    englishNameTranslation: "The Mount",
+    numberOfAyahs: 49,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[51]
+  },
+  {
+    id: 53,
+    number: 53,
+    name: "النجم",
+    englishName: "An-Najm",
+    englishNameTranslation: "The Star",
+    numberOfAyahs: 62,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[52]
+  },
+  {
+    id: 54,
+    number: 54,
+    name: "القمر",
+    englishName: "Al-Qamar",
+    englishNameTranslation: "The Moon",
+    numberOfAyahs: 55,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[53]
+  },
+  {
+    id: 55,
+    number: 55,
+    name: "الرحمن",
+    englishName: "Ar-Rahman",
+    englishNameTranslation: "The Beneficent",
+    numberOfAyahs: 78,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[54]
+  },
+  {
+    id: 56,
+    number: 56,
+    name: "الواقعة",
+    englishName: "Al-Waqi'a",
+    englishNameTranslation: "The Inevitable",
+    numberOfAyahs: 96,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[55]
+  },
+  {
+    id: 57,
+    number: 57,
+    name: "الحديد",
+    englishName: "Al-Hadid",
+    englishNameTranslation: "The Iron",
+    numberOfAyahs: 29,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[56]
+  },
+  {
+    id: 58,
+    number: 58,
+    name: "المجادلة",
+    englishName: "Al-Mujadila",
+    englishNameTranslation: "The Pleading Woman",
+    numberOfAyahs: 22,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[57]
+  },
+  {
+    id: 59,
+    number: 59,
+    name: "الحشر",
+    englishName: "Al-Hashr",
+    englishNameTranslation: "The Exile",
+    numberOfAyahs: 24,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[58]
+  },
+  {
+    id: 60,
+    number: 60,
+    name: "الممتحنة",
+    englishName: "Al-Mumtahana",
+    englishNameTranslation: "She That is to be Examined",
+    numberOfAyahs: 13,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[59]
+  },
+  {
+    id: 61,
+    number: 61,
+    name: "الصف",
+    englishName: "As-Saf",
+    englishNameTranslation: "The Ranks",
+    numberOfAyahs: 14,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[60]
+  },
+  {
+    id: 62,
+    number: 62,
+    name: "الجمعة",
+    englishName: "Al-Jumu'a",
+    englishNameTranslation: "The Congregation",
+    numberOfAyahs: 11,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[61]
+  },
+  {
+    id: 63,
+    number: 63,
+    name: "المنافقون",
+    englishName: "Al-Munafiqun",
+    englishNameTranslation: "The Hypocrites",
+    numberOfAyahs: 11,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[62]
+  },
+  {
+    id: 64,
+    number: 64,
+    name: "التغابن",
+    englishName: "At-Taghabun",
+    englishNameTranslation: "The Mutual Disillusion",
+    numberOfAyahs: 18,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[63]
+  },
+  {
+    id: 65,
+    number: 65,
+    name: "الطلاق",
+    englishName: "At-Talaq",
+    englishNameTranslation: "The Divorce",
+    numberOfAyahs: 12,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[64]
+  },
+  {
+    id: 66,
+    number: 66,
+    name: "التحريم",
+    englishName: "At-Tahrim",
+    englishNameTranslation: "The Prohibition",
+    numberOfAyahs: 12,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[65]
+  },
+  {
+    id: 67,
+    number: 67,
+    name: "الملك",
+    englishName: "Al-Mulk",
+    englishNameTranslation: "The Sovereignty",
+    numberOfAyahs: 30,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[66]
+  },
+  {
+    id: 68,
+    number: 68,
+    name: "القلم",
+    englishName: "Al-Qalam",
+    englishNameTranslation: "The Pen",
+    numberOfAyahs: 52,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[67]
+  },
+  {
+    id: 69,
+    number: 69,
+    name: "الحاقة",
+    englishName: "Al-Haaqqa",
+    englishNameTranslation: "The Reality",
+    numberOfAyahs: 52,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[68]
+  },
+  {
+    id: 70,
+    number: 70,
+    name: "المعارج",
+    englishName: "Al-Ma'arij",
+    englishNameTranslation: "The Ascending Stairways",
+    numberOfAyahs: 44,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[69]
+  },
+  {
+    id: 71,
+    number: 71,
+    name: "نوح",
+    englishName: "Nuh",
+    englishNameTranslation: "Noah",
+    numberOfAyahs: 28,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[70]
+  },
+  {
+    id: 72,
+    number: 72,
+    name: "الجن",
+    englishName: "Al-Jinn",
+    englishNameTranslation: "The Jinn",
+    numberOfAyahs: 28,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[71]
+  },
+  {
+    id: 73,
+    number: 73,
+    name: "المزمل",
+    englishName: "Al-Muzzammil",
+    englishNameTranslation: "The Enshrouded One",
+    numberOfAyahs: 20,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[72]
+  },
+  {
+    id: 74,
+    number: 74,
+    name: "المدثر",
+    englishName: "Al-Muddathir",
+    englishNameTranslation: "The Cloaked One",
+    numberOfAyahs: 56,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[73]
+  },
+  {
+    id: 75,
+    number: 75,
+    name: "القيامة",
+    englishName: "Al-Qiyama",
+    englishNameTranslation: "The Resurrection",
+    numberOfAyahs: 40,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[74]
+  },
+  {
+    id: 76,
+    number: 76,
+    name: "الانسان",
+    englishName: "Al-Insan",
+    englishNameTranslation: "The Man",
+    numberOfAyahs: 31,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[75]
+  },
+  {
+    id: 77,
+    number: 77,
+    name: "المرسلات",
+    englishName: "Al-Mursalat",
+    englishNameTranslation: "The Emissaries",
+    numberOfAyahs: 50,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[76]
+  },
+  {
+    id: 78,
+    number: 78,
+    name: "النبإ",
+    englishName: "An-Naba",
+    englishNameTranslation: "The Tidings",
+    numberOfAyahs: 40,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[77]
+  },
+  {
+    id: 79,
+    number: 79,
+    name: "النازعات",
+    englishName: "An-Nazi'at",
+    englishNameTranslation: "Those Who Drag Forth",
+    numberOfAyahs: 46,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[78]
+  },
+  {
+    id: 80,
+    number: 80,
+    name: "عبس",
+    englishName: "Abasa",
+    englishNameTranslation: "He Frowned",
+    numberOfAyahs: 42,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[79]
+  },
+  {
+    id: 81,
+    number: 81,
+    name: "التكوير",
+    englishName: "At-Takwir",
+    englishNameTranslation: "The Overthrowing",
+    numberOfAyahs: 29,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[80]
+  },
+  {
+    id: 82,
+    number: 82,
+    name: "الإنفطار",
+    englishName: "Al-Infitar",
+    englishNameTranslation: "The Cleaving",
+    numberOfAyahs: 19,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[81]
+  },
+  {
+    id: 83,
+    number: 83,
+    name: "المطففين",
+    englishName: "Al-Mutaffifin",
+    englishNameTranslation: "The Defrauding",
+    numberOfAyahs: 36,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[82]
+  },
+  {
+    id: 84,
+    number: 84,
+    name: "الإنشقاق",
+    englishName: "Al-Inshiqaq",
+    englishNameTranslation: "The Sundering",
+    numberOfAyahs: 25,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[83]
+  },
+  {
+    id: 85,
+    number: 85,
+    name: "البروج",
+    englishName: "Al-Buruj",
+    englishNameTranslation: "The Mansions of the Stars",
+    numberOfAyahs: 22,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[84]
+  },
+  {
+    id: 86,
+    number: 86,
+    name: "الطارق",
+    englishName: "At-Tariq",
+    englishNameTranslation: "The Nightcomer",
+    numberOfAyahs: 17,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[85]
+  },
+  {
+    id: 87,
+    number: 87,
+    name: "الأعلى",
+    englishName: "Al-A'la",
+    englishNameTranslation: "The Most High",
+    numberOfAyahs: 19,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[86]
+  },
+  {
+    id: 88,
+    number: 88,
+    name: "الغاشية",
+    englishName: "Al-Ghashiya",
+    englishNameTranslation: "The Overwhelming",
+    numberOfAyahs: 26,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[87]
+  },
+  {
+    id: 89,
+    number: 89,
+    name: "الفجر",
+    englishName: "Al-Fajr",
+    englishNameTranslation: "The Dawn",
+    numberOfAyahs: 30,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[88]
+  },
+  {
+    id: 90,
+    number: 90,
+    name: "البلد",
+    englishName: "Al-Balad",
+    englishNameTranslation: "The City",
+    numberOfAyahs: 20,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[89]
+  },
+  {
+    id: 91,
+    number: 91,
+    name: "الشمس",
+    englishName: "Ash-Shams",
+    englishNameTranslation: "The Sun",
+    numberOfAyahs: 15,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[90]
+  },
+  {
+    id: 92,
+    number: 92,
+    name: "الليل",
+    englishName: "Al-Layl",
+    englishNameTranslation: "The Night",
+    numberOfAyahs: 21,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[91]
+  },
+  {
+    id: 93,
+    number: 93,
+    name: "الضحى",
+    englishName: "Ad-Duhaa",
+    englishNameTranslation: "The Morning Hours",
+    numberOfAyahs: 11,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[92]
+  },
+  {
+    id: 94,
+    number: 94,
+    name: "الشرح",
+    englishName: "Ash-Sharh",
+    englishNameTranslation: "The Relief",
+    numberOfAyahs: 8,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[93]
+  },
+  {
+    id: 95,
+    number: 95,
+    name: "التين",
+    englishName: "At-Tin",
+    englishNameTranslation: "The Fig",
+    numberOfAyahs: 8,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[94]
+  },
+  {
+    id: 96,
+    number: 96,
+    name: "العلق",
+    englishName: "Al-Alaq",
+    englishNameTranslation: "The Clot",
+    numberOfAyahs: 19,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[95]
+  },
+  {
+    id: 97,
+    number: 97,
+    name: "القدر",
+    englishName: "Al-Qadr",
+    englishNameTranslation: "The Power",
+    numberOfAyahs: 5,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[96]
+  },
+  {
+    id: 98,
+    number: 98,
+    name: "البينة",
+    englishName: "Al-Bayyina",
+    englishNameTranslation: "The Clear Proof",
+    numberOfAyahs: 8,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[97]
+  },
+  {
+    id: 99,
+    number: 99,
+    name: "الزلزلة",
+    englishName: "Az-Zalzala",
+    englishNameTranslation: "The Earthquake",
+    numberOfAyahs: 8,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[98]
+  },
+  {
+    id: 100,
+    number: 100,
+    name: "العاديات",
+    englishName: "Al-Adiyat",
+    englishNameTranslation: "The Courser",
+    numberOfAyahs: 11,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[99]
+  },
+  {
+    id: 101,
+    number: 101,
+    name: "القارعة",
+    englishName: "Al-Qari'a",
+    englishNameTranslation: "The Calamity",
+    numberOfAyahs: 11,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[100]
+  },
+  {
+    id: 102,
+    number: 102,
+    name: "التكاثر",
+    englishName: "At-Takathur",
+    englishNameTranslation: "The Rivalry in world increase",
+    numberOfAyahs: 8,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[101]
+  },
+  {
+    id: 103,
+    number: 103,
+    name: "العصر",
+    englishName: "Al-Asr",
+    englishNameTranslation: "The Declining Day",
+    numberOfAyahs: 3,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[102]
+  },
+  {
+    id: 104,
+    number: 104,
+    name: "الهمزة",
+    englishName: "Al-Humaza",
+    englishNameTranslation: "The Traducer",
+    numberOfAyahs: 9,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[103]
+  },
+  {
+    id: 105,
+    number: 105,
+    name: "الفيل",
+    englishName: "Al-Fil",
+    englishNameTranslation: "The Elephant",
+    numberOfAyahs: 5,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[104]
+  },
+  {
+    id: 106,
+    number: 106,
+    name: "قريش",
+    englishName: "Quraysh",
+    englishNameTranslation: "Quraysh",
+    numberOfAyahs: 4,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[105]
+  },
+  {
+    id: 107,
+    number: 107,
+    name: "الماعون",
+    englishName: "Al-Ma'un",
+    englishNameTranslation: "The Small Kindnesses",
+    numberOfAyahs: 7,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[106]
+  },
+  {
+    id: 108,
+    number: 108,
+    name: "الكوثر",
+    englishName: "Al-Kawthar",
+    englishNameTranslation: "Abundance",
+    numberOfAyahs: 3,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[107]
+  },
+  {
+    id: 109,
+    number: 109,
+    name: "الكافرون",
+    englishName: "Al-Kafirun",
+    englishNameTranslation: "The Disbelievers",
+    numberOfAyahs: 6,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[108]
+  },
+  {
+    id: 110,
+    number: 110,
+    name: "النصر",
+    englishName: "An-Nasr",
+    englishNameTranslation: "The Divine Support",
+    numberOfAyahs: 3,
+    revelationType: "Medinan",
+    arabicNumber: arabicNumbers[109]
+  },
+  {
+    id: 111,
+    number: 111,
+    name: "المسد",
+    englishName: "Al-Masad",
+    englishNameTranslation: "The Palm Fiber",
+    numberOfAyahs: 5,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[110]
+  },
+  {
+    id: 112,
+    number: 112,
+    name: "الإخلاص",
+    englishName: "Al-Ikhlas",
+    englishNameTranslation: "The Sincerity",
+    numberOfAyahs: 4,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[111]
+  },
+  {
+    id: 113,
+    number: 113,
+    name: "الفلق",
+    englishName: "Al-Falaq",
+    englishNameTranslation: "The Daybreak",
+    numberOfAyahs: 5,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[112]
+  },
+  {
+    id: 114,
+    number: 114,
+    name: "الناس",
+    englishName: "An-Nas",
+    englishNameTranslation: "Mankind",
+    numberOfAyahs: 6,
+    revelationType: "Meccan",
+    arabicNumber: arabicNumbers[113]
+  }
 ];
