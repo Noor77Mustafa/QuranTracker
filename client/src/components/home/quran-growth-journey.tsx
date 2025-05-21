@@ -38,10 +38,11 @@ export default function QuranGrowthJourney() {
           </div>
         </div>
         
-        <Link href="/profile/goals">
-          <a className="block w-full bg-white text-secondary py-3 rounded-lg text-center font-medium hover:bg-white/90 transition">
-            Set a Daily Goal
-          </a>
+        <Link 
+          href="/profile/goals"
+          className="block w-full bg-white text-secondary py-3 rounded-lg text-center font-medium hover:bg-white/90 transition"
+        >
+          Set a Daily Goal
         </Link>
       </div>
     </div>

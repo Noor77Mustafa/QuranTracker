@@ -39,28 +39,31 @@ export default function SurahExplorer() {
       {/* Surah List */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
         {displayedSurahs.map((surah) => (
-          <Link key={surah.id} href={`/surah/${surah.id}`}>
-            <a className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 hover:shadow-md transition flex justify-between">
-              <div>
-                <h3 className="font-medium">{surah.englishName}</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">{surah.englishNameTranslation}</p>
-                <p className="text-xs text-gray-400 dark:text-gray-500">{surah.numberOfAyahs} Ayahs</p>
-              </div>
-              <div className="flex flex-col items-end">
-                <span className="font-amiri text-xl">{surah.arabicNumber}</span>
-                <span className="text-xs text-gray-400 dark:text-gray-500">{surah.number.toString().padStart(3, '0')}</span>
-              </div>
-            </a>
+          <Link 
+            key={surah.id} 
+            href={`/surah/${surah.id}`}
+            className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 hover:shadow-md transition flex justify-between"
+          >
+            <div>
+              <h3 className="font-medium">{surah.englishName}</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{surah.englishNameTranslation}</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500">{surah.numberOfAyahs} Ayahs</p>
+            </div>
+            <div className="flex flex-col items-end">
+              <span className="font-amiri text-xl">{surah.arabicNumber}</span>
+              <span className="text-xs text-gray-400 dark:text-gray-500">{surah.number.toString().padStart(3, '0')}</span>
+            </div>
           </Link>
         ))}
       </div>
       
       <div className="mt-4 text-center">
-        <Link href="/read">
-          <a className="inline-flex items-center text-primary px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary/5">
-            <span>View All Surahs</span>
-            <span className="material-symbols-rounded ml-1">arrow_forward</span>
-          </a>
+        <Link 
+          href="/read"
+          className="inline-flex items-center text-primary px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary/5"
+        >
+          <span>View All Surahs</span>
+          <span className="material-symbols-rounded ml-1">arrow_forward</span>
         </Link>
       </div>
     </div>
