@@ -1,7 +1,9 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertAchievementSchema, insertReadingGoalSchema, insertReadingProgressSchema, insertStreakSchema, insertUserSchema } from "@shared/schema";
+import { PgStorage } from "./pg-storage";
+import { insertAchievementSchema, insertReadingGoalSchema, insertReadingProgressSchema, insertStreakSchema, insertUserSchema, insertBookmarkSchema, insertReflectionSchema, insertQuestSchema, insertUserQuestSchema } from "@shared/schema";
+import { handleDbError } from "./db";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
