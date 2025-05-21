@@ -32,7 +32,7 @@ export const learningPlans: LearningPlan[] = [
     icon: "self_improvement",
     isNew: true,
     difficulty: "beginner",
-    coverImage: "./src/assets/mindful-fasting.jpg",
+    coverImage: "/assets/mindful-fasting.svg",
     lessons: [
       {
         id: "lesson-1",

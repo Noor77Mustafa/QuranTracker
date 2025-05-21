@@ -1,0 +1,6 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#d4e6ff"/>
+  <rect x="300" y="100" width="200" height="200" fill="#00acc1" rx="10" />
+  <text x="400" y="210" font-family="Arial" font-size="24" fill="#fff" text-anchor="middle">Mindful</text>
+  <text x="400" y="250" font-family="Arial" font-size="24" fill="#fff" text-anchor="middle">Fasting</text>
+</svg>
