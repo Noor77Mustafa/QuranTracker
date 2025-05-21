@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { useLocation } from "wouter";
 
 export default function AIAssistantFAB() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,15 +25,36 @@ export default function AIAssistantFAB() {
             </div>
             <div className="p-4">
               <div className="flex flex-col gap-2">
-                <Button variant="outline" className="justify-start text-left">
+                <Button 
+                  variant="outline" 
+                  className="justify-start text-left btn-tap-effect" 
+                  onClick={() => {
+                    // Handle search for patience verses
+                    window.location.href = "/surah/2";  // Navigate to Surah Al-Baqarah which contains verses about patience
+                  }}
+                >
                   <span className="material-symbols-rounded mr-2">search</span>
                   Find verses about patience
                 </Button>
-                <Button variant="outline" className="justify-start text-left">
+                <Button 
+                  variant="outline" 
+                  className="justify-start text-left btn-tap-effect"
+                  onClick={() => {
+                    // Handle explanation request
+                    window.location.href = "/surah/1";  // Navigate to Surah Al-Fatihah
+                  }}
+                >
                   <span className="material-symbols-rounded mr-2">menu_book</span>
                   Explain Surah Al-Fatihah
                 </Button>
-                <Button variant="outline" className="justify-start text-left">
+                <Button 
+                  variant="outline" 
+                  className="justify-start text-left btn-tap-effect"
+                  onClick={() => {
+                    // Handle reading plan suggestion
+                    window.location.href = "/learn";  // Navigate to learning plans page
+                  }}
+                >
                   <span className="material-symbols-rounded mr-2">psychology</span>
                   Suggest a daily reading plan
                 </Button>

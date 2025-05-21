@@ -40,10 +40,11 @@ export default function Learning() {
               </ul>
             </div>
             <div className="px-6 pb-6">
-              <Link href={`/learn/plan/${plan.id}`}>
-                <a className="block w-full bg-primary text-white py-3 rounded-lg text-center font-medium hover:bg-primary/90 transition">
-                  Start Learning
-                </a>
+              <Link 
+                href={`/learn/plan/${plan.id}`}
+                className="block w-full bg-primary text-white py-3 rounded-lg text-center font-medium hover:bg-primary/90 transition btn-tap-effect"
+              >
+                Start Learning
               </Link>
             </div>
           </div>
