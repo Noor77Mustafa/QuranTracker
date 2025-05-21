@@ -53,7 +53,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "Physical and Psychological Dimensions",
             content: "While many focus on the physical aspects of fasting—abstaining from food and drink—Islamic fasting encompasses much more. During the fast, Muslims are encouraged to refrain from negative behaviors such as lying, backbiting, arguing, and other moral transgressions.\n\nThis holistic approach transforms fasting from merely a physical exercise into a comprehensive spiritual regimen. It trains the mind to be conscious of actions, words, and even thoughts throughout the day.\n\nModern science has also begun to recognize the health benefits of intermittent fasting, which aligns with the Islamic practice. These benefits include improved metabolic health, enhanced cellular repair processes, and potential longevity benefits.",
-            videoUrl: "https://www.youtube.com/embed/example1"
+            videoUrl: "https://www.youtube.com/embed/R-5S_GtiTTw"
           }
         ]
       },
@@ -76,7 +76,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "Self-Discipline and Willpower",
             content: "The consistent daily practice of denying immediate gratification for a higher purpose strengthens one's willpower and self-discipline. This enhanced self-control often extends beyond the month of Ramadan, helping Muslims make better choices in various aspects of life.\n\nThis spiritual training helps overcome harmful habits and inclinations, leading to personal growth and development. Many Muslims report breaking negative habits during Ramadan and establishing positive ones that continue throughout the year.",
-            videoUrl: "https://www.youtube.com/embed/example2"
+            videoUrl: "https://www.youtube.com/embed/mIYaCDrTTkU"
           }
         ]
       },
@@ -99,7 +99,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "Managing Emotions and Responses",
             content: "Hunger and thirst can sometimes lead to irritability, making emotional management an essential aspect of mindful fasting. The Prophet Muhammad ﷺ taught that when fasting, if someone tries to argue or fight with you, you should say, 'I am fasting.'\n\nThis simple reminder serves as a pattern interrupt, helping the fasting person maintain composure and mindfulness even in challenging situations. It transforms potential negative interactions into opportunities for spiritual growth and self-control.",
-            videoUrl: "https://www.youtube.com/embed/example3"
+            videoUrl: "https://www.youtube.com/embed/6ErB0AiMGFU"
           }
         ]
       }
@@ -132,7 +132,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "Case Study: Surah Al-Asr",
             content: "Let's examine Surah Al-Asr (Chapter 103) through a historical lens. This short yet profound surah was revealed in Mecca during a time when the early Muslims faced significant persecution.\n\nThe surah's emphasis on the passage of time, righteous deeds, and mutual encouragement to persevere in truth directly addressed the challenges faced by the small Muslim community. Understanding this context deepens our appreciation of the surah's message about the importance of faith, good deeds, and community support during difficult times.",
-            videoUrl: "https://www.youtube.com/embed/example-historical"
+            videoUrl: "https://www.youtube.com/embed/m9pP3yZFGAE"
           }
         ]
       },
@@ -155,7 +155,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "Word Choice and Precision",
             content: "The Quran is known for its precise word choices, where seemingly synonymous terms actually carry subtle but significant differences in meaning. For instance, the Quran uses different words for 'fear' (khawf, khashya, taqwa) each conveying distinct psychological states.\n\nThis precision extends to grammatical structures, verb tenses, and pronoun usage. When analyzed carefully, these linguistic features often reveal insights that enhance our understanding of the text's message.",
-            videoUrl: "https://www.youtube.com/embed/example-linguistic"
+            videoUrl: "https://www.youtube.com/embed/E-SPpULDY8Y"
           }
         ]
       },
@@ -178,7 +178,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "Case Study: Justice in the Quran",
             content: "The concept of justice appears throughout the Quran, addressed in various contexts including personal conduct, family relations, commerce, and governance. By examining these diverse passages together, we gain a multi-dimensional understanding of the Quranic approach to justice.\n\nThis thematic lens reveals that justice in the Quran is not merely a legal concept but is deeply connected to the qualities of mercy, moderation, and truthfulness. The result is a comprehensive ethical framework that can be applied across different domains of life.",
-            videoUrl: "https://www.youtube.com/embed/example-thematic"
+            videoUrl: "https://www.youtube.com/embed/PxCLXDhS6m4"
           }
         ]
       }
@@ -211,7 +211,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "Key Themes",
             content: "Several key themes run throughout Surah al-Hadid:\n\n1. Divine Sovereignty: The surah emphasizes Allah's complete control over creation and His perfect knowledge of all things.\n\n2. The Reality of This World: It repeatedly emphasizes the temporary nature of worldly life and the permanence of the Hereafter.\n\n3. Generosity and Sacrifice: The surah strongly encourages believers to spend their wealth in charity and in the cause of Allah.\n\n4. Balance Between Spirituality and Material Progress: The mention of iron highlights the importance of material strength alongside spiritual development.\n\nThese themes create a comprehensive worldview that balances spiritual aspirations with material realities.",
-            videoUrl: "https://www.youtube.com/embed/example-hadid-intro"
+            videoUrl: "https://www.youtube.com/embed/tqOuHU_wxKQ"
           }
         ]
       },
@@ -234,7 +234,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "Symbolic Meaning",
             content: "Beyond its literal meaning, iron in Surah al-Hadid carries symbolic significance. Iron represents strength, resilience, and the material foundations necessary for human civilization and justice. It symbolizes the balance between spiritual values (represented by the Scripture) and material strength (represented by iron).\n\nJust as iron needs to be heated, beaten, and shaped to become useful, human souls often require trials and challenges to develop moral strength and character. This symbolism reminds believers that spiritual development doesn't mean neglecting material progress and strength—both are necessary for a balanced life and a just society.",
-            videoUrl: "https://www.youtube.com/embed/example-iron-symbolism"
+            videoUrl: "https://www.youtube.com/embed/FYdeL2Mgtys"
           }
         ]
       },
@@ -257,7 +257,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "Developing Spiritual Resilience",
             content: "Iron's properties of strength and resilience serve as a metaphor for spiritual strength. Just as iron must go through intense heat and pressure to become strong and useful, our spirits often develop through trials and challenges.\n\nPractical applications include:\n\n1. Approaching hardships as opportunities for spiritual growth rather than mere obstacles\n2. Developing regular spiritual practices that strengthen the heart, such as dhikr (remembrance of Allah) and reflection on the Quran\n3. Building communities that support each other during difficulties, sharing both material resources and spiritual strength\n4. Recognizing that spiritual transformation, like the forging of iron, is a process that takes time and consistent effort",
-            videoUrl: "https://www.youtube.com/embed/example-resilience"
+            videoUrl: "https://www.youtube.com/embed/2J4uzCZ8ZRA"
           }
         ]
       }
