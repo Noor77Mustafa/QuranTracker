@@ -35,48 +35,57 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-sm">
+      {/* Skip to content link for keyboard users */}
+      <a href="#main-content" className="skip-to-content focus-visible">
+        Skip to content
+      </a>
+      
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center">
           <button 
-            className="mr-3 lg:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800" 
-            aria-label="Open menu"
+            className="mr-3 lg:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 focus-visible" 
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            <span className="material-symbols-rounded">
+            <span className="material-symbols-rounded" aria-hidden="true">
               {isMobileMenuOpen ? "close" : "menu"}
             </span>
           </button>
-          <Link href="/" className="flex items-center cursor-pointer">
+          <Link href="/" className="flex items-center cursor-pointer focus-visible">
             <h1 className="text-xl font-semibold text-primary">MyQuran</h1>
-            <span className="text-xs bg-primary text-white px-1 rounded ml-1">3.0</span>
+            <span className="text-xs bg-primary text-white px-1 rounded ml-1" aria-hidden="true">3.0</span>
           </Link>
         </div>
         <div className="flex items-center space-x-3">
           <button 
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" 
+            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-visible" 
             aria-label="Search"
+            aria-expanded={isSearchExpanded}
+            aria-controls="search-bar"
             onClick={toggleSearch}
           >
-            <span className="material-symbols-rounded">search</span>
+            <span className="material-symbols-rounded" aria-hidden="true">search</span>
           </button>
           <button 
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" 
-            aria-label="Toggle theme"
+            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-visible" 
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
             onClick={toggleTheme}
           >
-            <span className="material-symbols-rounded">
+            <span className="material-symbols-rounded" aria-hidden="true">
               {theme === "dark" ? "light_mode" : "dark_mode"}
             </span>
           </button>
           <button 
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" 
+            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-visible" 
             aria-label="Settings"
             onClick={handleSettingsClick}
           >
-            <span className="material-symbols-rounded">settings</span>
+            <span className="material-symbols-rounded" aria-hidden="true">settings</span>
           </button>
           <button 
-            className="hidden md:block bg-primary text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-primary/90 transition-colors"
+            className="hidden md:block bg-primary text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-primary/90 transition-colors focus-visible"
             onClick={handleSignInClick}
           >
             Sign In
@@ -86,51 +95,54 @@ export default function Header() {
       
       {/* Mobile Menu */}
       <div 
+        id="mobile-menu"
+        role="navigation"
+        aria-label="Mobile navigation"
         className={`lg:hidden border-t border-gray-100 dark:border-gray-800 overflow-hidden transition-all duration-300 ease-in-out ${
           isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
         <nav className="py-3 px-4">
-          <ul className="space-y-3">
-            <li>
-              <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <ul className="space-y-3" role="menu">
+            <li role="menuitem">
+              <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-visible">
                 <span className="flex items-center">
-                  <span className="material-symbols-rounded mr-3">home</span>
+                  <span className="material-symbols-rounded mr-3" aria-hidden="true">home</span>
                   Home
                 </span>
               </Link>
             </li>
-            <li>
-              <Link href="/read" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+            <li role="menuitem">
+              <Link href="/read" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-visible">
                 <span className="flex items-center">
-                  <span className="material-symbols-rounded mr-3">auto_stories</span>
+                  <span className="material-symbols-rounded mr-3" aria-hidden="true">auto_stories</span>
                   Read Quran
                 </span>
               </Link>
             </li>
-            <li>
-              <Link href="/profile" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+            <li role="menuitem">
+              <Link href="/profile" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-visible">
                 <span className="flex items-center">
-                  <span className="material-symbols-rounded mr-3">person</span>
+                  <span className="material-symbols-rounded mr-3" aria-hidden="true">person</span>
                   Profile
                 </span>
               </Link>
             </li>
-            <li>
-              <Link href="/learn" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+            <li role="menuitem">
+              <Link href="/learn" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-visible">
                 <span className="flex items-center">
-                  <span className="material-symbols-rounded mr-3">school</span>
+                  <span className="material-symbols-rounded mr-3" aria-hidden="true">school</span>
                   Learn
                 </span>
               </Link>
             </li>
-            <li className="md:hidden">
+            <li role="menuitem" className="md:hidden">
               <button 
                 onClick={handleSignInClick} 
-                className="w-full text-left block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="w-full text-left block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-visible"
               >
                 <span className="flex items-center">
-                  <span className="material-symbols-rounded mr-3">login</span>
+                  <span className="material-symbols-rounded mr-3" aria-hidden="true">login</span>
                   Sign In
                 </span>
               </button>

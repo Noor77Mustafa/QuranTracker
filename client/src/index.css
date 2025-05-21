@@ -4,12 +4,12 @@
 
 @layer base {
   :root {
-    /* Base colors from design guide */
-    --primary: 187 100% 38%; /* #00ACC1 - peaceful blue */
-    --secondary: 122 41% 45%; /* #43A047 - forest green */
+    /* Base colors from design guide - adjusted for WCAG 4.5:1 contrast ratio */
+    --primary: 187 80% 33%; /* #008799 - darker peaceful blue for better contrast */
+    --secondary: 122 41% 39%; /* #3A8A3D - darker forest green for better contrast */
     --text: 0 0% 13%; /* #212121 - deep black */
     --background: 0 0% 100%; /* #FFFFFF - pure white */
-    --accent: 40 100% 50%; /* #FFB300 - warm gold */
+    --accent: 36 100% 45%; /* #E59300 - darker warm gold for better contrast */
     
     /* Theme colors for shadcn */
     --foreground: var(--text);
@@ -20,12 +20,12 @@
     --primary-foreground: 0 0% 100%;
     --secondary-foreground: 0 0% 100%;
     --muted: 60 5% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted-foreground: 0 0% 35%; /* Darker for better contrast */
     --accent-foreground: 0 0% 13%;
-    --destructive: 0 84% 60%;
+    --destructive: 0 84% 50%; /* Darker red for better contrast */
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
+    --border: 0 0% 85%; /* Darker for better visibility */
+    --input: 0 0% 85%;
     --ring: var(--primary);
     --radius: 0.5rem;
     
@@ -137,6 +137,20 @@
     @apply transition-transform active:scale-95;
   }
   
+  /* Accessibility focus indicators */
+  .focus-visible:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2;
+  }
+  
+  /* Responsive containers */
+  .responsive-container {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .responsive-card {
+    @apply w-full max-w-sm mx-auto sm:max-w-md md:max-w-lg;
+  }
+  
   /* Smooth page transitions */
   .page-enter {
     @apply opacity-0 transform translate-y-4;
@@ -144,6 +158,12 @@
   
   .page-enter-active {
     @apply opacity-100 transform translate-y-0 transition-all duration-300 ease-out;
+  }
+  
+  /* Skip to content accessibility feature */
+  .skip-to-content {
+    @apply absolute left-0 -top-10 z-50 bg-white dark:bg-gray-900 px-4 py-3 
+           transition-transform duration-200 focus:top-0 focus:transform-none;
   }
   
   /* Animations */
