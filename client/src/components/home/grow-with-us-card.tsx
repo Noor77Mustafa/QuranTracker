@@ -13,10 +13,8 @@ export default function GrowWithUsCard() {
           <p className="mb-2 font-medium">Achieve Your Quran Goals</p>
           <p className="text-sm text-white/80">Track Streaks, Create Custom Goals, Stay Consistent</p>
         </div>
-        <Link href="/profile">
-          <a className="inline-block bg-white text-primary px-6 py-2 rounded-full text-sm font-medium hover:bg-white/90 transition">
-            Get Started
-          </a>
+        <Link href="/profile" className="inline-block bg-white text-primary px-6 py-2 rounded-full text-sm font-medium hover:bg-white/90 transition">
+          Get Started
         </Link>
       </div>
     </div>

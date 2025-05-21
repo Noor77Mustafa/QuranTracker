@@ -7,11 +7,15 @@ import { handleDbError } from "./db";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Create PostgreSQL storage
+  const pgStorage = new PgStorage();
+  // Use pgStorage instead of in-memory storage for all routes
+  const dbStorage = pgStorage;
   // User routes
   app.post("/api/auth/register", async (req, res) => {
     try {
       const userData = insertUserSchema.parse(req.body);
-      const user = await storage.createUser(userData);
+      const user = await dbStorage.createUser(userData);
       // Don't return password in response
       const { password, ...userWithoutPassword } = user;
       res.status(201).json(userWithoutPassword);
@@ -19,7 +23,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (error instanceof z.ZodError) {
         res.status(400).json({ message: "Invalid user data", errors: error.errors });
       } else {
-        res.status(500).json({ message: "Failed to create user" });
+        res.status(500).json({ message: handleDbError(error) });
       }
     }
   });
@@ -27,7 +31,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/user/:id", async (req, res) => {
     try {
       const userId = parseInt(req.params.id);
-      const user = await storage.getUser(userId);
+      const user = await dbStorage.getUser(userId);
       
       if (!user) {
         return res.status(404).json({ message: "User not found" });
@@ -37,7 +41,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { password, ...userWithoutPassword } = user;
       res.json(userWithoutPassword);
     } catch (error) {
-      res.status(500).json({ message: "Error retrieving user" });
+      res.status(500).json({ message: handleDbError(error) });
     }
   });
 
@@ -45,13 +49,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/reading-progress", async (req, res) => {
     try {
       const progressData = insertReadingProgressSchema.parse(req.body);
-      const progress = await storage.createOrUpdateReadingProgress(progressData);
+      const progress = await dbStorage.createOrUpdateReadingProgress(progressData);
       res.status(201).json(progress);
     } catch (error) {
       if (error instanceof z.ZodError) {
         res.status(400).json({ message: "Invalid progress data", errors: error.errors });
       } else {
-        res.status(500).json({ message: "Failed to update reading progress" });
+        res.status(500).json({ message: handleDbError(error) });
       }
     }
   });
@@ -59,10 +63,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/reading-progress/:userId", async (req, res) => {
     try {
       const userId = parseInt(req.params.userId);
-      const progress = await storage.getReadingProgressByUserId(userId);
+      const progress = await dbStorage.getReadingProgressByUserId(userId);
       res.json(progress);
     } catch (error) {
-      res.status(500).json({ message: "Error retrieving reading progress" });
+      res.status(500).json({ message: handleDbError(error) });
     }
   });
 
@@ -70,13 +74,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/streaks", async (req, res) => {
     try {
       const streakData = insertStreakSchema.parse(req.body);
-      const streak = await storage.createOrUpdateStreak(streakData);
+      const streak = await dbStorage.createOrUpdateStreak(streakData);
       res.status(201).json(streak);
     } catch (error) {
       if (error instanceof z.ZodError) {
         res.status(400).json({ message: "Invalid streak data", errors: error.errors });
       } else {
-        res.status(500).json({ message: "Failed to update streak" });
+        res.status(500).json({ message: handleDbError(error) });
       }
     }
   });
@@ -84,7 +88,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/streaks/:userId", async (req, res) => {
     try {
       const userId = parseInt(req.params.userId);
-      const streak = await storage.getStreakByUserId(userId);
+      const streak = await dbStorage.getStreakByUserId(userId);
       
       if (!streak) {
         return res.status(404).json({ message: "Streak not found" });
@@ -92,7 +96,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(streak);
     } catch (error) {
-      res.status(500).json({ message: "Error retrieving streak" });
+      res.status(500).json({ message: handleDbError(error) });
     }
   });
 
@@ -100,13 +104,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/achievements", async (req, res) => {
     try {
       const achievementData = insertAchievementSchema.parse(req.body);
-      const achievement = await storage.createAchievement(achievementData);
+      const achievement = await dbStorage.createAchievement(achievementData);
       res.status(201).json(achievement);
     } catch (error) {
       if (error instanceof z.ZodError) {
         res.status(400).json({ message: "Invalid achievement data", errors: error.errors });
       } else {
-        res.status(500).json({ message: "Failed to record achievement" });
+        res.status(500).json({ message: handleDbError(error) });
       }
     }
   });
@@ -114,10 +118,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/achievements/:userId", async (req, res) => {
     try {
       const userId = parseInt(req.params.userId);
-      const achievements = await storage.getAchievementsByUserId(userId);
+      const achievements = await dbStorage.getAchievementsByUserId(userId);
       res.json(achievements);
     } catch (error) {
-      res.status(500).json({ message: "Error retrieving achievements" });
+      res.status(500).json({ message: handleDbError(error) });
     }
   });
 
@@ -125,13 +129,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/reading-goals", async (req, res) => {
     try {
       const goalData = insertReadingGoalSchema.parse(req.body);
-      const goal = await storage.createOrUpdateReadingGoal(goalData);
+      const goal = await dbStorage.createOrUpdateReadingGoal(goalData);
       res.status(201).json(goal);
     } catch (error) {
       if (error instanceof z.ZodError) {
         res.status(400).json({ message: "Invalid goal data", errors: error.errors });
       } else {
-        res.status(500).json({ message: "Failed to update reading goal" });
+        res.status(500).json({ message: handleDbError(error) });
       }
     }
   });
@@ -139,7 +143,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/reading-goals/:userId", async (req, res) => {
     try {
       const userId = parseInt(req.params.userId);
-      const goal = await storage.getReadingGoalByUserId(userId);
+      const goal = await dbStorage.getReadingGoalByUserId(userId);
       
       if (!goal) {
         return res.status(404).json({ message: "Reading goal not found" });
@@ -147,7 +151,166 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(goal);
     } catch (error) {
-      res.status(500).json({ message: "Error retrieving reading goal" });
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+  
+  // Bookmark routes
+  app.post("/api/bookmarks", async (req, res) => {
+    try {
+      const bookmarkData = insertBookmarkSchema.parse(req.body);
+      const bookmark = await dbStorage.createBookmark(bookmarkData);
+      res.status(201).json(bookmark);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Invalid bookmark data", errors: error.errors });
+      } else {
+        res.status(500).json({ message: handleDbError(error) });
+      }
+    }
+  });
+
+  app.get("/api/bookmarks/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const bookmarks = await dbStorage.getBookmarksByUserId(userId);
+      res.json(bookmarks);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  app.delete("/api/bookmarks/:id", async (req, res) => {
+    try {
+      const bookmarkId = parseInt(req.params.id);
+      const success = await dbStorage.deleteBookmark(bookmarkId);
+      
+      if (!success) {
+        return res.status(404).json({ message: "Bookmark not found" });
+      }
+      
+      res.status(200).json({ message: "Bookmark deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  // Reflection/Journal routes
+  app.post("/api/reflections", async (req, res) => {
+    try {
+      const reflectionData = insertReflectionSchema.parse(req.body);
+      const reflection = await dbStorage.createReflection(reflectionData);
+      res.status(201).json(reflection);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Invalid reflection data", errors: error.errors });
+      } else {
+        res.status(500).json({ message: handleDbError(error) });
+      }
+    }
+  });
+
+  app.get("/api/reflections/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const reflections = await dbStorage.getReflectionsByUserId(userId);
+      res.json(reflections);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  app.patch("/api/reflections/:id", async (req, res) => {
+    try {
+      const reflectionId = parseInt(req.params.id);
+      const updatedReflection = await dbStorage.updateReflection(reflectionId, req.body);
+      
+      if (!updatedReflection) {
+        return res.status(404).json({ message: "Reflection not found" });
+      }
+      
+      res.json(updatedReflection);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  app.delete("/api/reflections/:id", async (req, res) => {
+    try {
+      const reflectionId = parseInt(req.params.id);
+      const success = await dbStorage.deleteReflection(reflectionId);
+      
+      if (!success) {
+        return res.status(404).json({ message: "Reflection not found" });
+      }
+      
+      res.status(200).json({ message: "Reflection deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  // Quest routes
+  app.post("/api/quests", async (req, res) => {
+    try {
+      const questData = insertQuestSchema.parse(req.body);
+      const quest = await dbStorage.createQuest(questData);
+      res.status(201).json(quest);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Invalid quest data", errors: error.errors });
+      } else {
+        res.status(500).json({ message: handleDbError(error) });
+      }
+    }
+  });
+
+  app.get("/api/quests/active", async (req, res) => {
+    try {
+      const quests = await dbStorage.getActiveQuests();
+      res.json(quests);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  app.get("/api/quests/:id", async (req, res) => {
+    try {
+      const questId = parseInt(req.params.id);
+      const quest = await dbStorage.getQuestById(questId);
+      
+      if (!quest) {
+        return res.status(404).json({ message: "Quest not found" });
+      }
+      
+      res.json(quest);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  // User Quest progress routes
+  app.post("/api/user-quests", async (req, res) => {
+    try {
+      const userQuestData = insertUserQuestSchema.parse(req.body);
+      const userQuest = await dbStorage.createOrUpdateUserQuest(userQuestData);
+      res.status(201).json(userQuest);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Invalid user quest data", errors: error.errors });
+      } else {
+        res.status(500).json({ message: handleDbError(error) });
+      }
+    }
+  });
+
+  app.get("/api/user-quests/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const userQuests = await dbStorage.getUserQuestsByUserId(userId);
+      res.json(userQuests);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
     }
   });
 
