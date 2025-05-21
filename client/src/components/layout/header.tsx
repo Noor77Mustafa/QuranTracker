@@ -1,17 +1,12 @@
 import { useState, useRef } from "react";
 import { Link, useLocation } from "wouter";
-import { useTheme } from "@/components/ui/theme-provider";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export default function Header() {
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [location, navigate] = useLocation();
-
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
 
   const toggleSearch = () => {
     setIsSearchExpanded(!isSearchExpanded);
@@ -68,15 +63,7 @@ export default function Header() {
           >
             <span className="material-symbols-rounded" aria-hidden="true">search</span>
           </button>
-          <button 
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-visible" 
-            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-            onClick={toggleTheme}
-          >
-            <span className="material-symbols-rounded" aria-hidden="true">
-              {theme === "dark" ? "light_mode" : "dark_mode"}
-            </span>
-          </button>
+          <ThemeToggle />
           <button 
             className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-visible" 
             aria-label="Settings"
