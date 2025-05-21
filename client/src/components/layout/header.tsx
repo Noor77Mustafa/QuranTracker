@@ -85,75 +85,87 @@ export default function Header() {
       </div>
       
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-gray-100 dark:border-gray-800">
-          <nav className="py-3 px-4">
-            <ul className="space-y-3">
-              <li>
-                <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
-                  <span className="flex items-center">
-                    <span className="material-symbols-rounded mr-3">home</span>
-                    Home
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/read" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
-                  <span className="flex items-center">
-                    <span className="material-symbols-rounded mr-3">auto_stories</span>
-                    Read Quran
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/profile" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
-                  <span className="flex items-center">
-                    <span className="material-symbols-rounded mr-3">person</span>
-                    Profile
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/learn" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
-                  <span className="flex items-center">
-                    <span className="material-symbols-rounded mr-3">school</span>
-                    Learn
-                  </span>
-                </Link>
-              </li>
-              <li className="md:hidden">
-                <button 
-                  onClick={handleSignInClick} 
-                  className="w-full text-left block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-                >
-                  <span className="flex items-center">
-                    <span className="material-symbols-rounded mr-3">login</span>
-                    Sign In
-                  </span>
-                </button>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      )}
+      <div 
+        className={`lg:hidden border-t border-gray-100 dark:border-gray-800 overflow-hidden transition-all duration-300 ease-in-out ${
+          isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <nav className="py-3 px-4">
+          <ul className="space-y-3">
+            <li>
+              <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <span className="flex items-center">
+                  <span className="material-symbols-rounded mr-3">home</span>
+                  Home
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/read" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <span className="flex items-center">
+                  <span className="material-symbols-rounded mr-3">auto_stories</span>
+                  Read Quran
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/profile" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <span className="flex items-center">
+                  <span className="material-symbols-rounded mr-3">person</span>
+                  Profile
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/learn" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <span className="flex items-center">
+                  <span className="material-symbols-rounded mr-3">school</span>
+                  Learn
+                </span>
+              </Link>
+            </li>
+            <li className="md:hidden">
+              <button 
+                onClick={handleSignInClick} 
+                className="w-full text-left block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              >
+                <span className="flex items-center">
+                  <span className="material-symbols-rounded mr-3">login</span>
+                  Sign In
+                </span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
       
       {/* Search Bar */}
-      {isSearchExpanded && (
-        <div className="border-t border-gray-100 dark:border-gray-800 px-4 py-2 animate-fadeIn">
-          <div className="relative">
-            <input 
-              ref={searchInputRef}
-              type="text" 
-              placeholder="Search the Quran..." 
-              className="w-full py-2 pl-10 pr-10 bg-gray-100 dark:bg-gray-800 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-            <span className="material-symbols-rounded absolute left-3 top-2 text-gray-400">search</span>
-            <button className="absolute right-3 top-2 text-gray-400">
-              <span className="material-symbols-rounded">mic</span>
-            </button>
-          </div>
+      <div className={`border-t border-gray-100 dark:border-gray-800 px-4 py-2 transition-all duration-300 ease-in-out overflow-hidden ${
+        isSearchExpanded ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0'
+      }`}>
+        <div className="relative">
+          <input 
+            ref={searchInputRef}
+            type="text" 
+            placeholder="Search the Quran..." 
+            className="w-full py-2 pl-10 pr-10 bg-gray-100 dark:bg-gray-800 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+          <span className="material-symbols-rounded absolute left-3 top-2 text-gray-400">search</span>
+          <button 
+            className="absolute right-3 top-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+            onClick={() => {
+              // Handle voice search
+              if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                alert('Voice search would be activated here');
+              } else {
+                alert('Voice recognition is not supported in this browser');
+              }
+            }}
+          >
+            <span className="material-symbols-rounded">mic</span>
+          </button>
         </div>
-      )}
+      </div>
     </header>
   );
 }

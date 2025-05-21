@@ -205,6 +205,8 @@ export default function SurahDetail() {
               size="icon"
               onClick={goToPrevAyah}
               disabled={currentAyah === 1}
+              className="transition-transform active:scale-95"
+              aria-label="Previous ayah"
             >
               <span className="material-symbols-rounded">skip_previous</span>
             </Button>
@@ -212,10 +214,11 @@ export default function SurahDetail() {
             <Button
               variant="default"
               size="icon"
-              className="h-12 w-12 rounded-full bg-primary text-white"
+              className="h-14 w-14 rounded-full bg-primary text-white shadow-md transition-all active:scale-95 hover:shadow-lg"
               onClick={togglePlayPause}
+              aria-label={isPlaying ? "Pause recitation" : "Play recitation"}
             >
-              <span className="material-symbols-rounded">
+              <span className="material-symbols-rounded text-2xl">
                 {isPlaying ? "pause" : "play_arrow"}
               </span>
             </Button>
@@ -225,9 +228,45 @@ export default function SurahDetail() {
               size="icon"
               onClick={goToNextAyah}
               disabled={currentAyah === surah.numberOfAyahs}
+              className="transition-transform active:scale-95"
+              aria-label="Next ayah"
             >
               <span className="material-symbols-rounded">skip_next</span>
             </Button>
+            
+            <div className="flex items-center">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-gray-500 dark:text-gray-400"
+                onClick={() => {
+                  // Handle bookmark logic here
+                  alert('Ayah bookmarked');
+                }}
+                aria-label="Bookmark this ayah"
+              >
+                <span className="material-symbols-rounded">bookmark_add</span>
+              </Button>
+              
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-gray-500 dark:text-gray-400"
+                onClick={() => {
+                  // Handle share logic here
+                  navigator.share?.({
+                    title: `${surah.englishName} (Ayah ${currentAyah})`,
+                    text: currentAyahData.translation,
+                    url: window.location.href,
+                  }).catch(() => {
+                    alert('Shared ayah link copied to clipboard');
+                  });
+                }}
+                aria-label="Share this ayah"
+              >
+                <span className="material-symbols-rounded">share</span>
+              </Button>
+            </div>
             
             <audio ref={audioRef} className="hidden" />
           </div>
@@ -235,20 +274,62 @@ export default function SurahDetail() {
       </div>
       
       {/* Ayah Navigation */}
-      <div className="grid grid-cols-5 sm:grid-cols-10 gap-2 mb-8">
-        {Array.from({ length: surah.numberOfAyahs }).map((_, index) => (
-          <button
-            key={index}
-            className={`h-10 rounded-md transition-colors ${
-              currentAyah === index + 1
-                ? "bg-primary text-white"
-                : "bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600"
-            }`}
-            onClick={() => setCurrentAyah(index + 1)}
-          >
-            {index + 1}
-          </button>
-        ))}
+      <div className="mb-8">
+        <div className="flex justify-between items-center mb-3">
+          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Navigate Ayahs</h3>
+          <div className="flex items-center space-x-2">
+            <button 
+              className="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              onClick={() => setCurrentAyah(1)}
+            >
+              First
+            </button>
+            <button 
+              className="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              onClick={() => setCurrentAyah(surah.numberOfAyahs)}
+            >
+              Last
+            </button>
+          </div>
+        </div>
+        
+        {/* Swipeable and scrollable row of ayah numbers */}
+        <div className="overflow-x-auto overflow-y-hidden pb-2 no-scrollbar">
+          <div className="flex gap-2 min-w-max px-1">
+            {Array.from({ length: surah.numberOfAyahs }).map((_, index) => (
+              <button
+                key={index}
+                className={`min-w-10 h-10 rounded-md transition-all ${
+                  currentAyah === index + 1
+                    ? "bg-primary text-white shadow-md scale-105 font-medium"
+                    : "bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300"
+                }`}
+                onClick={() => setCurrentAyah(index + 1)}
+                aria-label={`Go to Ayah ${index + 1}`}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        </div>
+        
+        {/* Mobile-friendly ayah slider */}
+        <div className="mt-4 px-2">
+          <input
+            type="range"
+            min={1}
+            max={surah.numberOfAyahs}
+            value={currentAyah}
+            onChange={(e) => setCurrentAyah(parseInt(e.target.value))}
+            className="w-full accent-primary h-2 rounded-lg appearance-none cursor-pointer bg-gray-200 dark:bg-gray-700"
+            aria-label="Ayah slider"
+          />
+          <div className="flex justify-between mt-1 text-xs text-gray-500 dark:text-gray-400">
+            <span>1</span>
+            <span>{Math.floor(surah.numberOfAyahs / 2)}</span>
+            <span>{surah.numberOfAyahs}</span>
+          </div>
+        </div>
       </div>
     </main>
   );
