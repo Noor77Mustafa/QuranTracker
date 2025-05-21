@@ -4,13 +4,42 @@ import { useAchievements, Badge } from "@/hooks/use-achievements";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+
+// Mock user data - in a real app, this would come from the API
+interface UserProfile {
+  id: number;
+  username: string;
+  displayName: string;
+  level: number;
+  xp: number;
+  points: number;
+  joinedAt: string;
+  avatarUrl?: string;
+}
 
 export default function Profile() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true); // Set to true for demo purposes
   const { streak, longestStreak, pagesRead } = useStreak();
   const { badges } = useAchievements();
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
-  const [activeTab, setActiveTab] = useState<'progress' | 'achievements' | 'settings'>('progress');
+  const [activeTab, setActiveTab] = useState<'progress' | 'achievements' | 'quests' | 'settings'>('progress');
+  
+  // Fetch user profile data
+  const { data: user } = useQuery<UserProfile>({
+    queryKey: ['user', 1], // User ID would come from auth context in a real app
+    queryFn: async () => ({
+      id: 1,
+      username: "quranreader",
+      displayName: "Abdullah",
+      level: 5,
+      xp: 450,
+      points: 720,
+      joinedAt: "2023-05-15T12:00:00Z",
+      avatarUrl: undefined
+    })
+  });
   
   // Set page title
   useEffect(() => {
@@ -28,12 +57,37 @@ export default function Profile() {
             <div className="p-6">
               <div className="flex items-center mb-6">
                 <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl mr-4">
-                  U
+                  {user?.avatarUrl ? 
+                    <img src={user.avatarUrl} alt={user.displayName} className="w-full h-full rounded-full object-cover" /> : 
+                    user?.displayName?.charAt(0) || 'U'
+                  }
                 </div>
                 <div>
-                  <h1 className="text-xl font-semibold">User</h1>
-                  <p className="text-gray-500 dark:text-gray-400">Joined: Recently</p>
+                  <div className="flex items-center">
+                    <h1 className="text-xl font-semibold">{user?.displayName || 'User'}</h1>
+                    <div className="ml-2 px-2 py-0.5 bg-primary/10 text-primary rounded-full text-xs font-medium">
+                      Level {user?.level || 1}
+                    </div>
+                  </div>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    @{user?.username} · Joined: {user?.joinedAt ? new Date(user.joinedAt).toLocaleDateString() : 'Recently'}
+                  </p>
                 </div>
+              </div>
+              
+              {/* XP Progress */}
+              <div className="mb-6 bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                <div className="flex justify-between items-center mb-2">
+                  <div className="flex items-center">
+                    <span className="material-symbols-rounded text-yellow-500 mr-2">stars</span>
+                    <span className="font-medium">Level {user?.level || 1}</span>
+                  </div>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">{user?.xp || 0}/1000 XP</span>
+                </div>
+                <Progress value={((user?.xp || 0) % 1000) / 10} className="h-2 mb-1" />
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {1000 - ((user?.xp || 0) % 1000)} XP needed for next level
+                </p>
               </div>
               
               <div className="grid grid-cols-3 gap-4 mb-6">
@@ -42,8 +96,8 @@ export default function Profile() {
                   <p className="text-sm text-gray-600 dark:text-gray-300">Day Streak</p>
                 </div>
                 <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 text-center">
-                  <p className="text-2xl font-bold text-primary">{pagesRead}</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">Pages Read</p>
+                  <p className="text-2xl font-bold text-primary">{user?.points || 0}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">Points</p>
                 </div>
                 <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 text-center">
                   <p className="text-2xl font-bold text-primary">{badges.length}</p>
@@ -62,23 +116,33 @@ export default function Profile() {
           </div>
           
           {/* Tabs */}
-          <div className="flex border-b border-gray-200 dark:border-gray-700 mb-6">
+          <div className="flex border-b border-gray-200 dark:border-gray-700 mb-6 overflow-x-auto no-scrollbar">
             <button 
-              className={`px-4 py-2 ${activeTab === "progress" ? "border-b-2 border-primary text-primary font-medium" : "text-gray-500 dark:text-gray-400"}`}
+              className={`px-4 py-2 whitespace-nowrap ${activeTab === "progress" ? "border-b-2 border-primary text-primary font-medium" : "text-gray-500 dark:text-gray-400"}`}
               onClick={() => setActiveTab("progress")}
             >
+              <span className="material-symbols-rounded mr-1 text-sm align-text-bottom">trending_up</span>
               Progress
             </button>
             <button 
-              className={`px-4 py-2 ${activeTab === "achievements" ? "border-b-2 border-primary text-primary font-medium" : "text-gray-500 dark:text-gray-400"}`}
+              className={`px-4 py-2 whitespace-nowrap ${activeTab === "quests" ? "border-b-2 border-primary text-primary font-medium" : "text-gray-500 dark:text-gray-400"}`}
+              onClick={() => setActiveTab("quests")}
+            >
+              <span className="material-symbols-rounded mr-1 text-sm align-text-bottom">task_alt</span>
+              Quests
+            </button>
+            <button 
+              className={`px-4 py-2 whitespace-nowrap ${activeTab === "achievements" ? "border-b-2 border-primary text-primary font-medium" : "text-gray-500 dark:text-gray-400"}`}
               onClick={() => setActiveTab("achievements")}
             >
+              <span className="material-symbols-rounded mr-1 text-sm align-text-bottom">military_tech</span>
               Achievements
             </button>
             <button 
-              className={`px-4 py-2 ${activeTab === "settings" ? "border-b-2 border-primary text-primary font-medium" : "text-gray-500 dark:text-gray-400"}`}
+              className={`px-4 py-2 whitespace-nowrap ${activeTab === "settings" ? "border-b-2 border-primary text-primary font-medium" : "text-gray-500 dark:text-gray-400"}`}
               onClick={() => setActiveTab("settings")}
             >
+              <span className="material-symbols-rounded mr-1 text-sm align-text-bottom">settings</span>
               Settings
             </button>
           </div>
@@ -106,6 +170,150 @@ export default function Profile() {
               </div>
               
               <Button className="w-full">Set a New Goal</Button>
+            </div>
+          )}
+          
+          {activeTab === "quests" && (
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-semibold">Quests</h2>
+                <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center">
+                  <span className="material-symbols-rounded mr-1">stars</span>
+                  <span>{user?.points || 0} Points</span>
+                </div>
+              </div>
+              
+              {/* Daily Quests */}
+              <div className="mb-6">
+                <h3 className="font-medium mb-3 flex items-center">
+                  <span className="material-symbols-rounded mr-2 text-blue-500">today</span>
+                  Daily Quests
+                </h3>
+                
+                <div className="space-y-3">
+                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                    <div className="flex justify-between mb-2">
+                      <div>
+                        <h4 className="font-medium">Read 5 Pages</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Read 5 pages from any surah</p>
+                      </div>
+                      <div className="text-sm font-medium text-yellow-500 flex items-center">
+                        <span className="material-symbols-rounded mr-1">add_circle</span>
+                        +20 XP
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <Progress value={60} className="h-1 w-3/4" />
+                      <span className="text-sm text-gray-600 dark:text-gray-400">3/5</span>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                    <div className="flex justify-between mb-1">
+                      <div>
+                        <h4 className="font-medium">Reflect on a Verse</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Write a reflection on any verse</p>
+                      </div>
+                      <div className="text-sm font-medium text-green-500 flex items-center">
+                        <span className="material-symbols-rounded mr-1">check_circle</span>
+                        +15 XP
+                      </div>
+                    </div>
+                    <Button size="sm" variant="outline" className="w-full mt-2" disabled>Completed</Button>
+                  </div>
+                  
+                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                    <div className="flex justify-between mb-1">
+                      <div>
+                        <h4 className="font-medium">Listen to Recitation</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Listen to at least 10 minutes of Quran</p>
+                      </div>
+                      <div className="text-sm font-medium text-yellow-500 flex items-center">
+                        <span className="material-symbols-rounded mr-1">add_circle</span>
+                        +25 XP
+                      </div>
+                    </div>
+                    <Button size="sm" className="w-full mt-2">Start Quest</Button>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Weekly Quests */}
+              <div className="mb-6">
+                <h3 className="font-medium mb-3 flex items-center">
+                  <span className="material-symbols-rounded mr-2 text-purple-500">calendar_view_week</span>
+                  Weekly Quests
+                </h3>
+                
+                <div className="space-y-3">
+                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                    <div className="flex justify-between mb-2">
+                      <div>
+                        <h4 className="font-medium">Complete Al-Fatihah</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Read all verses of Surah Al-Fatihah</p>
+                      </div>
+                      <div className="text-sm font-medium text-yellow-500 flex items-center">
+                        <span className="material-symbols-rounded mr-1">add_circle</span>
+                        +50 XP
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <Progress value={85} className="h-1 w-3/4" />
+                      <span className="text-sm text-gray-600 dark:text-gray-400">6/7</span>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                    <div className="flex justify-between mb-1">
+                      <div>
+                        <h4 className="font-medium">5-Day Streak</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Read Quran for 5 consecutive days</p>
+                      </div>
+                      <div className="text-sm font-medium text-yellow-500 flex items-center">
+                        <span className="material-symbols-rounded mr-1">add_circle</span>
+                        +75 XP
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between mt-2">
+                      <div className="flex space-x-1">
+                        {[1, 2, 3, 4, 5].map((day) => (
+                          <div key={day} className={`w-8 h-8 rounded-full flex items-center justify-center 
+                            ${day <= streak ? 'bg-primary text-white' : 'bg-gray-200 dark:bg-gray-600 text-gray-400 dark:text-gray-500'}`}>
+                            {day}
+                          </div>
+                        ))}
+                      </div>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">{streak}/5</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Monthly Challenge */}
+              <div>
+                <h3 className="font-medium mb-3 flex items-center">
+                  <span className="material-symbols-rounded mr-2 text-primary">calendar_month</span>
+                  Monthly Challenge
+                </h3>
+                
+                <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-4 border border-primary/20">
+                  <h4 className="font-medium text-primary mb-1 flex items-center">
+                    <span className="material-symbols-rounded mr-1">trophy</span>
+                    Complete Juz Amma
+                  </h4>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
+                    Read all surahs in the 30th Juz of the Quran this month
+                  </p>
+                  
+                  <div className="flex justify-between items-center text-sm mb-2">
+                    <span className="text-gray-600 dark:text-gray-400">Progress: 8/37 surahs</span>
+                    <span className="font-medium text-primary">+500 XP</span>
+                  </div>
+                  <Progress value={22} className="h-1 mb-3" />
+                  
+                  <Button variant="outline" className="w-full">View Challenge Details</Button>
+                </div>
+              </div>
             </div>
           )}
           
