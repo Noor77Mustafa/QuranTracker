@@ -5,6 +5,7 @@ import { useLocation } from "wouter";
 
 export default function AIAssistantFAB() {
   const [isOpen, setIsOpen] = useState(false);
+  const [, navigate] = useLocation();
   
   const toggleOpen = () => setIsOpen(!isOpen);
   
@@ -30,7 +31,8 @@ export default function AIAssistantFAB() {
                   className="justify-start text-left btn-tap-effect" 
                   onClick={() => {
                     // Handle search for patience verses
-                    window.location.href = "/surah/2";  // Navigate to Surah Al-Baqarah which contains verses about patience
+                    navigate("/surah/2");  // Navigate to Surah Al-Baqarah which contains verses about patience
+                    setIsOpen(false);  // Close the assistant after selection
                   }}
                 >
                   <span className="material-symbols-rounded mr-2">search</span>
@@ -41,7 +43,8 @@ export default function AIAssistantFAB() {
                   className="justify-start text-left btn-tap-effect"
                   onClick={() => {
                     // Handle explanation request
-                    window.location.href = "/surah/1";  // Navigate to Surah Al-Fatihah
+                    navigate("/surah/1");  // Navigate to Surah Al-Fatihah
+                    setIsOpen(false);  // Close the assistant after selection
                   }}
                 >
                   <span className="material-symbols-rounded mr-2">menu_book</span>
@@ -52,7 +55,8 @@ export default function AIAssistantFAB() {
                   className="justify-start text-left btn-tap-effect"
                   onClick={() => {
                     // Handle reading plan suggestion
-                    window.location.href = "/learn";  // Navigate to learning plans page
+                    navigate("/learn");  // Navigate to learning plans page
+                    setIsOpen(false);  // Close the assistant after selection
                   }}
                 >
                   <span className="material-symbols-rounded mr-2">psychology</span>
