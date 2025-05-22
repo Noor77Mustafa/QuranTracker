@@ -5,6 +5,7 @@ import { PgStorage } from "./pg-storage";
 import { insertAchievementSchema, insertReadingGoalSchema, insertReadingProgressSchema, insertStreakSchema, insertUserSchema, insertBookmarkSchema, insertReflectionSchema, insertQuestSchema, insertUserQuestSchema } from "@shared/schema";
 import { handleDbError } from "./db";
 import { z } from "zod";
+import { getAIResponse } from "./openai-routes";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Create PostgreSQL storage
@@ -313,6 +314,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: handleDbError(error) });
     }
   });
+
+  // OpenAI routes
+  app.post("/api/ai/chat", getAIResponse);
 
   // Create HTTP server
   const httpServer = createServer(app);

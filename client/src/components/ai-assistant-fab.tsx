@@ -50,11 +50,21 @@ export default function AIAssistantFAB() {
     setIsLoading(true);
     
     try {
-      // Import dynamically to prevent early loading of OpenAI client
-      const { getQuranAIResponse } = await import('@/lib/openai-service');
+      // Call our server API endpoint
+      const response = await fetch('/api/ai/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: currentQuery }),
+      });
       
-      // Get response from OpenAI
-      const responseContent = await getQuranAIResponse(currentQuery);
+      if (!response.ok) {
+        throw new Error(`Server responded with status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      const responseContent = data.content || "I couldn't process your question properly. Please try again.";
       
       const assistantMessage: Message = {
         id: Date.now().toString(),
