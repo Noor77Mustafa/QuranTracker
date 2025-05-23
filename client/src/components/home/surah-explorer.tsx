@@ -7,8 +7,8 @@ type TabType = "surah" | "juz" | "revelation";
 export default function SurahExplorer() {
   const [activeTab, setActiveTab] = useState<TabType>("surah");
   
-  // For display in the UI we'll only show a subset of surahs
-  const displayedSurahs = surahs.slice(0, 6);
+  // Display all 114 surahs 
+  const displayedSurahs = surahs;
   
   return (
     <div className="mt-8">
@@ -47,7 +47,11 @@ export default function SurahExplorer() {
             <div>
               <h3 className="font-medium">{surah.englishName}</h3>
               <p className="text-sm text-gray-500 dark:text-gray-400">{surah.englishNameTranslation}</p>
-              <p className="text-xs text-gray-400 dark:text-gray-500">{surah.numberOfAyahs} Ayahs</p>
+              <div className="flex flex-wrap gap-2 mt-1">
+                <p className="text-xs text-gray-400 dark:text-gray-500">{surah.numberOfAyahs} Ayahs</p>
+                <span className="text-xs bg-primary/10 text-primary px-1.5 rounded">Juz {Math.ceil(surah.number / 5)}</span>
+                <span className="text-xs bg-secondary/10 text-secondary px-1.5 rounded">Rev #{surah.revelationType === "Meccan" ? 114 - surah.number : Math.floor(surah.number / 2)}</span>
+              </div>
             </div>
             <div className="flex flex-col items-end">
               <span className="font-amiri text-xl">{surah.arabicNumber}</span>
@@ -57,15 +61,7 @@ export default function SurahExplorer() {
         ))}
       </div>
       
-      <div className="mt-4 text-center">
-        <Link 
-          href="/read"
-          className="inline-flex items-center text-primary px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary/5"
-        >
-          <span>View All Surahs</span>
-          <span className="material-symbols-rounded ml-1">arrow_forward</span>
-        </Link>
-      </div>
+      {/* Pagination is no longer needed since we're showing all surahs */}
     </div>
   );
 }

@@ -7,6 +7,8 @@ export interface Surah {
   numberOfAyahs: number;
   revelationType: string;
   arabicNumber: string;
+  juzNumber?: number;
+  revelationOrder?: number;
 }
 
 // Arabic numerals for 1-114
