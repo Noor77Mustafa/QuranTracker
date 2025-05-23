@@ -61,10 +61,10 @@ export default function ReadingGoalDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[425px]" aria-describedby="dialog-description">
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Set Reading Goal</DialogTitle>
-          <DialogDescription id="dialog-description">
+          <DialogDescription>
             Set daily targets to help you stay consistent with your Quran reading.
           </DialogDescription>
         </DialogHeader>
