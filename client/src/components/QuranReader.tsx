@@ -49,11 +49,30 @@ export default function QuranReader({ surahId, initialVerseNumber = 1 }: QuranRe
           if (surahId !== 9 && versesData.length > 0 && versesData[0].verse_number === 1) {
             // For verses that start with Bismillah, remove it from the text
             const firstVerse = versesData[0];
-            // Only modify if it starts with Bismillah
-            if (firstVerse.text_uthmani.startsWith('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ')) {
-              // Remove Bismillah from text (only if it's at the beginning and not part of the verse)
-              if (surahId !== 1) { // Don't modify Surah Al-Fatiha where Bismillah is verse 1
-                firstVerse.text_uthmani = firstVerse.text_uthmani.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '').trim();
+            
+            // Handle special case: Only in Surah Al-Fatiha (1), Bismillah is actually verse 1
+            // For all other Surahs, Bismillah should only be shown at the top, not in the verses
+            if (surahId !== 1) {
+              // Check for Bismillah in the first verse text and remove it
+              if (firstVerse.text_uthmani.includes('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ')) {
+                // Replace Bismillah from the text, regardless of where it appears
+                firstVerse.text_uthmani = firstVerse.text_uthmani
+                  .replace(/بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ/g, '')
+                  .trim();
+                
+                // Also update the translation if it includes "In the name of Allah"
+                if (firstVerse.translations && firstVerse.translations.length > 0) {
+                  const bismillahEnglish = "In the name of Allah, the Entirely Merciful, the Especially Merciful";
+                  const bismillahShort = "In the name of Allah";
+                  
+                  firstVerse.translations.forEach(translation => {
+                    if (translation.text.includes(bismillahEnglish)) {
+                      translation.text = translation.text.replace(bismillahEnglish, '').trim();
+                    } else if (translation.text.includes(bismillahShort)) {
+                      translation.text = translation.text.replace(new RegExp(bismillahShort + ".*?\\.", "i"), '').trim();
+                    }
+                  });
+                }
               }
             }
           }
