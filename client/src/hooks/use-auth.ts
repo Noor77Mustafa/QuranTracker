@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 
 export interface User {
   id: number;
@@ -23,20 +24,25 @@ export interface User {
 export function useAuth() {
   const queryClient = useQueryClient();
   
-  const { data: user, isLoading, error } = useQuery<User>({
-    queryKey: ["auth", "me"],
-    queryFn: async () => {
-      const response = await fetch("/api/auth/me");
-      if (!response.ok) {
-        if (response.status === 401) {
-          return null; // Not authenticated
-        }
-        throw new Error("Failed to fetch user");
+  const { data: user, isLoading, error } = useQuery<User | null>({
+    queryKey: ["/api/auth/me"],
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    retry: false,
+    queryFn: async ({ queryKey }) => {
+      const response = await fetch(queryKey[0] as string, {
+        credentials: "include",
+      });
+      
+      if (response.status === 401) {
+        return null; // Not authenticated
       }
+      
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+      
       return response.json();
     },
-    retry: false,
-    staleTime: 5 * 60 * 1000, // 5 minutes
   });
   
   const logout = useMutation({
