@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
+import { useAuth } from "@/hooks/use-auth";
 import ReadingGoalDialog from "@/components/ReadingGoalDialog";
 
 // Mock user data - in a real app, this would come from the API
@@ -21,7 +22,7 @@ interface UserProfile {
 }
 
 export default function Profile() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true); // Set to true for demo purposes
+  const { user: authUser, isAuthenticated } = useAuth();
   const { streak, longestStreak, pagesRead } = useStreak();
   const { badges } = useAchievements();
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
@@ -33,20 +34,17 @@ export default function Profile() {
     completionTarget?: string;
   } | null>(null);
   
-  // Fetch user profile data
-  const { data: user } = useQuery<UserProfile>({
-    queryKey: ['user', 1], // User ID would come from auth context in a real app
-    queryFn: async () => ({
-      id: 1,
-      username: "quranreader",
-      displayName: "Abdullah",
-      level: 5,
-      xp: 450,
-      points: 720,
-      joinedAt: "2023-05-15T12:00:00Z",
-      avatarUrl: undefined
-    })
-  });
+  // Use authenticated user data directly
+  const user: UserProfile | undefined = authUser ? {
+    id: authUser.id,
+    username: authUser.username,
+    displayName: authUser.displayName || authUser.username,
+    level: authUser.level || 1,
+    xp: authUser.xp || 0,
+    points: authUser.points || 0,
+    joinedAt: authUser.lastActive || new Date().toISOString(),
+    avatarUrl: authUser.avatarUrl
+  } : undefined;
   
   // Set page title
   useEffect(() => {
