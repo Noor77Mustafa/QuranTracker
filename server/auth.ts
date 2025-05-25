@@ -5,6 +5,8 @@ import { db } from "./db";
 import { PgStorage } from "./pg-storage";
 import connectPgSimple from "connect-pg-simple";
 import { pool } from "./db";
+import { users } from "@shared/schema";
+import { eq } from "drizzle-orm";
 
 const pgStorage = new PgStorage();
 const PgSession = connectPgSimple(session);
@@ -131,9 +133,9 @@ export function setupAuth(app: express.Express) {
       (req.session as any).userId = user.id;
 
       // Update last active
-      await db.update(db.schema.users)
+      await db.update(users)
         .set({ lastActive: new Date() })
-        .where(db.eq(db.schema.users.id, user.id));
+        .where(eq(users.id, user.id));
 
       // Return user without password
       const { password: _, ...userWithoutPassword } = user;

@@ -6,8 +6,16 @@ import { insertAchievementSchema, insertReadingGoalSchema, insertReadingProgress
 import { handleDbError } from "./db";
 import { z } from "zod";
 import { getAIResponse } from "./openai-routes";
+import { setupAuth, isAuthenticated } from "./auth";
+import cookieParser from "cookie-parser";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Set up middlewares
+  app.use(cookieParser());
+  
+  // Set up authentication
+  setupAuth(app);
+  
   // Create PostgreSQL storage
   const pgStorage = new PgStorage();
   // Use pgStorage instead of in-memory storage for all routes
