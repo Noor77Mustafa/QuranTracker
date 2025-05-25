@@ -1,0 +1,306 @@
+import { useState, useEffect } from "react";
+import { useRoute, Link } from "wouter";
+import { 
+  Card, 
+  CardContent,
+  CardFooter,
+  CardHeader, 
+  CardTitle, 
+  CardDescription 
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/components/ui/badge";
+import { Share2, BookmarkPlus, Copy } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+
+// Detailed hadith data with more fields
+const HADITH_DETAILS = {
+  "bukhari-1": {
+    id: "bukhari-1",
+    collection: "bukhari",
+    collectionName: "Sahih al-Bukhari",
+    bookNumber: 1,
+    chapterNumber: 1,
+    hadithNumber: 1,
+    volumeNumber: 1,
+    chapterTitle: "How the Divine Revelation started being revealed to Allah's Messenger",
+    chapterTitleArabic: "بدء الوحي",
+    arabicText: "حَدَّثَنَا الْحُمَيْدِيُّ عَبْدُ اللَّهِ بْنُ الزُّبَيْرِ، قَالَ حَدَّثَنَا سُفْيَانُ، قَالَ حَدَّثَنَا يَحْيَى بْنُ سَعِيدٍ الأَنْصَارِيُّ، قَالَ أَخْبَرَنِي مُحَمَّدُ بْنُ إِبْرَاهِيمَ التَّيْمِيُّ، أَنَّهُ سَمِعَ عَلْقَمَةَ بْنَ وَقَّاصٍ اللَّيْثِيَّ، يَقُولُ سَمِعْتُ عُمَرَ بْنَ الْخَطَّابِ رضى الله عنه عَلَى الْمِنْبَرِ قَالَ سَمِعْتُ رَسُولَ اللَّهِ صلى الله عليه وسلم يَقُولُ ‏\"‏ إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إِلَى دُنْيَا يُصِيبُهَا أَوْ إِلَى امْرَأَةٍ يَنْكِحُهَا، فَهِجْرَتُهُ إِلَى مَا هَاجَرَ إِلَيْهِ ‏\"‏‏.‏",
+    englishText: "Narrated 'Umar bin Al-Khattab: I heard Allah's Messenger (ﷺ) saying, \"The reward of deeds depends upon the intentions and every person will get the reward according to what he has intended. So whoever emigrates for worldly benefits or for a woman to marry, his emigration will be for what he emigrated for.\"",
+    grade: "Sahih",
+    narrator: "'Umar bin Al-Khattab",
+    references: [
+      { collection: "Sahih al-Bukhari", volume: 1, book: 1, hadith: 1 },
+      { collection: "Sahih Muslim", book: 33, hadith: 222 }
+    ],
+    topics: ["Intention", "Deeds", "Rewards", "Migration"],
+    explanations: [
+      {
+        scholar: "Ibn Hajar al-Asqalani",
+        text: "This hadith emphasizes that the value of actions depends on the intention behind them. It is considered one of the most important hadiths in Islam as it sets the foundation for sincerity in all acts of worship and dealings."
+      },
+      {
+        scholar: "Imam Nawawi",
+        text: "This hadith is one-third of Islamic knowledge as all actions fall under three categories: beliefs, actions, and intentions. This hadith covers the entire area of intentions."
+      }
+    ]
+  },
+  "nawawi40-13": {
+    id: "nawawi40-13",
+    collection: "nawawi40",
+    collectionName: "40 Hadith Nawawi",
+    bookNumber: 1,
+    chapterNumber: 13,
+    hadithNumber: 13,
+    volumeNumber: 1,
+    chapterTitle: "Brotherhood in Faith",
+    chapterTitleArabic: "الأخوة في الإيمان",
+    arabicText: "عَنْ أَبِي حَمْزَةَ أَنَسِ بْنِ مَالِكٍ رَضِيَ اللهُ عَنْهُ خَادِمِ رَسُولِ اللَّهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ عَنْ النَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: لاَ يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ",
+    englishText: "On the authority of Abu Hamzah Anas bin Malik (may Allah be pleased with him) - the servant of the Messenger of Allah (peace and blessings of Allah be upon him) - that the Prophet (peace and blessings of Allah be upon him) said: \"None of you [truly] believes until he loves for his brother what he loves for himself.\"",
+    grade: "Sahih",
+    narrator: "Anas bin Malik",
+    references: [
+      { collection: "Sahih al-Bukhari", volume: 1, book: 2, hadith: 13 },
+      { collection: "Sahih Muslim", book: 1, hadith: 72 }
+    ],
+    topics: ["Faith", "Brotherhood", "Love", "Compassion"],
+    explanations: [
+      {
+        scholar: "Ibn Rajab",
+        text: "This hadith teaches that a believer should wish for others what he wishes for himself of goodness, and dislike for them what he dislikes for himself of hardship."
+      },
+      {
+        scholar: "Ibn Daqiq al-'Id",
+        text: "This hadith establishes one of the most important principles of human relationships in Islam - that of genuine care for others."
+      }
+    ]
+  },
+  "muslim-2553": {
+    id: "muslim-2553",
+    collection: "muslim",
+    collectionName: "Sahih Muslim",
+    bookNumber: 32,
+    chapterNumber: 17,
+    hadithNumber: 2553,
+    volumeNumber: 4,
+    chapterTitle: "On Virtue, Good Manners and Joining of the Ties of Relationship",
+    chapterTitleArabic: "في البر والصلة والآداب",
+    arabicText: "عَنْ أَبِي هُرَيْرَةَ، عَنْ رَسُولِ اللَّهِ صلى الله عليه وسلم قَالَ ‏ \"‏ مَنْ نَفَّسَ عَنْ مُؤْمِنٍ كُرْبَةً مِنْ كُرَبِ الدُّنْيَا نَفَّسَ اللَّهُ عَنْهُ كُرْبَةً مِنْ كُرَبِ يَوْمِ الْقِيَامَةِ وَمَنْ يَسَّرَ عَلَى مُعْسِرٍ يَسَّرَ اللَّهُ عَلَيْهِ فِي الدُّنْيَا وَالآخِرَةِ وَمَنْ سَتَرَ مُسْلِمًا سَتَرَهُ اللَّهُ فِي الدُّنْيَا وَالآخِرَةِ وَاللَّهُ فِي عَوْنِ الْعَبْدِ مَا كَانَ الْعَبْدُ فِي عَوْنِ أَخِيهِ ‏\"‏ ‏.‏",
+    englishText: "Abu Huraira reported Allah's Messenger (ﷺ) as saying: \"Whoever relieves a believer's distress of the distressful aspects of this world, Allah will rescue him from a difficulty of the difficulties of the Hereafter. Whoever alleviates the situation of one in dire straits who cannot repay his debt, Allah will alleviate his lot in both this world and the Hereafter. Whoever conceals the faults of a Muslim, Allah will conceal his faults in this world and the Hereafter. Allah helps His servant as long as the servant helps his brother.\"",
+    grade: "Sahih",
+    narrator: "Abu Huraira",
+    references: [
+      { collection: "Sahih Muslim", book: 32, hadith: 2553 },
+      { collection: "Sunan Abu Dawud", book: 31, hadith: 4946 }
+    ],
+    topics: ["Helping Others", "Relief", "Reward", "Brotherhood"],
+    explanations: [
+      {
+        scholar: "Imam Nawawi",
+        text: "This hadith encourages Muslims to assist one another, relieve distress, and conceal faults. These actions have a profound effect on one's standing with Allah."
+      },
+      {
+        scholar: "Ibn Uthaymeen",
+        text: "The hadith outlines three major acts of kindness: relieving distress, helping the indebted, and concealing faults. Each brings a corresponding reward."
+      }
+    ]
+  }
+};
+
+export default function HadithDetail() {
+  const [, params] = useRoute("/hadith/:id");
+  const [loading, setLoading] = useState(true);
+  const [hadith, setHadith] = useState<any>(null);
+  const [copiedText, setCopiedText] = useState(false);
+  const { toast } = useToast();
+  
+  useEffect(() => {
+    // In a real app, we would fetch the hadith data from an API
+    const fetchHadith = async () => {
+      setLoading(true);
+      try {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        const hadithId = params?.id || "";
+        const hadithData = HADITH_DETAILS[hadithId as keyof typeof HADITH_DETAILS];
+        
+        if (hadithData) {
+          setHadith(hadithData);
+          document.title = `${hadithData.collectionName} #${hadithData.hadithNumber} - MyQuran`;
+        } else {
+          // Handle hadith not found
+          document.title = "Hadith Not Found - MyQuran";
+        }
+      } catch (error) {
+        console.error("Error fetching hadith:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchHadith();
+  }, [params]);
+  
+  const copyToClipboard = () => {
+    if (!hadith) return;
+    
+    const textToCopy = `${hadith.englishText}\n\n${hadith.arabicText}\n\nReference: ${hadith.collectionName}, Book ${hadith.bookNumber}, Hadith ${hadith.hadithNumber}`;
+    
+    navigator.clipboard.writeText(textToCopy).then(
+      () => {
+        setCopiedText(true);
+        toast({
+          title: "Copied to clipboard",
+          description: "Hadith text has been copied to your clipboard.",
+          duration: 3000,
+        });
+        
+        // Reset copy status after 3 seconds
+        setTimeout(() => setCopiedText(false), 3000);
+      },
+      () => {
+        toast({
+          title: "Copy failed",
+          description: "Could not copy text to clipboard.",
+          variant: "destructive",
+          duration: 3000,
+        });
+      }
+    );
+  };
+  
+  // Handle hadith not found
+  if (!loading && !hadith) {
+    return (
+      <main className="container mx-auto px-4 py-8 max-w-3xl">
+        <Card>
+          <CardHeader>
+            <CardTitle>Hadith Not Found</CardTitle>
+            <CardDescription>The hadith you are looking for does not exist or has been removed.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>Please check the URL and try again, or browse our hadith collections.</p>
+          </CardContent>
+          <CardFooter>
+            <Link href="/hadiths">
+              <Button>Back to Hadiths</Button>
+            </Link>
+          </CardFooter>
+        </Card>
+      </main>
+    );
+  }
+  
+  return (
+    <main className="container mx-auto px-4 py-8 max-w-3xl">
+      {loading ? (
+        // Loading skeleton
+        <Card>
+          <CardHeader>
+            <Skeleton className="h-8 w-3/4 mb-2" />
+            <Skeleton className="h-4 w-1/2" />
+          </CardHeader>
+          <CardContent>
+            <Skeleton className="h-32 w-full mb-4" />
+            <Skeleton className="h-24 w-full" />
+          </CardContent>
+        </Card>
+      ) : (
+        // Hadith content
+        <Card>
+          <CardHeader>
+            <div className="flex justify-between items-start">
+              <div>
+                <CardTitle>{hadith.collectionName}</CardTitle>
+                <CardDescription>
+                  Book {hadith.bookNumber}, Hadith {hadith.hadithNumber}
+                </CardDescription>
+              </div>
+              <Badge>{hadith.grade}</Badge>
+            </div>
+          </CardHeader>
+          
+          <CardContent className="space-y-6">
+            {/* Chapter info */}
+            <div className="bg-primary/5 p-3 rounded-md">
+              <h3 className="font-semibold mb-1">Chapter: {hadith.chapterTitle}</h3>
+              <p className="text-right font-arabic rtl">{hadith.chapterTitleArabic}</p>
+            </div>
+            
+            {/* Arabic text */}
+            <div className="border-b pb-4">
+              <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-2">Arabic Text</h3>
+              <p className="text-xl rtl text-right font-arabic leading-loose">{hadith.arabicText}</p>
+            </div>
+            
+            {/* English translation */}
+            <div className="border-b pb-4">
+              <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-2">English Translation</h3>
+              <p className="text-base">{hadith.englishText}</p>
+            </div>
+            
+            {/* Narrator */}
+            <div className="border-b pb-4">
+              <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-2">Narrator</h3>
+              <p>{hadith.narrator}</p>
+            </div>
+            
+            {/* Topics */}
+            <div className="border-b pb-4">
+              <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-2">Topics</h3>
+              <div className="flex flex-wrap gap-2">
+                {hadith.topics.map((topic: string) => (
+                  <Badge key={topic} variant="outline">{topic}</Badge>
+                ))}
+              </div>
+            </div>
+            
+            {/* References */}
+            <div className="border-b pb-4">
+              <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-2">References</h3>
+              <ul className="list-disc list-inside space-y-1">
+                {hadith.references.map((ref: any, index: number) => (
+                  <li key={index}>
+                    {ref.collection}, {ref.volume ? `Volume ${ref.volume}, ` : ''}Book {ref.book}, Hadith {ref.hadith}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            {/* Explanations */}
+            <div>
+              <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-2">Scholarly Explanations</h3>
+              <div className="space-y-4">
+                {hadith.explanations.map((exp: any, index: number) => (
+                  <div key={index} className="bg-gray-50 dark:bg-gray-800 p-3 rounded-md">
+                    <h4 className="font-medium text-primary">{exp.scholar}</h4>
+                    <p className="mt-1 text-sm">{exp.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+          
+          <CardFooter className="border-t pt-4 flex justify-between">
+            <div className="flex space-x-2">
+              <Button variant="outline" size="sm" onClick={copyToClipboard}>
+                <Copy className="h-4 w-4 mr-2" />
+                {copiedText ? "Copied" : "Copy"}
+              </Button>
+              <Button variant="outline" size="sm">
+                <Share2 className="h-4 w-4 mr-2" />
+                Share
+              </Button>
+            </div>
+            <Button variant="outline" size="sm">
+              <BookmarkPlus className="h-4 w-4 mr-2" />
+              Save
+            </Button>
+          </CardFooter>
+        </Card>
+      )}
+    </main>
+  );
+}

@@ -21,6 +21,10 @@ const Profile = lazy(() => import("@/pages/profile"));
 const LearningPlanDetail = lazy(() => import("@/pages/learn-plan-detail"));
 const Bookmarks = lazy(() => import("@/pages/bookmarks"));
 const ExploreCategory = lazy(() => import("@/pages/explore-category"));
+const Hadiths = lazy(() => import("@/pages/hadiths"));
+const HadithDetail = lazy(() => import("@/pages/hadith-detail"));
+const Duas = lazy(() => import("@/pages/duas"));
+const DuaDetail = lazy(() => import("@/pages/dua-detail"));
 
 function Router() {
   return (
@@ -43,6 +47,10 @@ function Router() {
             <Route path="/explore/:id" component={ExploreCategory} />
             <Route path="/profile" component={Profile} />
             <Route path="/bookmarks" component={Bookmarks} />
+            <Route path="/hadiths" component={Hadiths} />
+            <Route path="/hadith/:id" component={HadithDetail} />
+            <Route path="/duas" component={Duas} />
+            <Route path="/dua/:id" component={DuaDetail} />
             <Route component={NotFound} />
           </Switch>
         </Suspense>

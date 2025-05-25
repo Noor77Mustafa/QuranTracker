@@ -17,10 +17,10 @@ export default function FooterNav() {
         {[
           { path: "/", icon: "home", label: "Home" },
           { path: "/read", icon: "auto_stories", label: "Read" },
+          { path: "/hadiths", icon: "history_edu", label: "Hadiths" },
+          { path: "/duas", icon: "volunteer_activism", label: "Duas" },
           { path: "/learn", icon: "school", label: "Learn" },
-          { path: "/explore", icon: "explore", label: "Explore" },
-          { path: "/bookmarks", icon: "bookmark", label: "Bookmarks" },
-          { path: "/profile", icon: "person", label: "Profile" }
+          { path: "/explore", icon: "explore", label: "Explore" }
         ].map(item => {
           const active = isActive(item.path);
           return (
