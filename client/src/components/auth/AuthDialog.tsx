@@ -3,7 +3,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/hooks/use-auth";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -111,6 +111,11 @@ export function AuthDialog({ open, setOpen }: AuthDialogProps) {
           <DialogTitle className="text-center text-xl font-semibold">
             {activeTab === "login" ? "Sign In" : "Create Account"}
           </DialogTitle>
+          <DialogDescription className="text-center">
+            {activeTab === "login" 
+              ? "Sign in to your account to save your reading progress and achievements."
+              : "Create a new account to track your Quran reading journey."}
+          </DialogDescription>
         </DialogHeader>
         
         <Tabs defaultValue={activeTab} onValueChange={(value) => setActiveTab(value as "login" | "register")}>

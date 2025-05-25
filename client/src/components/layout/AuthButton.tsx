@@ -16,8 +16,8 @@ import { Loader2, LogOut, UserCircle } from "lucide-react";
 
 export function AuthButton() {
   const { user, isAuthenticated, isLoading, logout } = useAuth();
-  const isLoggingOut = logout.isPending;
   const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const isLoggingOut = logout?.isPending || false;
   
   if (isLoading) {
     return (
@@ -59,7 +59,7 @@ export function AuthButton() {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem 
-              onClick={() => logout.mutate()}
+              onClick={() => logout?.mutate?.()}
               disabled={isLoggingOut}
             >
               {isLoggingOut ? (
