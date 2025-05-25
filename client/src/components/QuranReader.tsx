@@ -92,12 +92,12 @@ export default function QuranReader({ surahId, initialVerseNumber = 1 }: QuranRe
           </p>
           
           {/* 
-            Bismillah - display for all Surahs except At-Tawbah (9) 
-            Special handling for Al-Fatiha (1): Don't show Bismillah separately since it's verse 1
+            Bismillah - display for all Surahs except At-Tawbah (9)
+            This is shown at the top of every Surah except Surah 9
           */}
-          {surah.id !== 9 && surah.id !== 1 && (
+          {surah.id !== 9 && (
             <div className="my-6 text-center">
-              <p className="text-xl rtl text-primary font-arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+              <p className="text-2xl rtl text-primary font-arabic leading-loose">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
               <p className="text-sm mt-2 text-gray-600 dark:text-gray-400">In the name of Allah, the Entirely Merciful, the Especially Merciful</p>
             </div>
           )}
