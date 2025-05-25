@@ -49,9 +49,9 @@ export function SurahSearchIndex() {
   // Search logic
   useEffect(() => {
     if (!searchTerm.trim()) {
-      // Show first 10 surahs when search is empty
+      // Show all 114 surahs when search is empty
       setSearchResults(
-        surahs.slice(0, 10).map(surah => ({
+        surahs.map(surah => ({
           id: surah.number,
           name: surah.name,
           englishName: surah.englishName,
@@ -114,7 +114,7 @@ export function SurahSearchIndex() {
       }
     });
     
-    setSearchResults(results.slice(0, 20)); // Limit to 20 results
+    setSearchResults(results); // Show all matching results
   }, [searchTerm]);
   
   const handleResultClick = (result: SearchResult) => {
