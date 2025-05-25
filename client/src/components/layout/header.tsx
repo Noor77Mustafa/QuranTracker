@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { AuthButton } from "@/components/layout/AuthButton";
+import DesktopNav from "@/components/layout/desktop-nav";
 
 export default function Header() {
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
@@ -82,6 +83,9 @@ export default function Header() {
         </div>
       </div>
       
+      {/* Desktop Navigation */}
+      <DesktopNav />
+      
       {/* Mobile Menu */}
       <div 
         id="mobile-menu"
@@ -114,6 +118,22 @@ export default function Header() {
                 <span className="flex items-center">
                   <span className="material-symbols-rounded mr-3" aria-hidden="true">person</span>
                   Profile
+                </span>
+              </Link>
+            </li>
+            <li role="menuitem">
+              <Link href="/hadiths" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-visible">
+                <span className="flex items-center">
+                  <span className="material-symbols-rounded mr-3" aria-hidden="true">history_edu</span>
+                  Hadiths
+                </span>
+              </Link>
+            </li>
+            <li role="menuitem">
+              <Link href="/duas" onClick={() => setIsMobileMenuOpen(false)} className="block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-visible">
+                <span className="flex items-center">
+                  <span className="material-symbols-rounded mr-3" aria-hidden="true">volunteer_activism</span>
+                  Duas
                 </span>
               </Link>
             </li>
