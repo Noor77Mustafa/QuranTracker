@@ -21,6 +21,17 @@ export interface User {
   };
 }
 
+interface LoginCredentials {
+  username: string;
+  password: string;
+}
+
+interface RegisterCredentials {
+  username: string;
+  email: string;
+  password: string;
+}
+
 export function useAuth() {
   const queryClient = useQueryClient();
   
@@ -45,10 +56,33 @@ export function useAuth() {
     },
   });
   
+  const login = useMutation({
+    mutationFn: async (credentials: LoginCredentials) => {
+      const res = await apiRequest("POST", "/api/auth/login", credentials);
+      return res.json();
+    },
+    onSuccess: (data) => {
+      queryClient.setQueryData(["/api/auth/me"], data);
+      queryClient.invalidateQueries({ queryKey: ["/api/auth/me"] });
+    },
+  });
+
+  const register = useMutation({
+    mutationFn: async (credentials: RegisterCredentials) => {
+      const res = await apiRequest("POST", "/api/auth/register", credentials);
+      return res.json();
+    },
+    onSuccess: (data) => {
+      queryClient.setQueryData(["/api/auth/me"], data);
+      queryClient.invalidateQueries({ queryKey: ["/api/auth/me"] });
+    },
+  });
+  
   const logout = useMutation({
     mutationFn: async () => {
       const response = await fetch("/api/auth/logout", {
         method: "POST",
+        credentials: "include"
       });
       if (!response.ok) {
         throw new Error("Failed to logout");
@@ -56,7 +90,8 @@ export function useAuth() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["auth"] });
+      queryClient.setQueryData(["/api/auth/me"], null);
+      queryClient.invalidateQueries({ queryKey: ["/api/auth/me"] });
       
       // Clear all other queries as well to avoid stale data
       queryClient.invalidateQueries();
@@ -68,7 +103,11 @@ export function useAuth() {
     isLoading,
     error,
     isAuthenticated: !!user,
-    logout: logout.mutate,
+    login,
+    isLoggingIn: login.isPending,
+    register,
+    isRegistering: register.isPending,
+    logout,
     isLoggingOut: logout.isPending,
   };
 }

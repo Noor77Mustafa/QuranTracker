@@ -77,7 +77,7 @@ export function AuthDialog({ open, setOpen }: AuthDialogProps) {
     } catch (error) {
       toast({
         title: "Login failed",
-        description: error instanceof Error ? error.message : "Something went wrong",
+        description: error instanceof Error ? error.message : "Invalid username or password",
         variant: "destructive",
       });
     }

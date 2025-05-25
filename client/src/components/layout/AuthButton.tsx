@@ -15,7 +15,8 @@ import { Link } from "wouter";
 import { Loader2, LogOut, UserCircle } from "lucide-react";
 
 export function AuthButton() {
-  const { user, isAuthenticated, isLoading, logout, isLoggingOut } = useAuth();
+  const { user, isAuthenticated, isLoading, logout } = useAuth();
+  const isLoggingOut = logout.isPending;
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   
   if (isLoading) {
@@ -58,7 +59,7 @@ export function AuthButton() {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem 
-              onClick={() => logout()}
+              onClick={() => logout.mutate()}
               disabled={isLoggingOut}
             >
               {isLoggingOut ? (
