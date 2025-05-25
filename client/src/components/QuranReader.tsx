@@ -143,10 +143,25 @@ export default function QuranReader({ surahId, initialVerseNumber = 1 }: QuranRe
                 </div>
               </div>
               
-              <p className="text-xl rtl text-right mb-3 font-arabic leading-loose">{verse.text_uthmani}</p>
+              {/* Display Arabic verse text, handle special cases for verses with Bismillah included */}
+              <p className="text-xl rtl text-right mb-3 font-arabic leading-loose">
+                {/* Remove Bismillah from the verse text if it appears at the beginning (except for Al-Fatiha) */}
+                {verse.verse_number === 1 && surahId !== 1 && verse.text_uthmani && 
+                verse.text_uthmani.includes('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ') 
+                  ? verse.text_uthmani.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '').trim() 
+                  : verse.text_uthmani}
+              </p>
               
+              {/* Display translation text */}
               {verse.translations && verse.translations.length > 0 && (
-                <p className="text-gray-700 dark:text-gray-300">{verse.translations[0].text}</p>
+                <p className="text-gray-700 dark:text-gray-300">
+                  {/* Remove Bismillah from the translation if it appears at the beginning of verse 1 (except for Al-Fatiha) */}
+                  {verse.verse_number === 1 && surahId !== 1 && verse.translations[0].text &&
+                  (verse.translations[0].text.includes("In the name of Allah") || 
+                   verse.translations[0].text.includes("In the Name of God"))
+                    ? verse.translations[0].text.replace(/In the (name|Name) of (Allah|God)[^.]*\./, '').trim()
+                    : verse.translations[0].text}
+                </p>
               )}
             </div>
           ))
