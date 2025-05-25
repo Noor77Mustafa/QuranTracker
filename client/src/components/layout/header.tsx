@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { AuthButton } from "@/components/layout/AuthButton";
 
 export default function Header() {
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
@@ -54,6 +55,7 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex items-center space-x-3">
+          <AuthButton />
           <button 
             className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-visible" 
             aria-label="Search"
