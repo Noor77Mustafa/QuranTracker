@@ -22,7 +22,7 @@ interface UserProfile {
 }
 
 export default function Profile() {
-  const { user: authUser, isAuthenticated } = useAuth();
+  const { user: authUser, isAuthenticated, logout } = useAuth();
   const { streak, longestStreak, pagesRead } = useStreak();
   const { badges } = useAchievements();
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
@@ -444,8 +444,23 @@ export default function Profile() {
                   <h3 className="font-medium mb-2">Appearance</h3>
                   <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                     <div className="flex justify-between items-center">
-                      <p>Dark Mode</p>
-                      <Button variant="ghost" size="sm">Toggle</Button>
+                      <div className="flex items-center gap-2">
+                        <span className="material-symbols-rounded text-gray-600 dark:text-gray-300">dark_mode</span>
+                        <p>Dark Mode</p>
+                      </div>
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input 
+                          type="checkbox" 
+                          className="sr-only peer"
+                          defaultChecked={document.documentElement.classList.contains('dark')}
+                          onChange={() => {
+                            const isDark = document.documentElement.classList.contains('dark');
+                            document.documentElement.classList.toggle('dark', !isDark);
+                            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+                          }}
+                        />
+                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                      </label>
                     </div>
                   </div>
                 </div>
@@ -454,13 +469,44 @@ export default function Profile() {
                   <h3 className="font-medium mb-2">Notifications</h3>
                   <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                     <div className="flex justify-between items-center">
-                      <p>Daily Reminders</p>
-                      <Button variant="ghost" size="sm">Enable</Button>
+                      <div className="flex items-center gap-2">
+                        <span className="material-symbols-rounded text-gray-600 dark:text-gray-300">notifications</span>
+                        <p>Daily Reminders</p>
+                      </div>
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input 
+                          type="checkbox" 
+                          className="sr-only peer"
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              // Request notification permission when enabling
+                              if (Notification.permission !== "granted") {
+                                Notification.requestPermission();
+                              }
+                              localStorage.setItem('dailyReminders', 'enabled');
+                            } else {
+                              localStorage.setItem('dailyReminders', 'disabled');
+                            }
+                          }}
+                          defaultChecked={localStorage.getItem('dailyReminders') === 'enabled'}
+                        />
+                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                      </label>
                     </div>
                   </div>
                 </div>
                 
-                <Button variant="destructive" className="w-full">Sign Out</Button>
+                <Button 
+                  variant="destructive" 
+                  className="w-full"
+                  onClick={() => {
+                    if (logout?.mutate) {
+                      logout.mutate();
+                    }
+                  }}
+                >
+                  Sign Out
+                </Button>
               </div>
             </div>
           )}
