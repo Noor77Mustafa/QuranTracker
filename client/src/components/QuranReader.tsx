@@ -41,7 +41,22 @@ export default function QuranReader({ surahId, initialVerseNumber = 1 }: QuranRe
       try {
         const versesData = await getVerses(surahId, currentPage);
         
+        // If this is the first Surah (Al-Fatiha) or not Surah At-Tawbah (9),
+        // the Bismillah should be shown separately at the beginning, not as verse 1
         if (currentPage === 1) {
+          // Remove Bismillah from first verse if present (it should be displayed at the Surah header)
+          // Surah At-Tawbah (9) is the only Surah that doesn't start with Bismillah
+          if (surahId !== 9 && versesData.length > 0 && versesData[0].verse_number === 1) {
+            // For verses that start with Bismillah, remove it from the text
+            const firstVerse = versesData[0];
+            // Only modify if it starts with Bismillah
+            if (firstVerse.text_uthmani.startsWith('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ')) {
+              // Remove Bismillah from text (only if it's at the beginning and not part of the verse)
+              if (surahId !== 1) { // Don't modify Surah Al-Fatiha where Bismillah is verse 1
+                firstVerse.text_uthmani = firstVerse.text_uthmani.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '').trim();
+              }
+            }
+          }
           setVerses(versesData);
         } else {
           setVerses(prev => [...prev, ...versesData]);
@@ -91,8 +106,8 @@ export default function QuranReader({ surahId, initialVerseNumber = 1 }: QuranRe
             {surah.translated_name.name} • {surah.revelation_place} • {surah.verses_count} Verses
           </p>
           
-          {/* Bismillah */}
-          {surah.bismillah_pre && (
+          {/* Bismillah - display for all Surahs except At-Tawbah (9) */}
+          {surah.id !== 9 && (
             <div className="my-6 text-center">
               <p className="text-xl rtl text-primary font-arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
               <p className="text-sm mt-2 text-gray-600 dark:text-gray-400">In the name of Allah, the Entirely Merciful, the Especially Merciful</p>
