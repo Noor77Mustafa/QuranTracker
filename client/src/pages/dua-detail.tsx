@@ -239,7 +239,7 @@ export default function DuaDetail() {
                 size="sm" 
                 className="mt-2 text-primary hover:text-primary/80"
               >
-                <VolumeUp className="h-4 w-4 mr-2" />
+                <Volume className="h-4 w-4 mr-2" />
                 Play Audio
               </Button>
             </div>
