@@ -89,7 +89,8 @@ export async function getVerses(
   limit = 10
 ): Promise<Verse[]> {
   try {
-    let url = `${QURAN_COM_API_URL}/verses/by_chapter/${surahId}?language=en&page=${page}&limit=${limit}`;
+    // Make sure we get the Arabic text in Uthmani script
+    let url = `${QURAN_COM_API_URL}/verses/by_chapter/${surahId}?language=en&page=${page}&limit=${limit}&text_type=uthmani`;
     
     // Add translation if requested
     if (translationId) {
@@ -106,7 +107,52 @@ export async function getVerses(
       throw new Error(`Failed to fetch verses: ${response.status}`);
     }
     const data = await response.json();
-    return data.verses || [];
+    
+    // Process verses to fix Bismillah issue
+    const verses = data.verses || [];
+    
+    // For the first page, handle the Bismillah
+    if (page === 1 && verses.length > 0) {
+      // Surah Al-Fatiha (1) is special - Bismillah is verse 1
+      // Surah At-Tawbah (9) doesn't have Bismillah
+      if (surahId !== 1 && surahId !== 9) {
+        // For all other Surahs, remove Bismillah from first verse if present
+        const firstVerse = verses[0];
+        if (firstVerse.text_uthmani && firstVerse.text_uthmani.includes('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ')) {
+          // Remove Bismillah text from verse content
+          firstVerse.text_uthmani = firstVerse.text_uthmani
+            .replace(/بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ/g, '')
+            .trim();
+        }
+        
+        // Also clean up translation if it exists
+        if (firstVerse.translations && firstVerse.translations.length > 0) {
+          const bismillahPatterns = [
+            "In the name of Allah, the Entirely Merciful, the Especially Merciful",
+            "In the name of Allah, the Most Gracious, the Most Merciful",
+            "In the name of God, the Most Compassionate, the Most Merciful",
+            "In the Name of Allah—the Most Compassionate, Most Merciful"
+          ];
+          
+          firstVerse.translations.forEach(translation => {
+            // Try to remove Bismillah from translation
+            for (const pattern of bismillahPatterns) {
+              if (translation.text.includes(pattern)) {
+                translation.text = translation.text.replace(pattern, '').trim();
+                break;
+              }
+            }
+            
+            // If we still have a phrase starting with "In the name of Allah/God"
+            if (translation.text.match(/^In the name of (Allah|God)/i)) {
+              translation.text = translation.text.replace(/^In the name of (Allah|God)[^.]*\./, '').trim();
+            }
+          });
+        }
+      }
+    }
+    
+    return verses;
   } catch (error) {
     console.error(`Error fetching verses for surah ${surahId}:`, error);
     return [];
