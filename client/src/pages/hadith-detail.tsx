@@ -96,6 +96,88 @@ const COLLECTION_HADITHS = {
         text: "This hadith explains that revelation to the Prophet began with true dreams, which were a preparation for receiving the Quran."
       }
     ]
+  },
+  "muslim-1": {
+    id: "muslim-1",
+    collection: "muslim",
+    collectionName: "Sahih Muslim",
+    bookNumber: 1,
+    chapterNumber: 1,
+    hadithNumber: 1,
+    volumeNumber: 1,
+    chapterTitle: "The Book of Faith",
+    chapterTitleArabic: "كتاب الإيمان",
+    arabicText: "حَدَّثَنِي يَحْيَى بْنُ أَيُّوبَ، وَقُتَيْبَةُ بْنُ سَعِيدٍ، وَعَلِيُّ بْنُ حُجْرٍ، قَالُوا حَدَّثَنَا إِسْمَاعِيلُ، - وَهُوَ ابْنُ جَعْفَرٍ - عَنِ الْعَلاَءِ، عَنْ أَبِيهِ، عَنْ أَبِي هُرَيْرَةَ، أَنَّ رَسُولَ اللَّهِ صلى الله عليه وسلم قَالَ ‏\"‏ الإِيمَانُ بِضْعٌ وَسَبْعُونَ - أَوْ بِضْعٌ وَسِتُّونَ - شُعْبَةً فَأَفْضَلُهَا قَوْلُ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَدْنَاهَا إِمَاطَةُ الأَذَى عَنِ الطَّرِيقِ وَالْحَيَاءُ شُعْبَةٌ مِنَ الإِيمَانِ ‏\"‏",
+    englishText: "Narrated Abu Huraira: The Messenger of Allah (ﷺ) said, \"Faith has over seventy branches or over sixty branches, the most excellent of which is the declaration that there is no god but Allah, and the humblest of which is the removal of what is injurious from the path: and modesty is a branch of faith.\"",
+    grade: "Sahih",
+    narrator: "Abu Huraira",
+    references: [
+      { collection: "Sahih Muslim", book: 1, hadith: 63 },
+      { collection: "Sahih al-Bukhari", volume: 1, book: 2, hadith: 9 }
+    ],
+    topics: ["Faith", "Good Deeds", "Modesty", "Islamic Values"],
+    explanations: [
+      {
+        scholar: "Imam Nawawi",
+        text: "This hadith shows that faith consists of beliefs, statements, and actions. It encompasses both the highest form of worship (the declaration of monotheism) and simple acts of kindness like removing harmful objects from the road."
+      }
+    ]
+  },
+  "muslim-2": {
+    id: "muslim-2", 
+    collection: "muslim",
+    collectionName: "Sahih Muslim",
+    bookNumber: 1,
+    chapterNumber: 1,
+    hadithNumber: 16,
+    volumeNumber: 1,
+    chapterTitle: "The Book of Faith",
+    chapterTitleArabic: "كتاب الإيمان",
+    arabicText: "حَدَّثَنَا أَبُو بَكْرِ بْنُ أَبِي شَيْبَةَ، حَدَّثَنَا أَبُو مُعَاوِيَةَ، وَوَكِيعٌ، عَنِ الأَعْمَشِ، عَنْ أَبِي صَالِحٍ، عَنْ أَبِي هُرَيْرَةَ، قَالَ قَالَ رَسُولُ اللَّهِ صلى الله عليه وسلم ‏\"‏ الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ وَالْمُؤْمِنُ مَنْ أَمِنَهُ النَّاسُ عَلَى دِمَائِهِمْ وَأَمْوَالِهِمْ ‏\"‏",
+    englishText: "Narrated Abu Huraira: The Messenger of Allah (ﷺ) said, \"The Muslim is one from whose tongue and hand the Muslims are safe, and the believer is one whom people trust with their blood and wealth.\"",
+    grade: "Sahih",
+    narrator: "Abu Huraira",
+    references: [
+      { collection: "Sahih Muslim", book: 1, hadith: 65 },
+      { collection: "Jami` at-Tirmidhi", volume: 5, book: 38, hadith: 2627 }
+    ],
+    topics: ["Character", "Trust", "Safety", "Community"],
+    explanations: [
+      {
+        scholar: "Ibn Rajab al-Hanbali",
+        text: "This hadith defines the true Muslim and believer not just by ritual worship, but by their character and how they treat others. Safety and trust are fundamental to Islamic society."
+      }
+    ]
+  },
+  "nawawi40-1": {
+    id: "nawawi40-1",
+    collection: "nawawi40",
+    collectionName: "40 Hadith of Imam Nawawi",
+    bookNumber: 1,
+    chapterNumber: 1,
+    hadithNumber: 1,
+    volumeNumber: 1,
+    chapterTitle: "Actions are by Intentions",
+    chapterTitleArabic: "إنما الأعمال بالنيات",
+    arabicText: "عَنْ أَمِيرِ الْمُؤْمِنِينَ أَبِي حَفْصٍ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللهُ عَنْهُ قَالَ: سَمِعْت رَسُولَ اللَّهِ صلى الله عليه و سلم يَقُولُ: ‏\"‏ إنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إلَى اللَّهِ وَرَسُولِهِ فَهِجْرَتُهُ إلَى اللَّهِ وَرَسُولِهِ، وَمَنْ كَانَتْ هِجْرَتُهُ لِدُنْيَا يُصِيبُهَا أَوْ امْرَأَةٍ يَنْكِحُهَا فَهِجْرَتُهُ إلَى مَا هَاجَرَ إلَيْهِ ‏\"‏",
+    englishText: "On the authority of the Commander of the Faithful, Abu Hafs Umar ibn al-Khattab (may Allah be pleased with him), who said: I heard the Messenger of Allah (ﷺ) say: \"Actions are only by intention, and every person will have only what they intended. So whoever's migration was to Allah and His Messenger, then his migration was to Allah and His Messenger. And whoever's migration was for some worldly benefit or to marry a woman, then his migration was for that which he migrated.\"",
+    grade: "Sahih",
+    narrator: "Umar ibn al-Khattab",
+    references: [
+      { collection: "Sahih al-Bukhari", volume: 1, book: 1, hadith: 1 },
+      { collection: "Sahih Muslim", book: 33, hadith: 222 }
+    ],
+    topics: ["Intention", "Sincerity", "Migration", "Purification of Heart"],
+    explanations: [
+      {
+        scholar: "Imam Nawawi",
+        text: "This hadith is one of the most important in Islam. The scholars say it is one-third of Islamic knowledge, as it covers the realm of intentions which affect all actions."
+      },
+      {
+        scholar: "Ibn Hajar al-Asqalani",
+        text: "Al-Bukhari opened his Sahih with this hadith to emphasize that seeking knowledge and teaching it must be done purely for Allah's sake."
+      }
+    ]
   }
 };
 

@@ -96,6 +96,109 @@ const COLLECTION_DUAS = {
       { arabic: "عَذَابَ", meaning: "from the punishment" },
       { arabic: "النَّارِ", meaning: "of the Fire" }
     ]
+  },
+  "evening-1": {
+    id: "evening-1",
+    category: "morning-evening",
+    categoryName: "Morning & Evening Adhkar",
+    name: "Evening Protection",
+    arabicName: "دعاء الحماية المسائية",
+    arabicText: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لاَ إِلَـهَ إِلاَّ اللهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+    transliteration: "Amsayna wa amsal-mulku lillah, walhamdu lillah, la ilaha illallahu wahdahu la shareeka lah, lahul-mulku wa lahul-hamdu wa huwa 'ala kulli shay'in qadeer",
+    translation: "We have reached the evening and the kingdom belongs to Allah. Praise is to Allah. None has the right to be worshipped except Allah, alone, without partner. To Him belongs the dominion and praise, and He is able to do all things.",
+    reference: "Abu Dawud, Tirmidhi",
+    whenToRecite: "Once in evening",
+    virtue: "Whoever recites this in the evening has thanked Allah for the night and sought His protection.",
+    notes: "This evening supplication mirrors the morning one, acknowledging Allah's sovereignty as day transitions to night.",
+    wordByWord: [
+      { arabic: "أَمْسَيْنَا", meaning: "We have reached the evening" },
+      { arabic: "وَأَمْسَى", meaning: "and has reached the evening" },
+      { arabic: "الْمُلْكُ", meaning: "the dominion" },
+      { arabic: "لِلَّهِ", meaning: "to Allah" }
+    ]
+  },
+  "travel-1": {
+    id: "travel-1",
+    category: "travel",
+    categoryName: "Travel Duas",
+    name: "Dua for Beginning Journey",
+    arabicName: "دعاء السفر",
+    arabicText: "اللَّهُ أَكْبَرُ، اللَّهُ أَكْبَرُ، اللَّهُ أَكْبَرُ، سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ، وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ",
+    transliteration: "Allahu akbar, Allahu akbar, Allahu akbar, subhanal-ladhi sakhkhara lana hadha wa ma kunna lahu muqrineen, wa inna ila rabbina lamunqaliboon",
+    translation: "Allah is the Greatest, Allah is the Greatest, Allah is the Greatest. Glory be to Him who has subjected this to us, and we could never have it (by our efforts). And to our Lord, surely, must we return!",
+    reference: "Quran 43:13-14, Abu Dawud, Tirmidhi",
+    whenToRecite: "When beginning any journey",
+    virtue: "This dua ensures Allah's protection during travel and reminds us of our ultimate return to Him.",
+    notes: "Based on Quranic verses, this supplication acknowledges that all modes of transport are gifts from Allah.",
+    wordByWord: [
+      { arabic: "سُبْحَانَ", meaning: "Glory be to" },
+      { arabic: "الَّذِي", meaning: "the One who" },
+      { arabic: "سَخَّرَ", meaning: "has subjected" },
+      { arabic: "لَنَا", meaning: "for us" },
+      { arabic: "هَذَا", meaning: "this" }
+    ]
+  },
+  "food-1": {
+    id: "food-1",
+    category: "food",
+    categoryName: "Food & Drink Duas",
+    name: "Before Eating",
+    arabicName: "دعاء قبل الطعام",
+    arabicText: "بِسْمِ اللَّهِ",
+    transliteration: "Bismillah",
+    translation: "In the name of Allah",
+    reference: "Abu Dawud, Tirmidhi",
+    whenToRecite: "Before eating any meal",
+    virtue: "Mentioning Allah's name before eating brings blessing to the food and protection from harm.",
+    notes: "The simplest yet most important dua before eating. If forgotten at the beginning, say 'Bismillahi awwalahu wa akhirahu' (In the name of Allah at its beginning and end).",
+    wordByWord: [
+      { arabic: "بِسْمِ", meaning: "In the name" },
+      { arabic: "اللَّهِ", meaning: "of Allah" }
+    ]
+  },
+  "food-2": {
+    id: "food-2",
+    category: "food",
+    categoryName: "Food & Drink Duas",
+    name: "After Eating",
+    arabicName: "دعاء بعد الطعام",
+    arabicText: "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلاَ قُوَّةٍ",
+    transliteration: "Alhamdu lillahil-ladhi at'amani hadha wa razaqaneehi min ghayri hawlin minnee wa la quwwah",
+    translation: "All praise is due to Allah who has fed me this and provided it for me without any might or power on my part.",
+    reference: "Abu Dawud, Tirmidhi",
+    whenToRecite: "After finishing any meal",
+    virtue: "Whoever recites this dua after eating, their past sins will be forgiven.",
+    notes: "This dua acknowledges that all sustenance comes from Allah alone, not from our own efforts or strength.",
+    wordByWord: [
+      { arabic: "الْحَمْدُ", meaning: "All praise" },
+      { arabic: "لِلَّهِ", meaning: "is for Allah" },
+      { arabic: "الَّذِي", meaning: "who" },
+      { arabic: "أَطْعَمَنِي", meaning: "has fed me" },
+      { arabic: "هَذَا", meaning: "this" }
+    ]
+  },
+  "quran-2": {
+    id: "quran-2",
+    category: "quran",
+    categoryName: "Quranic Duas",
+    name: "Seeking Guidance",
+    arabicName: "دعاء طلب الهداية",
+    arabicText: "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً ۚ إِنَّكَ أَنتَ الْوَهَّابُ",
+    transliteration: "Rabbana la tuzigh quloobana ba'da idh hadaytana wa hab lana min ladunka rahmah, innaka antal-wahhab",
+    translation: "Our Lord, let not our hearts deviate after You have guided us and grant us from Yourself mercy. Indeed, You are the Bestower.",
+    reference: "Quran 3:8",
+    whenToRecite: "When seeking steadfastness in faith",
+    virtue: "This dua asks Allah to keep our hearts firm on guidance and to grant us His mercy.",
+    notes: "This is the prayer of those who are deeply rooted in knowledge, seeking continuous guidance from Allah.",
+    wordByWord: [
+      { arabic: "رَبَّنَا", meaning: "Our Lord" },
+      { arabic: "لَا", meaning: "do not" },
+      { arabic: "تُزِغْ", meaning: "deviate" },
+      { arabic: "قُلُوبَنَا", meaning: "our hearts" },
+      { arabic: "بَعْدَ", meaning: "after" },
+      { arabic: "إِذْ", meaning: "when" },
+      { arabic: "هَدَيْتَنَا", meaning: "You guided us" }
+    ]
   }
 };
 
