@@ -209,6 +209,7 @@ export default function HadithDetail() {
         await new Promise(resolve => setTimeout(resolve, 500));
         
         const hadithId = params?.id || "";
+        
         // First check in HADITH_DETAILS, then in COLLECTION_HADITHS
         let hadithData = HADITH_DETAILS[hadithId as keyof typeof HADITH_DETAILS];
         
@@ -314,10 +315,14 @@ export default function HadithDetail() {
           
           <CardContent className="space-y-6">
             {/* Chapter info */}
-            <div className="bg-primary/5 p-3 rounded-md">
-              <h3 className="font-semibold mb-1">Chapter: {hadith.chapterTitle}</h3>
-              <p className="text-right font-arabic rtl">{hadith.chapterTitleArabic}</p>
-            </div>
+            {hadith.chapterTitle && (
+              <div className="bg-primary/5 p-3 rounded-md">
+                <h3 className="font-semibold mb-1">Chapter: {hadith.chapterTitle}</h3>
+                {hadith.chapterTitleArabic && (
+                  <p className="text-right font-arabic rtl">{hadith.chapterTitleArabic}</p>
+                )}
+              </div>
+            )}
             
             {/* Arabic text */}
             <div className="border-b pb-4">
@@ -338,39 +343,45 @@ export default function HadithDetail() {
             </div>
             
             {/* Topics */}
-            <div className="border-b pb-4">
-              <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-2">Topics</h3>
-              <div className="flex flex-wrap gap-2">
-                {hadith.topics.map((topic: string) => (
-                  <Badge key={topic} variant="outline">{topic}</Badge>
-                ))}
+            {hadith.topics && hadith.topics.length > 0 && (
+              <div className="border-b pb-4">
+                <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-2">Topics</h3>
+                <div className="flex flex-wrap gap-2">
+                  {hadith.topics.map((topic: string) => (
+                    <Badge key={topic} variant="outline">{topic}</Badge>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
             
             {/* References */}
-            <div className="border-b pb-4">
-              <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-2">References</h3>
-              <ul className="list-disc list-inside space-y-1">
-                {hadith.references.map((ref: any, index: number) => (
-                  <li key={index}>
-                    {ref.collection}, {ref.volume ? `Volume ${ref.volume}, ` : ''}Book {ref.book}, Hadith {ref.hadith}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {hadith.references && hadith.references.length > 0 && (
+              <div className="border-b pb-4">
+                <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-2">References</h3>
+                <ul className="list-disc list-inside space-y-1">
+                  {hadith.references.map((ref: any, index: number) => (
+                    <li key={index}>
+                      {ref.collection}, {ref.volume ? `Volume ${ref.volume}, ` : ''}Book {ref.book}, Hadith {ref.hadith}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             
             {/* Explanations */}
-            <div>
-              <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-2">Scholarly Explanations</h3>
-              <div className="space-y-4">
-                {hadith.explanations.map((exp: any, index: number) => (
-                  <div key={index} className="bg-gray-50 dark:bg-gray-800 p-3 rounded-md">
-                    <h4 className="font-medium text-primary">{exp.scholar}</h4>
-                    <p className="mt-1 text-sm">{exp.text}</p>
-                  </div>
-                ))}
+            {hadith.explanations && hadith.explanations.length > 0 && (
+              <div>
+                <h3 className="text-sm text-gray-500 dark:text-gray-400 mb-2">Scholarly Explanations</h3>
+                <div className="space-y-4">
+                  {hadith.explanations.map((exp: any, index: number) => (
+                    <div key={index} className="bg-gray-50 dark:bg-gray-800 p-3 rounded-md">
+                      <h4 className="font-medium text-primary">{exp.scholar}</h4>
+                      <p className="mt-1 text-sm">{exp.text}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </CardContent>
           
           <CardFooter className="border-t pt-4 flex justify-between">
