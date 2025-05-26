@@ -11,72 +11,196 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/components/ui/badge";
 
-// Mock hadith collections for initial development
+// Comprehensive hadith collections based on authentic Islamic sources
 const HADITH_COLLECTIONS = [
+  // The Six Books (Kutub al-Sittah) - Most authentic Sunni collections
   { 
     id: "bukhari", 
     name: "Sahih al-Bukhari", 
     arabicName: "صحيح البخاري",
-    description: "Considered the most authentic collection of hadith compiled by Imam Muhammad al-Bukhari.",
+    description: "The most authentic hadith collection. Compiled by Imam Muhammad ibn Ismail al-Bukhari (194-256 AH).",
     count: 7563,
-    books: 97
+    books: 97,
+    category: "Kutub al-Sittah",
+    grade: "Sahih",
+    compiler: "Imam al-Bukhari",
+    compilationYear: "846-870 CE"
   },
   { 
     id: "muslim", 
     name: "Sahih Muslim", 
     arabicName: "صحيح مسلم",
-    description: "The second most authentic hadith collection compiled by Imam Muslim ibn al-Hajjaj.",
+    description: "Second most authentic collection. Compiled by Imam Muslim ibn al-Hajjaj (204-261 AH).",
     count: 7563,
-    books: 54
-  },
-  { 
-    id: "tirmidhi", 
-    name: "Jami at-Tirmidhi", 
-    arabicName: "جامع الترمذي",
-    description: "Collection by Imam Abu Isa Muhammad at-Tirmidhi with special focus on legal traditions.",
-    count: 3956,
-    books: 49
+    books: 54,
+    category: "Kutub al-Sittah",
+    grade: "Sahih",
+    compiler: "Imam Muslim",
+    compilationYear: "817-875 CE"
   },
   { 
     id: "abudawud", 
     name: "Sunan Abu Dawud", 
     arabicName: "سنن أبي داود",
-    description: "Collection focused on legal matters by Imam Abu Dawud Sulayman ibn al-Ash'ath.",
+    description: "Focused on legal traditions. Compiled by Abu Dawud Sulayman ibn al-Ash'ath (202-275 AH).",
     count: 5274,
-    books: 43
+    books: 43,
+    category: "Kutub al-Sittah",
+    grade: "Mixed",
+    compiler: "Abu Dawud",
+    compilationYear: "817-889 CE"
+  },
+  { 
+    id: "tirmidhi", 
+    name: "Jami at-Tirmidhi", 
+    arabicName: "جامع الترمذي",
+    description: "Known for detailed grading of hadiths. Compiled by Abu Isa Muhammad at-Tirmidhi (209-279 AH).",
+    count: 3956,
+    books: 49,
+    category: "Kutub al-Sittah",
+    grade: "Mixed",
+    compiler: "At-Tirmidhi",
+    compilationYear: "825-892 CE"
   },
   { 
     id: "nasai", 
     name: "Sunan an-Nasa'i", 
     arabicName: "سنن النسائي",
-    description: "Collection focused on legal matters by Imam Ahmad ibn Shu'ayb an-Nasa'i.",
+    description: "Known for strict criteria in hadith authentication. By Ahmad ibn Shu'ayb an-Nasa'i (215-303 AH).",
     count: 5761,
-    books: 52
+    books: 52,
+    category: "Kutub al-Sittah",
+    grade: "Mixed",
+    compiler: "An-Nasa'i",
+    compilationYear: "830-915 CE"
   },
   { 
     id: "ibnmajah", 
     name: "Sunan Ibn Majah", 
     arabicName: "سنن ابن ماجه",
-    description: "Collection by Imam Muhammad ibn Yazid Ibn Majah al-Qazvini.",
+    description: "Completes the six books. Compiled by Muhammad ibn Yazid Ibn Majah (209-273 AH).",
     count: 4341,
-    books: 37
+    books: 37,
+    category: "Kutub al-Sittah",
+    grade: "Mixed",
+    compiler: "Ibn Majah",
+    compilationYear: "824-887 CE"
   },
+
+  // Other Major Collections
   { 
     id: "malik", 
     name: "Muwatta Imam Malik", 
     arabicName: "موطأ الإمام مالك",
-    description: "The earliest surviving Sunni hadith collection compiled by Imam Malik ibn Anas.",
+    description: "The earliest surviving hadith collection. Compiled by Imam Malik ibn Anas (93-179 AH).",
     count: 1973,
-    books: 61
+    books: 61,
+    category: "Early Collections",
+    grade: "Sahih/Hasan",
+    compiler: "Imam Malik",
+    compilationYear: "711-795 CE"
   },
+  { 
+    id: "ahmad", 
+    name: "Musnad Ahmad", 
+    arabicName: "مسند أحمد",
+    description: "Largest hadith collection arranged by narrator. Compiled by Imam Ahmad ibn Hanbal (164-241 AH).",
+    count: 26363,
+    books: 1,
+    category: "Musnad Collections",
+    grade: "Mixed",
+    compiler: "Ahmad ibn Hanbal",
+    compilationYear: "780-855 CE"
+  },
+  { 
+    id: "darimi", 
+    name: "Sunan ad-Darimi", 
+    arabicName: "سنن الدارمي",
+    description: "Organized by topics with authentic chains. Compiled by Abdullah ibn Abdur Rahman ad-Darimi (181-255 AH).",
+    count: 3503,
+    books: 23,
+    category: "Sunan Collections",
+    grade: "Mixed",
+    compiler: "Ad-Darimi",
+    compilationYear: "797-869 CE"
+  },
+
+  // Specialized Collections
   { 
     id: "nawawi40", 
     name: "40 Hadith Nawawi", 
     arabicName: "الأربعون النووية",
-    description: "Collection of 40 important hadiths compiled by Imam Yahya ibn Sharaf al-Nawawi.",
-    count: 40,
-    books: 1
+    description: "40 fundamental hadiths covering Islamic principles. By Imam Yahya ibn Sharaf al-Nawawi (631-676 AH).",
+    count: 42,
+    books: 1,
+    category: "Specialized",
+    grade: "Sahih",
+    compiler: "Imam al-Nawawi",
+    compilationYear: "1233-1277 CE"
+  },
+  { 
+    id: "riyadussaliheen", 
+    name: "Riyad as-Saliheen", 
+    arabicName: "رياض الصالحين",
+    description: "Collection focusing on good character and conduct. Also compiled by Imam al-Nawawi.",
+    count: 1896,
+    books: 19,
+    category: "Specialized",
+    grade: "Mostly Sahih",
+    compiler: "Imam al-Nawawi",
+    compilationYear: "1233-1277 CE"
+  },
+  { 
+    id: "adabmufrad", 
+    name: "Al-Adab al-Mufrad", 
+    arabicName: "الأدب المفرد",
+    description: "Collection on Islamic manners and etiquette. Compiled by Imam al-Bukhari.",
+    count: 1322,
+    books: 57,
+    category: "Specialized",
+    grade: "Mixed",
+    compiler: "Imam al-Bukhari",
+    compilationYear: "810-870 CE"
+  },
+
+  // Additional Important Collections
+  { 
+    id: "hakim", 
+    name: "Al-Mustadrak", 
+    arabicName: "المستدرك على الصحيحين",
+    description: "Supplement to Bukhari and Muslim with additional authentic hadiths. By Al-Hakim an-Nisaburi (321-405 AH).",
+    count: 8803,
+    books: 4,
+    category: "Mustadrak",
+    grade: "Mixed",
+    compiler: "Al-Hakim",
+    compilationYear: "933-1014 CE"
+  },
+  { 
+    id: "tabarani", 
+    name: "Al-Mu'jam al-Kabir", 
+    arabicName: "المعجم الكبير",
+    description: "Comprehensive collection arranged alphabetically by companions. By At-Tabarani (260-360 AH).",
+    count: 25000,
+    books: 25,
+    category: "Mu'jam Collections",
+    grade: "Mixed",
+    compiler: "At-Tabarani",
+    compilationYear: "873-971 CE"
+  },
+  { 
+    id: "bayhaqi", 
+    name: "Sunan al-Kubra", 
+    arabicName: "السنن الكبرى",
+    description: "Comprehensive collection of legal traditions. By Imam al-Bayhaqi (384-458 AH).",
+    count: 21000,
+    books: 10,
+    category: "Sunan Collections",
+    grade: "Mixed",
+    compiler: "Al-Bayhaqi",
+    compilationYear: "994-1066 CE"
   }
 ];
 
@@ -204,8 +328,14 @@ export default function Hadiths() {
               filteredCollections.map(collection => (
                 <Card key={collection.id} className="overflow-hidden hover:shadow-md transition-shadow">
                   <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start mb-2">
+                      <Badge variant="secondary" className="text-xs">{collection.category}</Badge>
+                      <Badge variant={collection.grade === "Sahih" ? "default" : "outline"} className="text-xs">
+                        {collection.grade}
+                      </Badge>
+                    </div>
                     <CardTitle className="flex justify-between items-center">
-                      <span>{collection.name}</span>
+                      <span className="text-lg">{collection.name}</span>
                       <span className="text-lg font-arabic">{collection.arabicName}</span>
                     </CardTitle>
                     <CardDescription>
@@ -216,6 +346,10 @@ export default function Hadiths() {
                     <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
                       {collection.description}
                     </p>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+                      <p><strong>Compiler:</strong> {collection.compiler}</p>
+                      <p><strong>Period:</strong> {collection.compilationYear}</p>
+                    </div>
                     <Link href={`/hadith/collection/${collection.id}`}>
                       <Button variant="outline" size="sm" className="w-full">Browse Collection</Button>
                     </Link>

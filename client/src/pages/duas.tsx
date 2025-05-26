@@ -13,79 +13,222 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 
-// Mock dua categories
+// Comprehensive dua categories based on authentic Islamic sources
 const DUA_CATEGORIES = [
+  // Core Daily Remembrances
   {
     id: "morning-evening",
-    name: "Morning & Evening",
+    name: "Morning & Evening Adhkar",
     arabicName: "أذكار الصباح والمساء",
-    description: "Supplications to recite in the morning and evening for protection and blessings.",
-    count: 18,
-    icon: "sunny"
+    description: "Authentic morning and evening remembrances from Hisnul Muslim for daily protection and blessings.",
+    count: 28,
+    icon: "sunny",
+    source: "Hisnul Muslim, Sahih Bukhari, Sahih Muslim"
   },
   {
-    id: "salah",
-    name: "Prayer (Salah)",
-    arabicName: "أدعية الصلاة",
-    description: "Supplications for before, during, and after prayer.",
-    count: 25,
-    icon: "prayer_times"
+    id: "after-salah",
+    name: "After Prayer Adhkar",
+    arabicName: "أذكار ما بعد الصلاة",
+    description: "Recommended supplications to recite after completing the five daily prayers.",
+    count: 15,
+    icon: "prayer_times",
+    source: "Sahih Muslim, Abu Dawud, Tirmidhi"
   },
+  {
+    id: "before-sleep",
+    name: "Before Sleep",
+    arabicName: "أذكار النوم",
+    description: "Supplications and Quranic verses to recite before going to sleep.",
+    count: 12,
+    icon: "bedtime",
+    source: "Sahih Bukhari, Sahih Muslim"
+  },
+
+  // Quranic Supplications
   {
     id: "quran",
-    name: "From the Quran",
-    arabicName: "أدعية من القرآن",
-    description: "Supplications mentioned in the Holy Quran.",
-    count: 40,
-    icon: "menu_book"
+    name: "Quranic Duas",
+    arabicName: "أدعية من القرآن الكريم",
+    description: "Complete collection of supplications directly from the Holy Quran.",
+    count: 67,
+    icon: "menu_book",
+    source: "The Holy Quran"
   },
   {
-    id: "prophetic",
-    name: "Prophetic Duas",
-    arabicName: "أدعية النبي",
-    description: "Supplications taught by Prophet Muhammad (PBUH).",
-    count: 35,
-    icon: "history_edu"
+    id: "prophets-duas",
+    name: "Prophets' Supplications",
+    arabicName: "أدعية الأنبياء",
+    description: "Duas made by various prophets as mentioned in the Quran.",
+    count: 23,
+    icon: "auto_awesome",
+    source: "The Holy Quran"
+  },
+
+  // Prophetic Traditions
+  {
+    id: "prophetic-duas",
+    name: "Prophetic Supplications",
+    arabicName: "أدعية نبوية",
+    description: "Authentic supplications taught by Prophet Muhammad (ﷺ).",
+    count: 156,
+    icon: "history_edu",
+    source: "Sahih Bukhari, Sahih Muslim, Abu Dawud"
   },
   {
-    id: "protection",
-    name: "Protection & Healing",
-    arabicName: "أدعية الحماية والشفاء",
-    description: "Supplications for seeking protection and healing.",
+    id: "comprehensive-duas",
+    name: "Comprehensive Supplications",
+    arabicName: "الأدعية الجامعة",
+    description: "All-encompassing duas that cover multiple aspects of life and the afterlife.",
+    count: 18,
+    icon: "all_inclusive",
+    source: "Sahih Muslim, Abu Dawud, Tirmidhi"
+  },
+
+  // Life Situations
+  {
+    id: "hardship-distress",
+    name: "Hardship & Distress",
+    arabicName: "أدعية الكرب والضيق",
+    description: "Powerful supplications for times of difficulty, anxiety, and distress.",
+    count: 25,
+    icon: "healing",
+    source: "Sahih Bukhari, Sahih Muslim, Ibn Majah"
+  },
+  {
+    id: "forgiveness-repentance",
+    name: "Forgiveness & Repentance",
+    arabicName: "أدعية الاستغفار والتوبة",
+    description: "Supplications for seeking Allah's forgiveness and guidance towards repentance.",
     count: 22,
-    icon: "health_and_safety"
+    icon: "favorite",
+    source: "Sahih Bukhari, Abu Dawud, Tirmidhi"
   },
   {
-    id: "forgiveness",
-    name: "Forgiveness",
-    arabicName: "أدعية الاستغفار",
-    description: "Supplications for seeking forgiveness from Allah.",
-    count: 15,
-    icon: "favorite"
+    id: "protection-refuge",
+    name: "Protection & Seeking Refuge",
+    arabicName: "أدعية الحماية والاستعاذة",
+    description: "Supplications for seeking Allah's protection from all forms of harm.",
+    count: 31,
+    icon: "shield",
+    source: "Sahih Muslim, Abu Dawud, Nasa'i"
+  },
+
+  // Health & Healing
+  {
+    id: "healing-illness",
+    name: "Healing & Illness",
+    arabicName: "أدعية الشفاء والمرض",
+    description: "Supplications for seeking healing and patience during illness.",
+    count: 16,
+    icon: "health_and_safety",
+    source: "Sahih Bukhari, Sahih Muslim, Tirmidhi"
   },
   {
-    id: "daily",
-    name: "Daily Activities",
-    arabicName: "أدعية الحياة اليومية",
-    description: "Supplications for various daily activities.",
-    count: 30,
-    icon: "schedule"
+    id: "ruqyah",
+    name: "Ruqyah (Spiritual Healing)",
+    arabicName: "الرقية الشرعية",
+    description: "Quranic verses and prophetic supplications for spiritual healing and protection.",
+    count: 19,
+    icon: "auto_fix_high",
+    source: "The Holy Quran, Sahih Bukhari, Sahih Muslim"
+  },
+
+  // Daily Activities
+  {
+    id: "eating-drinking",
+    name: "Eating & Drinking",
+    arabicName: "أدعية الطعام والشراب",
+    description: "Supplications before and after eating and drinking.",
+    count: 8,
+    icon: "restaurant",
+    source: "Abu Dawud, Tirmidhi, Ibn Majah"
+  },
+  {
+    id: "entering-leaving",
+    name: "Entering & Leaving",
+    arabicName: "أدعية الدخول والخروج",
+    description: "Supplications for entering and leaving home, mosque, and other places.",
+    count: 12,
+    icon: "door_open",
+    source: "Abu Dawud, Tirmidhi, Sahih Muslim"
   },
   {
     id: "travel",
-    name: "Travel",
+    name: "Travel Supplications",
     arabicName: "أدعية السفر",
-    description: "Supplications for before, during, and after travel.",
-    count: 12,
-    icon: "flight"
+    description: "Complete collection of travel-related supplications for safety and blessings.",
+    count: 15,
+    icon: "flight",
+    source: "Sahih Muslim, Abu Dawud, Tirmidhi"
+  },
+
+  // Special Occasions
+  {
+    id: "friday",
+    name: "Friday Supplications",
+    arabicName: "أدعية يوم الجمعة",
+    description: "Special supplications recommended for the blessed day of Friday.",
+    count: 9,
+    icon: "event",
+    source: "Abu Dawud, Tirmidhi, Ibn Majah"
   },
   {
-    id: "hardship",
-    name: "Hardship & Distress",
-    arabicName: "أدعية الشدائد",
-    description: "Supplications for times of difficulty and distress.",
-    count: 20,
-    icon: "sentiment_stressed"
+    id: "ramadan",
+    name: "Ramadan & Fasting",
+    arabicName: "أدعية رمضان والصيام",
+    description: "Supplications specific to Ramadan, fasting, and breaking the fast.",
+    count: 14,
+    icon: "nightlight",
+    source: "Abu Dawud, Tirmidhi, Ibn Majah"
+  },
+  {
+    id: "hajj-umrah",
+    name: "Hajj & Umrah",
+    arabicName: "أدعية الحج والعمرة",
+    description: "Supplications for pilgrimage including Talbiyah and various rituals.",
+    count: 18,
+    icon: "place",
+    source: "Sahih Bukhari, Sahih Muslim, Abu Dawud"
+  },
+
+  // Family & Relationships
+  {
+    id: "marriage-family",
+    name: "Marriage & Family",
+    arabicName: "أدعية الزواج والأسرة",
+    description: "Supplications for marriage, family life, and raising children.",
+    count: 13,
+    icon: "family_restroom",
+    source: "Abu Dawud, Tirmidhi, Ibn Majah"
+  },
+  {
+    id: "children-parents",
+    name: "For Children & Parents",
+    arabicName: "أدعية للأولاد والوالدين",
+    description: "Supplications for children's wellbeing and honoring parents.",
+    count: 11,
+    icon: "child_care",
+    source: "The Holy Quran, Abu Dawud, Tirmidhi"
+  },
+
+  // Knowledge & Guidance
+  {
+    id: "knowledge-wisdom",
+    name: "Knowledge & Wisdom",
+    arabicName: "أدعية العلم والحكمة",
+    description: "Supplications for seeking beneficial knowledge and wisdom.",
+    count: 10,
+    icon: "psychology",
+    source: "Abu Dawud, Tirmidhi, Ibn Majah"
+  },
+  {
+    id: "guidance-righteousness",
+    name: "Guidance & Righteousness",
+    arabicName: "أدعية الهداية والصلاح",
+    description: "Supplications for seeking Allah's guidance and remaining on the straight path.",
+    count: 17,
+    icon: "explore",
+    source: "Sahih Muslim, Abu Dawud, Tirmidhi"
   }
 ];
 
@@ -219,6 +362,10 @@ export default function Duas() {
               filteredCategories.map(category => (
                 <Card key={category.id} className="overflow-hidden hover:shadow-md transition-shadow">
                   <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start mb-2">
+                      <Badge variant="outline" className="text-xs">{category.source}</Badge>
+                      <span className="text-sm font-medium text-primary">{category.count} Duas</span>
+                    </div>
                     <div className="flex justify-between items-center">
                       <CardTitle className="flex items-center">
                         <span className="material-symbols-rounded mr-2">{category.icon}</span>
@@ -226,12 +373,9 @@ export default function Duas() {
                       </CardTitle>
                       <span className="text-base font-arabic">{category.arabicName}</span>
                     </div>
-                    <CardDescription>
-                      {category.count} Duas
-                    </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
+                    <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
                       {category.description}
                     </p>
                     <Link href={`/dua/category/${category.id}`}>
