@@ -14,6 +14,91 @@ import { Badge } from "@/components/ui/badge";
 import { Share2, BookmarkPlus, Copy, Volume } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
+// Import content from collection pages
+const COLLECTION_DUAS = {
+  "morning-1": {
+    id: "morning-1",
+    category: "morning-evening",
+    categoryName: "Morning & Evening Adhkar",
+    name: "Morning Protection",
+    arabicName: "دعاء الحماية الصباحية",
+    arabicText: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ",
+    transliteration: "Bismillahil-ladhi la yadurru ma'asmihi shay'un fil-ardi wa la fis-sama'i, wa huwas-sami'ul-'aleem",
+    translation: "In the name of Allah, with Whose name nothing can cause harm on earth or in the heavens, and He is the All-Hearing, the All-Knowing.",
+    reference: "Abu Dawud, Tirmidhi",
+    whenToRecite: "Morning, three times",
+    virtue: "Whoever recites this three times in the morning and evening, nothing will harm them.",
+    notes: "This dua provides comprehensive protection from all harm by invoking the name of Allah, who has power over all things in the heavens and the earth.",
+    wordByWord: [
+      { arabic: "بِسْمِ", meaning: "In the name" },
+      { arabic: "اللَّهِ", meaning: "of Allah" },
+      { arabic: "الَّذِي", meaning: "who" },
+      { arabic: "لَا", meaning: "not" },
+      { arabic: "يَضُرُّ", meaning: "causes harm" },
+      { arabic: "مَعَ", meaning: "with" },
+      { arabic: "اسْمِهِ", meaning: "His name" },
+      { arabic: "شَيْءٌ", meaning: "anything" },
+      { arabic: "فِي", meaning: "in" },
+      { arabic: "الْأَرْضِ", meaning: "the earth" },
+      { arabic: "وَلَا", meaning: "nor" },
+      { arabic: "فِي", meaning: "in" },
+      { arabic: "السَّمَاءِ", meaning: "the heaven" },
+      { arabic: "وَهُوَ", meaning: "and He is" },
+      { arabic: "السَّمِيعُ", meaning: "the All-Hearing" },
+      { arabic: "الْعَلِيمُ", meaning: "the All-Knowing" }
+    ]
+  },
+  "morning-2": {
+    id: "morning-2",
+    category: "morning-evening",
+    categoryName: "Morning & Evening Adhkar",
+    name: "Morning Gratitude",
+    arabicName: "دعاء الشكر الصباحي",
+    arabicText: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لاَ إِلَـهَ إِلاَّ اللهُ وَحْدَهُ لاَ شَرِيكَ لَهُ",
+    transliteration: "Asbahna wa asbahal-mulku lillah, walhamdu lillah, la ilaha illallahu wahdahu la shareeka lah",
+    translation: "We have reached the morning and the kingdom belongs to Allah. Praise is to Allah. None has the right to be worshipped except Allah, alone, without partner.",
+    reference: "Abu Dawud, Tirmidhi",
+    whenToRecite: "Once in morning",
+    virtue: "Whoever recites this in the morning has thanked Allah for the day.",
+    notes: "This supplication acknowledges Allah's sovereignty over all creation and expresses gratitude for the blessings of the new day.",
+    wordByWord: [
+      { arabic: "أَصْبَحْنَا", meaning: "We have reached the morning" },
+      { arabic: "وَأَصْبَحَ", meaning: "and has reached the morning" },
+      { arabic: "الْمُلْكُ", meaning: "the dominion" },
+      { arabic: "لِلَّهِ", meaning: "to Allah" },
+      { arabic: "وَالْحَمْدُ", meaning: "and all praise" },
+      { arabic: "لِلَّهِ", meaning: "is for Allah" }
+    ]
+  },
+  "quran-1": {
+    id: "quran-1",
+    category: "quran",
+    categoryName: "Quranic Duas",
+    name: "Dua from Surah Al-Baqarah",
+    arabicName: "دعاء من سورة البقرة",
+    arabicText: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+    transliteration: "Rabbana atina fid-dunya hasanatan wa fil-akhirati hasanatan waqina 'adhaban-nar",
+    translation: "Our Lord, give us in this world that which is good and in the Hereafter that which is good, and protect us from the punishment of the Fire.",
+    reference: "Quran 2:201",
+    whenToRecite: "Anytime, especially after prayers",
+    virtue: "This was one of the most frequent supplications of the Prophet Muhammad (PBUH).",
+    notes: "This concise yet comprehensive dua asks for good in both worldly matters and the hereafter, as well as protection from punishment.",
+    wordByWord: [
+      { arabic: "رَبَّنَا", meaning: "Our Lord" },
+      { arabic: "آتِنَا", meaning: "grant us" },
+      { arabic: "فِي", meaning: "in" },
+      { arabic: "الدُّنْيَا", meaning: "this world" },
+      { arabic: "حَسَنَةً", meaning: "that which is good" },
+      { arabic: "وَفِي", meaning: "and in" },
+      { arabic: "الآخِرَةِ", meaning: "the Hereafter" },
+      { arabic: "حَسَنَةً", meaning: "that which is good" },
+      { arabic: "وَقِنَا", meaning: "and protect us" },
+      { arabic: "عَذَابَ", meaning: "from the punishment" },
+      { arabic: "النَّارِ", meaning: "of the Fire" }
+    ]
+  }
+};
+
 // Detailed dua data
 const DUA_DETAILS = {
   "protection-1": {
@@ -133,7 +218,12 @@ export default function DuaDetail() {
         await new Promise(resolve => setTimeout(resolve, 500));
         
         const duaId = params?.id || "";
-        const duaData = DUA_DETAILS[duaId as keyof typeof DUA_DETAILS];
+        // First check in DUA_DETAILS, then in COLLECTION_DUAS
+        let duaData = DUA_DETAILS[duaId as keyof typeof DUA_DETAILS];
+        
+        if (!duaData) {
+          duaData = COLLECTION_DUAS[duaId as keyof typeof COLLECTION_DUAS];
+        }
         
         if (duaData) {
           setDua(duaData);

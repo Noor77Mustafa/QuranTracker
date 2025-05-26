@@ -14,6 +14,91 @@ import { Badge } from "@/components/ui/badge";
 import { Share2, BookmarkPlus, Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
+// Import content from collection pages
+const COLLECTION_HADITHS = {
+  "bukhari-1": {
+    id: "bukhari-1",
+    collection: "bukhari",
+    collectionName: "Sahih al-Bukhari",
+    bookNumber: 1,
+    chapterNumber: 1,
+    hadithNumber: 1,
+    volumeNumber: 1,
+    chapterTitle: "How the Divine Revelation started being revealed to Allah's Messenger",
+    chapterTitleArabic: "بدء الوحي",
+    arabicText: "حَدَّثَنَا الْحُمَيْدِيُّ عَبْدُ اللَّهِ بْنُ الزُّبَيْرِ، قَالَ حَدَّثَنَا سُفْيَانُ، قَالَ حَدَّثَنَا يَحْيَى بْنُ سَعِيدٍ الأَنْصَارِيُّ، قَالَ أَخْبَرَنِي مُحَمَّدُ بْنُ إِبْرَاهِيمَ التَّيْمِيُّ، أَنَّهُ سَمِعَ عَلْقَمَةَ بْنَ وَقَّاصٍ اللَّيْثِيَّ، يَقُولُ سَمِعْتُ عُمَرَ بْنَ الْخَطَّابِ رضى الله عنه عَلَى الْمِنْبَرِ قَالَ سَمِعْتُ رَسُولَ اللَّهِ صلى الله عليه وسلم يَقُولُ ‏\"‏ إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إِلَى دُنْيَا يُصِيبُهَا أَوْ إِلَى امْرَأَةٍ يَنْكِحُهَا، فَهِجْرَتُهُ إِلَى مَا هَاجَرَ إِلَيْهِ ‏\"‏‏.‏",
+    englishText: "Narrated 'Umar bin Al-Khattab: I heard Allah's Messenger (ﷺ) saying, \"The reward of deeds depends upon the intentions and every person will get the reward according to what he has intended. So whoever emigrates for worldly benefits or for a woman to marry, his emigration will be for what he emigrated for.\"",
+    grade: "Sahih",
+    narrator: "'Umar bin Al-Khattab",
+    references: [
+      { collection: "Sahih al-Bukhari", volume: 1, book: 1, hadith: 1 },
+      { collection: "Sahih Muslim", book: 33, hadith: 222 }
+    ],
+    topics: ["Intention", "Deeds", "Rewards", "Migration"],
+    explanations: [
+      {
+        scholar: "Ibn Hajar al-Asqalani",
+        text: "This hadith emphasizes that the value of actions depends on the intention behind them. It is considered one of the most important hadiths in Islam as it sets the foundation for sincerity in all acts of worship and dealings."
+      },
+      {
+        scholar: "Imam Nawawi",
+        text: "This hadith is one-third of Islamic knowledge as all actions fall under three categories: beliefs, actions, and intentions. This hadith covers the entire area of intentions."
+      }
+    ]
+  },
+  "bukhari-2": {
+    id: "bukhari-2",
+    collection: "bukhari",
+    collectionName: "Sahih al-Bukhari",
+    bookNumber: 1,
+    chapterNumber: 1,
+    hadithNumber: 2,
+    volumeNumber: 1,
+    chapterTitle: "How the Divine Revelation started being revealed to Allah's Messenger",
+    chapterTitleArabic: "بدء الوحي",
+    arabicText: "حَدَّثَنَا عَبْدُ اللَّهِ بْنُ يُوسُفَ، قَالَ أَخْبَرَنَا مَالِكٌ، عَنْ هِشَامِ بْنِ عُرْوَةَ، عَنْ أَبِيهِ، عَنْ عَائِشَةَ أُمِّ الْمُؤْمِنِينَ ـ رضى الله عنها ـ أَنَّ الْحَارِثَ بْنَ هِشَامٍ ـ رضى الله عنه ـ سَأَلَ رَسُولَ اللَّهِ صلى الله عليه وسلم فَقَالَ يَا رَسُولَ اللَّهِ كَيْفَ يَأْتِيكَ الْوَحْىُ فَقَالَ رَسُولُ اللَّهِ صلى الله عليه وسلم ‏\"‏ أَحْيَانًا يَأْتِينِي مِثْلَ صَلْصَلَةِ الْجَرَسِ وَهُوَ�شَدُّهُ عَلَىَّ، فَيُفْصَمُ عَنِّي وَقَدْ وَعَيْتُ عَنْهُ مَا قَالَ، وَأَحْيَانًا يَتَمَثَّلُ لِيَ الْمَلَكُ رَجُلاً فَيُكَلِّمُنِي فَأَعِي مَا يَقُولُ ‏\"‏‏.‏ قَالَتْ عَائِشَةُ ـ رضى الله عنها ـ وَلَقَدْ رَأَيْتُهُ يَنْزِلُ عَلَيْهِ الْوَحْىُ فِي الْيَوْمِ الشَّدِيدِ الْبَرْدِ، فَيَفْصِمُ عَنْهُ وَإِنَّ جَبِينَهُ لَيَتَفَصَّدُ عَرَقًا‏.‏",
+    englishText: "Narrated 'Aisha: (the mother of the faithful believers) Al-Harith bin Hisham asked Allah's Messenger \"O Allah's Messenger! How is the Divine Inspiration revealed to you?\" Allah's Messenger replied, \"Sometimes it is (revealed) like the ringing of a bell, this form of Inspiration is the hardest of all and then this state passes off after I have grasped what is inspired. Sometimes the Angel comes in the form of a man and talks to me and I grasp whatever he says.\" 'Aisha added: Verily I saw the Prophet being inspired Divinely on a very cold day and noticed the sweat dropping from his forehead (as the Inspiration was over).",
+    grade: "Sahih",
+    narrator: "'Aisha (Mother of the Believers)",
+    references: [
+      { collection: "Sahih al-Bukhari", volume: 1, book: 1, hadith: 2 },
+      { collection: "Sahih Muslim", book: 43, hadith: 99 }
+    ],
+    topics: ["Revelation", "Prophet Muhammad", "Divine Inspiration", "Angel Jibril"],
+    explanations: [
+      {
+        scholar: "Ibn Hajar al-Asqalani",
+        text: "This hadith describes the different forms in which revelation came to the Prophet. The ringing of a bell indicates the intensity and difficulty of receiving revelation."
+      }
+    ]
+  },
+  "bukhari-3": {
+    id: "bukhari-3",
+    collection: "bukhari",
+    collectionName: "Sahih al-Bukhari",
+    bookNumber: 1,
+    chapterNumber: 1,
+    hadithNumber: 3,
+    volumeNumber: 1,
+    chapterTitle: "How the Divine Revelation started being revealed to Allah's Messenger",
+    chapterTitleArabic: "بدء الوحي",
+    arabicText: "حَدَّثَنَا يَحْيَى بْنُ بُكَيْرٍ، قَالَ حَدَّثَنَا اللَّيْثُ، عَنْ عُقَيْلٍ، عَنِ ابْنِ شِهَابٍ، عَنْ عُرْوَةَ بْنِ الزُّبَيْرِ، عَنْ عَائِشَةَ أُمِّ الْمُؤْمِنِينَ، أَنَّهَا قَالَتْ أَوَّلُ مَا بُدِئَ بِهِ رَسُولُ اللَّهِ صلى الله عليه وسلم مِنَ الْوَحْىِ الرُّؤْيَا الصَّالِحَةُ فِي النَّوْمِ، فَكَانَ لاَ يَرَى رُؤْيَا إِلاَّ جَاءَتْ مِثْلَ فَلَقِ الصُّبْحِ",
+    englishText: "Narrated 'Aisha: (the mother of the faithful believers) The commencement of the Divine Inspiration to Allah's Messenger was in the form of good dreams which came true like bright daylight.",
+    grade: "Sahih",
+    narrator: "'Aisha (Mother of the Believers)",
+    references: [
+      { collection: "Sahih al-Bukhari", volume: 1, book: 1, hadith: 3 }
+    ],
+    topics: ["Revelation", "Dreams", "Prophet Muhammad", "Divine Inspiration"],
+    explanations: [
+      {
+        scholar: "Ibn Hajar al-Asqalani",
+        text: "This hadith explains that revelation to the Prophet began with true dreams, which were a preparation for receiving the Quran."
+      }
+    ]
+  }
+};
+
 // Detailed hadith data with more fields
 const HADITH_DETAILS = {
   "bukhari-1": {
@@ -124,7 +209,12 @@ export default function HadithDetail() {
         await new Promise(resolve => setTimeout(resolve, 500));
         
         const hadithId = params?.id || "";
-        const hadithData = HADITH_DETAILS[hadithId as keyof typeof HADITH_DETAILS];
+        // First check in HADITH_DETAILS, then in COLLECTION_HADITHS
+        let hadithData = HADITH_DETAILS[hadithId as keyof typeof HADITH_DETAILS];
+        
+        if (!hadithData) {
+          hadithData = COLLECTION_HADITHS[hadithId as keyof typeof COLLECTION_HADITHS];
+        }
         
         if (hadithData) {
           setHadith(hadithData);
