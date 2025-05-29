@@ -321,9 +321,6 @@ export default function DuaDetail() {
         await new Promise(resolve => setTimeout(resolve, 500));
         
         const duaId = params?.id || "";
-        console.log("Looking for dua ID:", duaId);
-        console.log("Available DUA_DETAILS keys:", Object.keys(DUA_DETAILS));
-        console.log("Available COLLECTION_DUAS keys:", Object.keys(COLLECTION_DUAS));
         
         // First check in DUA_DETAILS, then in COLLECTION_DUAS
         let duaData = DUA_DETAILS[duaId as keyof typeof DUA_DETAILS];
@@ -332,14 +329,11 @@ export default function DuaDetail() {
           duaData = COLLECTION_DUAS[duaId as keyof typeof COLLECTION_DUAS];
         }
         
-        console.log("Found dua data:", duaData);
-        
         if (duaData) {
           setDua(duaData);
           document.title = `${duaData.name} - Dua - MyQuran`;
         } else {
           // Handle dua not found
-          console.log("Dua not found for ID:", duaId);
           document.title = "Dua Not Found - MyQuran";
         }
       } catch (error) {
@@ -469,7 +463,7 @@ export default function DuaDetail() {
                 </Button>
               </div>
               
-              {showWordByWord && (
+              {showWordByWord && dua.wordByWord && dua.wordByWord.length > 0 && (
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
                   {dua.wordByWord.map((word: any, index: number) => (
                     <div key={index} className="bg-gray-50 dark:bg-gray-800 p-2 rounded text-center">
