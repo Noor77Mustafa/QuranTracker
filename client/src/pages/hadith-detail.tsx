@@ -292,12 +292,8 @@ export default function HadithDetail() {
         
         const hadithId = params?.id || "";
         
-        // First check in HADITH_DETAILS, then in COLLECTION_HADITHS
-        let hadithData = HADITH_DETAILS[hadithId as keyof typeof HADITH_DETAILS];
-        
-        if (!hadithData) {
-          hadithData = COLLECTION_HADITHS[hadithId as keyof typeof COLLECTION_HADITHS];
-        }
+        // Search for hadith in COLLECTION_HADITHS
+        let hadithData = COLLECTION_HADITHS[hadithId as keyof typeof COLLECTION_HADITHS];
         
         if (hadithData) {
           setHadith(hadithData);
