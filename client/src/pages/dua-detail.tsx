@@ -322,11 +322,18 @@ export default function DuaDetail() {
         
         const duaId = params?.id || "";
         
-        // First check in DUA_DETAILS, then in COLLECTION_DUAS
-        let duaData = DUA_DETAILS[duaId as keyof typeof DUA_DETAILS];
+        // Search through all dua categories to find the dua
+        let duaData = null;
         
+        // Search through each category
+        for (const categoryDuas of Object.values(CATEGORY_DUAS)) {
+          duaData = categoryDuas.find(d => d.id === duaId);
+          if (duaData) break;
+        }
+        
+        // If not found in categories, check DUA_DETAILS
         if (!duaData) {
-          duaData = COLLECTION_DUAS[duaId as keyof typeof COLLECTION_DUAS];
+          duaData = DUA_DETAILS[duaId as keyof typeof DUA_DETAILS];
         }
         
         if (duaData) {
