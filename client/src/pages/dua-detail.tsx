@@ -396,10 +396,9 @@ export default function DuaDetail() {
     );
   }
   
-  return (
-    <main className="container mx-auto px-4 py-8 max-w-3xl">
-      {loading ? (
-        // Loading skeleton
+  if (loading) {
+    return (
+      <main className="container mx-auto px-4 py-8 max-w-3xl">
         <Card>
           <CardHeader>
             <Skeleton className="h-8 w-3/4 mb-2" />
@@ -410,9 +409,28 @@ export default function DuaDetail() {
             <Skeleton className="h-24 w-full" />
           </CardContent>
         </Card>
-      ) : (
-        // Dua content
+      </main>
+    );
+  }
+
+  if (!dua) {
+    return (
+      <main className="container mx-auto px-4 py-8 max-w-3xl">
         <Card>
+          <CardHeader>
+            <CardTitle>Dua Not Found</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>The requested dua could not be found.</p>
+          </CardContent>
+        </Card>
+      </main>
+    );
+  }
+
+  return (
+    <main className="container mx-auto px-4 py-8 max-w-3xl">
+      <Card>
           <CardHeader>
             <div className="flex justify-between items-start">
               <div>
@@ -517,7 +535,6 @@ export default function DuaDetail() {
             </Button>
           </CardFooter>
         </Card>
-      )}
     </main>
   );
 }
