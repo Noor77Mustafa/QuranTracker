@@ -366,10 +366,9 @@ export default function HadithDetail() {
     );
   }
   
-  return (
-    <main className="container mx-auto px-4 py-8 max-w-3xl">
-      {loading ? (
-        // Loading skeleton
+  if (loading) {
+    return (
+      <main className="container mx-auto px-4 py-8 max-w-3xl">
         <Card>
           <CardHeader>
             <Skeleton className="h-8 w-3/4 mb-2" />
@@ -380,9 +379,28 @@ export default function HadithDetail() {
             <Skeleton className="h-24 w-full" />
           </CardContent>
         </Card>
-      ) : (
-        // Hadith content
+      </main>
+    );
+  }
+
+  if (!hadith) {
+    return (
+      <main className="container mx-auto px-4 py-8 max-w-3xl">
         <Card>
+          <CardHeader>
+            <CardTitle>Hadith Not Found</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>The requested hadith could not be found.</p>
+          </CardContent>
+        </Card>
+      </main>
+    );
+  }
+
+  return (
+    <main className="container mx-auto px-4 py-8 max-w-3xl">
+      <Card>
           <CardHeader>
             <div className="flex justify-between items-start">
               <div>
@@ -483,7 +501,6 @@ export default function HadithDetail() {
             </Button>
           </CardFooter>
         </Card>
-      )}
     </main>
   );
 }
