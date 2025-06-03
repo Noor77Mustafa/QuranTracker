@@ -59,6 +59,50 @@ const CATEGORY_DUAS = {
       source: "Quran 2:201",
       recitation: "Anytime"
     }
+  ],
+  "protection": [
+    {
+      id: "protection-1",
+      name: "Seeking Refuge",
+      arabicName: "دعاء الاستعاذة",
+      arabicText: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
+      transliteration: "A'udhu bi kalimatillahi't-tammati min sharri ma khalaq",
+      translation: "I seek refuge in the perfect words of Allah from the evil of what He has created.",
+      source: "Sahih Muslim",
+      recitation: "3 times for protection"
+    },
+    {
+      id: "protection-2", 
+      name: "Evening Protection",
+      arabicName: "حماية المساء",
+      arabicText: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ",
+      transliteration: "Bismillahil-ladhi la yadurru ma'asmihi shay'un fil-ardi wa la fis-sama'i, wa huwas-sami'ul-'aleem",
+      translation: "In the name of Allah, with Whose name nothing can cause harm on earth or in the heavens, and He is the All-Hearing, the All-Knowing.",
+      source: "Abu Dawud, Tirmidhi",
+      recitation: "3 times evening and morning"
+    }
+  ],
+  "forgiveness-repentance": [
+    {
+      id: "forgiveness-1",
+      name: "Master of Seeking Forgiveness",
+      arabicName: "سيد الاستغفار",
+      arabicText: "اللَّهُمَّ أَنْتَ رَبِّي لاَ إِلَهَ إِلاَّ أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ",
+      transliteration: "Allahumma anta rabbi la ilaha illa ant, khalaqtani wa ana 'abduka, wa ana 'ala 'ahdika wa wa'dika mas-tata't",
+      translation: "O Allah, You are my Lord, there is no god except You. You created me and I am Your servant, and I am keeping my covenant and promise to You as much as I can.",
+      source: "Sahih al-Bukhari",
+      recitation: "Morning and evening"
+    },
+    {
+      id: "forgiveness-2",
+      name: "Simple Seeking Forgiveness",
+      arabicName: "الاستغفار البسيط",
+      arabicText: "أَسْتَغْفِرُ اللَّهَ الَّذِي لاَ إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ",
+      transliteration: "Astaghfir Allah alladhi la ilaha illa huwal-hayyul-qayyumu wa atubu ilaih",
+      translation: "I seek forgiveness from Allah, besides whom there is no god, the Ever-Living, the Sustainer, and I repent to Him.",
+      source: "Abu Dawud, Tirmidhi",
+      recitation: "Anytime"
+    }
   ]
 };
 

@@ -69,6 +69,28 @@ const CATEGORY_DUAS = {
       recitation: "Anytime"
     }
   ],
+  "protection": [
+    {
+      id: "protection-1",
+      name: "Seeking Refuge",
+      arabicName: "دعاء الاستعاذة",
+      arabicText: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
+      transliteration: "A'udhu bi kalimatillahi't-tammati min sharri ma khalaq",
+      translation: "I seek refuge in the perfect words of Allah from the evil of what He has created.",
+      source: "Sahih Muslim",
+      recitation: "3 times for protection"
+    },
+    {
+      id: "protection-2", 
+      name: "Evening Protection",
+      arabicName: "حماية المساء",
+      arabicText: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ",
+      transliteration: "Bismillahil-ladhi la yadurru ma'asmihi shay'un fil-ardi wa la fis-sama'i, wa huwas-sami'ul-'aleem",
+      translation: "In the name of Allah, with Whose name nothing can cause harm on earth or in the heavens, and He is the All-Hearing, the All-Knowing.",
+      source: "Abu Dawud, Tirmidhi",
+      recitation: "3 times evening and morning"
+    }
+  ],
   "forgiveness-repentance": [
     {
       id: "forgiveness-1",
