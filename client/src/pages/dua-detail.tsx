@@ -98,14 +98,17 @@ export default function DuaDetail() {
         }
         
         if (foundDua) {
+          console.log("Setting dua state:", foundDua);
           setDua(foundDua);
+          setLoading(false);
           document.title = `${foundDua.name} - Dua - MyQuran`;
         } else {
+          console.log("No dua found - setting title to not found");
+          setLoading(false);
           document.title = "Dua Not Found - MyQuran";
         }
       } catch (error) {
         console.error("Error fetching dua:", error);
-      } finally {
         setLoading(false);
       }
     };

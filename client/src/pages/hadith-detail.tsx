@@ -130,14 +130,15 @@ export default function HadithDetail() {
         if (foundHadith) {
           console.log("Setting hadith state:", foundHadith);
           setHadith(foundHadith);
+          setLoading(false);
           document.title = `${foundHadith.collectionName} #${foundHadith.hadithNumber} - MyQuran`;
         } else {
           console.log("No hadith found - setting title to not found");
+          setLoading(false);
           document.title = "Hadith Not Found - MyQuran";
         }
       } catch (error) {
         console.error("Error fetching hadith:", error);
-      } finally {
         setLoading(false);
       }
     };
