@@ -128,9 +128,11 @@ export default function HadithDetail() {
         }
         
         if (foundHadith) {
+          console.log("Setting hadith state:", foundHadith);
           setHadith(foundHadith);
           document.title = `${foundHadith.collectionName} #${foundHadith.hadithNumber} - MyQuran`;
         } else {
+          console.log("No hadith found - setting title to not found");
           document.title = "Hadith Not Found - MyQuran";
         }
       } catch (error) {
@@ -170,7 +172,10 @@ export default function HadithDetail() {
     );
   };
   
+  console.log("Render state - loading:", loading, "hadith:", hadith);
+
   if (loading) {
+    console.log("Rendering loading state");
     return (
       <main className="container mx-auto px-4 py-8 max-w-3xl">
         <Card>
@@ -188,6 +193,7 @@ export default function HadithDetail() {
   }
 
   if (!hadith) {
+    console.log("Rendering not found state");
     return (
       <main className="container mx-auto px-4 py-8 max-w-3xl">
         <div className="mb-6">
@@ -209,6 +215,8 @@ export default function HadithDetail() {
       </main>
     );
   }
+
+  console.log("Rendering hadith content:", hadith);
 
   return (
     <main className="container mx-auto px-4 py-8 max-w-3xl">
