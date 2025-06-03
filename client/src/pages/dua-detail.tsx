@@ -77,14 +77,24 @@ export default function DuaDetail() {
         await new Promise(resolve => setTimeout(resolve, 500));
         
         const duaId = params?.id || "";
+        console.log("Looking for dua ID:", duaId);
+        console.log("Available categories:", Object.keys(CATEGORY_DUAS));
         
         // Search through all dua categories to find the dua
         let foundDua = null;
         
         // Check each category
-        for (const categoryDuas of Object.values(CATEGORY_DUAS)) {
+        for (const [categoryName, categoryDuas] of Object.entries(CATEGORY_DUAS)) {
+          console.log(`Checking ${categoryName} category:`, categoryDuas.map(d => d.id));
           foundDua = categoryDuas.find(d => d.id === duaId);
-          if (foundDua) break;
+          if (foundDua) {
+            console.log("Found dua in category", categoryName, ":", foundDua);
+            break;
+          }
+        }
+        
+        if (!foundDua) {
+          console.log("Dua not found with ID:", duaId);
         }
         
         if (foundDua) {

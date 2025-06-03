@@ -103,18 +103,28 @@ export default function HadithDetail() {
         await new Promise(resolve => setTimeout(resolve, 500));
         
         const hadithId = params?.id || "";
+        console.log("Looking for hadith ID:", hadithId);
+        console.log("Available collections:", Object.keys(COLLECTION_HADITHS));
         
         // Search through all collections to find the hadith
         let foundHadith = null;
         
         // Check in bukhari collection
         if (COLLECTION_HADITHS.bukhari) {
+          console.log("Bukhari hadiths:", COLLECTION_HADITHS.bukhari.map(h => h.id));
           foundHadith = COLLECTION_HADITHS.bukhari.find(h => h.id === hadithId);
+          if (foundHadith) console.log("Found in Bukhari:", foundHadith);
         }
         
         // Check in muslim collection if not found
         if (!foundHadith && COLLECTION_HADITHS.muslim) {
+          console.log("Muslim hadiths:", COLLECTION_HADITHS.muslim.map(h => h.id));
           foundHadith = COLLECTION_HADITHS.muslim.find(h => h.id === hadithId);
+          if (foundHadith) console.log("Found in Muslim:", foundHadith);
+        }
+        
+        if (!foundHadith) {
+          console.log("Hadith not found with ID:", hadithId);
         }
         
         if (foundHadith) {
