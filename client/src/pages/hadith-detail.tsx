@@ -73,6 +73,41 @@ const COLLECTION_HADITHS = {
       collectionName: "Sahih al-Bukhari"
     }
   ],
+  nawawi40: [
+    {
+      id: "nawawi40-1",
+      hadithNumber: 1,
+      bookNumber: 1,
+      chapterTitle: "Actions are According to Intention",
+      arabicText: "إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إِلَى دُنْيَا يُصِيبُهَا أَوْ إِلَى امْرَأَةٍ يَنْكِحُهَا، فَهِجْرَتُهُ إِلَى مَا هَاجَرَ إِلَيْهِ",
+      englishText: "Actions are according to intentions, and everyone will get what was intended. Whoever migrates with an intention for Allah and His messenger, the migration will be for the sake of Allah and his Messenger. And whoever migrates for worldly gain or to marry a woman, then his migration will be for the sake of whatever he migrated for.",
+      narrator: "Umar ibn al-Khattab",
+      grade: "Sahih",
+      collectionName: "An-Nawawi's Forty Hadith"
+    },
+    {
+      id: "nawawi40-13",
+      hadithNumber: 13,
+      bookNumber: 1,
+      chapterTitle: "None of You Believes Until",
+      arabicText: "لاَ يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ",
+      englishText: "None of you believes until he loves for his brother what he loves for himself.",
+      narrator: "Anas ibn Malik",
+      grade: "Sahih",
+      collectionName: "An-Nawawi's Forty Hadith"
+    },
+    {
+      id: "nawawi40-18",
+      hadithNumber: 18,
+      bookNumber: 1,
+      chapterTitle: "Fear Allah Wherever You Are",
+      arabicText: "اتَّقِ اللَّهَ حَيْثُمَا كُنْتَ، وَأَتْبِعِ السَّيِّئَةَ الْحَسَنَةَ تَمْحُهَا، وَخَالِقِ النَّاسَ بِخُلُقٍ حَسَنٍ",
+      englishText: "Fear Allah wherever you are, follow up a bad deed with a good one and it will wipe it out, and behave well towards people.",
+      narrator: "Abu Dharr al-Ghifari and Mu'adh ibn Jabal",
+      grade: "Hasan",
+      collectionName: "An-Nawawi's Forty Hadith"
+    }
+  ],
   muslim: [
     {
       id: "muslim-1",
@@ -96,55 +131,37 @@ export default function HadithDetail() {
   const { toast } = useToast();
   
   useEffect(() => {
+    const hadithId = params?.id;
+    if (!hadithId) return;
+    
     const fetchHadith = async () => {
-      setLoading(true);
       try {
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        const hadithId = params?.id || "";
-        console.log("Looking for hadith ID:", hadithId);
-        console.log("Available collections:", Object.keys(COLLECTION_HADITHS));
-        
         // Search through all collections to find the hadith
         let foundHadith = null;
         
-        // Check in bukhari collection
-        if (COLLECTION_HADITHS.bukhari) {
-          console.log("Bukhari hadiths:", COLLECTION_HADITHS.bukhari.map(h => h.id));
-          foundHadith = COLLECTION_HADITHS.bukhari.find(h => h.id === hadithId);
-          if (foundHadith) console.log("Found in Bukhari:", foundHadith);
-        }
-        
-        // Check in muslim collection if not found
-        if (!foundHadith && COLLECTION_HADITHS.muslim) {
-          console.log("Muslim hadiths:", COLLECTION_HADITHS.muslim.map(h => h.id));
-          foundHadith = COLLECTION_HADITHS.muslim.find(h => h.id === hadithId);
-          if (foundHadith) console.log("Found in Muslim:", foundHadith);
-        }
-        
-        if (!foundHadith) {
-          console.log("Hadith not found with ID:", hadithId);
+        // Check all collections
+        for (const collectionHadiths of Object.values(COLLECTION_HADITHS)) {
+          foundHadith = collectionHadiths.find(h => h.id === hadithId);
+          if (foundHadith) break;
         }
         
         if (foundHadith) {
-          console.log("Setting hadith state:", foundHadith);
           setHadith(foundHadith);
-          setLoading(false);
           document.title = `${foundHadith.collectionName} #${foundHadith.hadithNumber} - MyQuran`;
         } else {
-          console.log("No hadith found - setting title to not found");
-          setLoading(false);
+          setHadith(null);
           document.title = "Hadith Not Found - MyQuran";
         }
       } catch (error) {
         console.error("Error fetching hadith:", error);
+        setHadith(null);
+      } finally {
         setLoading(false);
       }
     };
     
     fetchHadith();
-  }, [params]);
+  }, [params?.id]);
   
   const copyToClipboard = () => {
     if (!hadith) return;
@@ -173,10 +190,7 @@ export default function HadithDetail() {
     );
   };
   
-  console.log("Render state - loading:", loading, "hadith:", hadith);
-
   if (loading) {
-    console.log("Rendering loading state");
     return (
       <main className="container mx-auto px-4 py-8 max-w-3xl">
         <Card>
@@ -194,7 +208,6 @@ export default function HadithDetail() {
   }
 
   if (!hadith) {
-    console.log("Rendering not found state");
     return (
       <main className="container mx-auto px-4 py-8 max-w-3xl">
         <div className="mb-6">
@@ -216,8 +229,6 @@ export default function HadithDetail() {
       </main>
     );
   }
-
-  console.log("Rendering hadith content:", hadith);
 
   return (
     <main className="container mx-auto px-4 py-8 max-w-3xl">
