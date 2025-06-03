@@ -114,51 +114,37 @@ export default function DuaDetail() {
   const { toast } = useToast();
   
   useEffect(() => {
+    const duaId = params?.id;
+    if (!duaId) return;
+    
     const fetchDua = async () => {
-      setLoading(true);
       try {
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        const duaId = params?.id || "";
-        console.log("Looking for dua ID:", duaId);
-        console.log("Available categories:", Object.keys(CATEGORY_DUAS));
-        
         // Search through all dua categories to find the dua
         let foundDua = null;
         
         // Check each category
-        for (const [categoryName, categoryDuas] of Object.entries(CATEGORY_DUAS)) {
-          console.log(`Checking ${categoryName} category:`, categoryDuas.map(d => d.id));
+        for (const categoryDuas of Object.values(CATEGORY_DUAS)) {
           foundDua = categoryDuas.find(d => d.id === duaId);
-          if (foundDua) {
-            console.log("Found dua in category", categoryName, ":", foundDua);
-            break;
-          }
-        }
-        
-        if (!foundDua) {
-          console.log("Dua not found with ID:", duaId);
+          if (foundDua) break;
         }
         
         if (foundDua) {
-          console.log("Setting dua state:", foundDua);
           setDua(foundDua);
-          setLoading(false);
           document.title = `${foundDua.name} - Dua - MyQuran`;
         } else {
-          console.log("No dua found - setting title to not found");
-          setLoading(false);
+          setDua(null);
           document.title = "Dua Not Found - MyQuran";
         }
       } catch (error) {
         console.error("Error fetching dua:", error);
+        setDua(null);
+      } finally {
         setLoading(false);
       }
     };
     
     fetchDua();
-  }, [params]);
+  }, [params?.id]);
   
   const copyToClipboard = () => {
     if (!dua) return;
