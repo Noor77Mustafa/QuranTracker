@@ -105,7 +105,7 @@ export default function Profile() {
                   <p className="text-sm text-gray-600 dark:text-gray-300">Points</p>
                 </div>
                 <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 text-center">
-                  <p className="text-2xl font-bold text-primary">{badges.length}</p>
+                  <p className="text-2xl font-bold text-primary">{Array.isArray(achievements) ? achievements.length : 0}</p>
                   <p className="text-sm text-gray-600 dark:text-gray-300">Achievements</p>
                 </div>
               </div>
@@ -413,16 +413,16 @@ export default function Profile() {
                 </motion.div>
               ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                  {badges.map((badge) => (
+                  {Array.isArray(achievements) && achievements.map((badge: any) => (
                     <button
                       key={badge.id}
                       className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600 transition"
                       onClick={() => setSelectedBadge(badge)}
                     >
                       <div className="w-12 h-12 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                        <span className="material-symbols-rounded text-2xl text-primary">{badge.icon}</span>
+                        <span className="material-symbols-rounded text-2xl text-primary">{badge.icon || 'star'}</span>
                       </div>
-                      <p className="font-medium text-sm">{badge.name}</p>
+                      <p className="font-medium text-sm">{badge.name || 'Achievement'}</p>
                     </button>
                   ))}
                 </div>
