@@ -5,7 +5,7 @@ import { useAchievements } from "@/hooks/use-achievements";
 export default function QuranGrowthJourney() {
   // We'll use placeholder data for now and integrate with real data from API later
   const { streak, pagesRead } = useStreak();
-  const { badges } = useAchievements();
+  const { achievements } = useAchievements();
   
   return (
     <div className="mt-8 bg-gradient-to-r from-secondary/90 to-secondary rounded-xl shadow-sm overflow-hidden text-white">
@@ -33,7 +33,7 @@ export default function QuranGrowthJourney() {
           {/* Badges Card */}
           <div className="bg-white/10 rounded-lg p-3 text-center">
             <span className="material-symbols-rounded text-2xl mb-1">workspace_premium</span>
-            <p className="text-xl font-bold">{badges.length}</p>
+            <p className="text-xl font-bold">{achievements?.length || 0}</p>
             <p className="text-xs">Badges</p>
           </div>
         </div>

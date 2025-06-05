@@ -63,7 +63,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const progressData = insertReadingProgressSchema.parse(req.body);
       const progress = await dbStorage.createOrUpdateReadingProgress(progressData);
-      res.status(201).json(progress);
+      
+      // Check for achievements when progress is updated
+      const newAchievements = await achievementService.onAyahRead(progressData.userId);
+      if (progress.isCompleted) {
+        const surahAchievements = await achievementService.onSurahCompleted(progressData.userId);
+        newAchievements.push(...surahAchievements);
+      }
+      
+      res.status(201).json({ 
+        progress, 
+        newAchievements: newAchievements.length > 0 ? newAchievements : undefined 
+      });
     } catch (error) {
       if (error instanceof z.ZodError) {
         res.status(400).json({ message: "Invalid progress data", errors: error.errors });
@@ -88,7 +99,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const streakData = insertStreakSchema.parse(req.body);
       const streak = await dbStorage.createOrUpdateStreak(streakData);
-      res.status(201).json(streak);
+      
+      // Check for streak-based achievements
+      const newAchievements = await achievementService.onStreakUpdated(streakData.userId);
+      
+      res.status(201).json({ 
+        streak, 
+        newAchievements: newAchievements.length > 0 ? newAchievements : undefined 
+      });
     } catch (error) {
       if (error instanceof z.ZodError) {
         res.status(400).json({ message: "Invalid streak data", errors: error.errors });
@@ -322,6 +340,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = parseInt(req.params.userId);
       const userQuests = await dbStorage.getUserQuestsByUserId(userId);
       res.json(userQuests);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  // Activity tracking for achievements
+  app.post("/api/activity/hadith-read", isAuthenticated, async (req, res) => {
+    try {
+      const { hadithId, collection } = req.body;
+      const userId = (req as any).user.id;
+      
+      // Track hadith reading for achievements
+      const newAchievements = await achievementService.onHadithRead(userId, collection);
+      
+      res.json({ 
+        success: true,
+        newAchievements: newAchievements.length > 0 ? newAchievements : undefined 
+      });
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  app.post("/api/activity/dua-learned", isAuthenticated, async (req, res) => {
+    try {
+      const { duaId, category } = req.body;
+      const userId = (req as any).user.id;
+      
+      // Track dua learning for achievements
+      const newAchievements = await achievementService.onDuaLearned(userId, category);
+      
+      res.json({ 
+        success: true,
+        newAchievements: newAchievements.length > 0 ? newAchievements : undefined 
+      });
     } catch (error) {
       res.status(500).json({ message: handleDbError(error) });
     }
