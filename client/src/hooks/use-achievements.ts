@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "./use-auth";
 
@@ -26,6 +26,8 @@ export function useAchievements(userId?: number) {
   const { data: achievements = [], isLoading } = useQuery({
     queryKey: ["/api/achievements", effectiveUserId],
     enabled: !!effectiveUserId,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    retry: false,
   });
 
   // Track hadith reading activity
@@ -47,8 +49,7 @@ export function useAchievements(userId?: number) {
     onSuccess: (data) => {
       if (data.newAchievements && data.newAchievements.length > 0) {
         setPendingAchievements(prev => [...prev, ...data.newAchievements!]);
-        // Invalidate achievements cache to refresh the list
-        queryClient.invalidateQueries({ queryKey: ["/api/achievements", userId] });
+        queryClient.invalidateQueries({ queryKey: ["/api/achievements", effectiveUserId] });
       }
     },
   });
@@ -72,8 +73,7 @@ export function useAchievements(userId?: number) {
     onSuccess: (data) => {
       if (data.newAchievements && data.newAchievements.length > 0) {
         setPendingAchievements(prev => [...prev, ...data.newAchievements!]);
-        // Invalidate achievements cache to refresh the list
-        queryClient.invalidateQueries({ queryKey: ["/api/achievements", userId] });
+        queryClient.invalidateQueries({ queryKey: ["/api/achievements", effectiveUserId] });
       }
     },
   });
@@ -84,7 +84,7 @@ export function useAchievements(userId?: number) {
   };
 
   return {
-    achievements,
+    achievements: Array.isArray(achievements) ? achievements : [],
     isLoading,
     pendingAchievements,
     clearPendingAchievements,

@@ -33,7 +33,7 @@ export default function QuranGrowthJourney() {
           {/* Badges Card */}
           <div className="bg-white/10 rounded-lg p-3 text-center">
             <span className="material-symbols-rounded text-2xl mb-1">workspace_premium</span>
-            <p className="text-xl font-bold">{achievements?.length || 0}</p>
+            <p className="text-xl font-bold">{Array.isArray(achievements) ? achievements.length : 0}</p>
             <p className="text-xs">Badges</p>
           </div>
         </div>
