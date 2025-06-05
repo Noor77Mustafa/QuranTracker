@@ -7,6 +7,7 @@ import { handleDbError } from "./db";
 import { z } from "zod";
 import { getAIResponse } from "./openai-routes";
 import { setupAuth, isAuthenticated } from "./auth";
+import { AchievementService } from "./achievement-service";
 import cookieParser from "cookie-parser";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -20,6 +21,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const pgStorage = new PgStorage();
   // Use pgStorage instead of in-memory storage for all routes
   const dbStorage = pgStorage;
+  
+  // Create achievement service
+  const achievementService = new AchievementService(pgStorage);
   // User routes
   app.post("/api/auth/register", async (req, res) => {
     try {

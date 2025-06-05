@@ -19,7 +19,7 @@ export default function FooterNav() {
           { path: "/read", icon: "auto_stories", label: "Read" },
           { path: "/hadiths", icon: "history_edu", label: "Hadiths" },
           { path: "/duas", icon: "volunteer_activism", label: "Duas" },
-          { path: "/learn", icon: "school", label: "Learn" },
+          { path: "/progress", icon: "trophy", label: "Progress" },
           { path: "/explore", icon: "explore", label: "Explore" }
         ].map(item => {
           const active = isActive(item.path);

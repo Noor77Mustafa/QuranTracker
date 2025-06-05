@@ -305,7 +305,12 @@ export default function Progress() {
               <span>Level {userLevel}</span>
               <span>{userXp % 1000} / 1000 XP</span>
             </div>
-            <ProgressBar value={xpProgress} className="h-3" />
+            <div className="w-full bg-gray-200 rounded-full h-3">
+              <div 
+                className="bg-primary h-3 rounded-full transition-all duration-300" 
+                style={{ width: `${xpProgress}%` }}
+              ></div>
+            </div>
             <p className="text-sm text-gray-600">
               {1000 - (userXp % 1000)} XP needed for Level {userLevel + 1}
             </p>
@@ -341,7 +346,7 @@ export default function Progress() {
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {filteredUnlocked.map((badge) => (
-                      <Card key={badge.id} className={`border-2 ${RARITY_COLORS[badge.rarity]} relative overflow-hidden`}>
+                      <Card key={badge.id} className={`border-2 ${RARITY_COLORS[badge.rarity as keyof typeof RARITY_COLORS]} relative overflow-hidden`}>
                         <div className="absolute top-2 right-2">
                           <Badge variant="secondary" className="text-xs">
                             {badge.rarity}

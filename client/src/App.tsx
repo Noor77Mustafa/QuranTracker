@@ -56,6 +56,7 @@ function Router() {
             <Route path="/duas" component={Duas} />
             <Route path="/dua/category/:categoryId" component={DuaCollection} />
             <Route path="/dua/:id" component={DuaDetail} />
+            <Route path="/progress" component={Progress} />
             <Route component={NotFound} />
           </Switch>
         </Suspense>
