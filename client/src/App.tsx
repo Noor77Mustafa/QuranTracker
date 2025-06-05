@@ -28,6 +28,7 @@ const Duas = lazy(() => import("@/pages/duas"));
 const DuaDetail = lazy(() => import("@/pages/dua-detail"));
 const DuaCollection = lazy(() => import("@/pages/dua-collection"));
 const Progress = lazy(() => import("@/pages/progress"));
+const ProfileGoals = lazy(() => import("@/pages/profile-goals"));
 
 function Router() {
   return (
@@ -57,6 +58,7 @@ function Router() {
             <Route path="/dua/category/:categoryId" component={DuaCollection} />
             <Route path="/dua/:id" component={DuaDetail} />
             <Route path="/progress" component={Progress} />
+            <Route path="/profile/goals" component={ProfileGoals} />
             <Route component={NotFound} />
           </Switch>
         </Suspense>

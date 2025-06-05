@@ -24,7 +24,7 @@ interface UserProfile {
 export default function Profile() {
   const { user: authUser, isAuthenticated, logout } = useAuth();
   const { streak, longestStreak, pagesRead } = useStreak();
-  const { badges } = useAchievements();
+  const { achievements } = useAchievements();
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
   const [activeTab, setActiveTab] = useState<'progress' | 'achievements' | 'quests' | 'settings'>('progress');
   const [isGoalDialogOpen, setIsGoalDialogOpen] = useState(false);
