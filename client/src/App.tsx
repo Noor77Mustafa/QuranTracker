@@ -27,6 +27,7 @@ const HadithCollection = lazy(() => import("@/pages/hadith-collection"));
 const Duas = lazy(() => import("@/pages/duas"));
 const DuaDetail = lazy(() => import("@/pages/dua-detail"));
 const DuaCollection = lazy(() => import("@/pages/dua-collection"));
+const Progress = lazy(() => import("@/pages/progress"));
 
 function Router() {
   return (
