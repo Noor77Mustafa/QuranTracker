@@ -42,7 +42,7 @@ export default function SurahDetail() {
   
   const audioRef = useRef<HTMLAudioElement>(null);
   const { updateStreak, incrementPagesRead } = useStreak();
-  const { checkForAchievements } = useAchievements();
+  const { achievements } = useAchievements();
   const { bookmarks, addBookmark, removeBookmark, isBookmarked, getBookmark } = useBookmarks();
   const { toast } = useToast();
   
@@ -71,9 +71,9 @@ export default function SurahDetail() {
     if (surah) {
       updateStreak();
       incrementPagesRead(1);
-      checkForAchievements({ pagesRead: 1, streak: 1 });
+      // Achievement tracking is handled automatically by the reading progress system
     }
-  }, [surah]);
+  }, [surah, updateStreak, incrementPagesRead]);
   
   // Handle audio playback
   useEffect(() => {
