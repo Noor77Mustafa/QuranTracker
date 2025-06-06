@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/use-auth";
 
 export function useStreak(userId?: number) {
+  const { user } = useAuth();
+  const effectiveUserId = userId || user?.id;
   const [streak, setStreak] = useState(0);
   const [longestStreak, setLongestStreak] = useState(0);
   const [pagesRead, setPagesRead] = useState(0);
@@ -12,7 +15,7 @@ export function useStreak(userId?: number) {
   
   // Load streak from localStorage if not authenticated
   useEffect(() => {
-    if (!userId) {
+    if (!effectiveUserId) {
       const storedStreak = localStorage.getItem("myquran-streak");
       const storedPagesRead = localStorage.getItem("myquran-pages-read");
       const storedLastReadDate = localStorage.getItem("myquran-last-read-date");
@@ -23,31 +26,34 @@ export function useStreak(userId?: number) {
       if (storedLastReadDate) setLastReadDate(storedLastReadDate);
       if (storedLongestStreak) setLongestStreak(parseInt(storedLongestStreak, 10));
     }
-  }, [userId]);
+  }, [effectiveUserId]);
   
   // Load streak from API if authenticated
   useEffect(() => {
-    if (userId) {
+    if (effectiveUserId) {
       setIsLoading(true);
-      fetch(`/api/streaks/${userId}`)
+      fetch(`/api/streaks/${effectiveUserId}`)
         .then(res => {
           if (!res.ok) throw new Error("Failed to fetch streak data");
           return res.json();
         })
         .then(data => {
-          setStreak(data.currentStreak);
-          setLongestStreak(data.longestStreak);
+          setStreak(data.currentStreak || 0);
+          setLongestStreak(data.longestStreak || 0);
           if (data.lastReadDate) setLastReadDate(data.lastReadDate);
         })
         .catch(error => {
           console.error("Error fetching streak:", error);
+          // Set defaults if fetch fails
+          setStreak(0);
+          setLongestStreak(0);
         })
         .finally(() => {
           setIsLoading(false);
         });
         
       // Also fetch pages read
-      fetch(`/api/reading-progress/${userId}`)
+      fetch(`/api/reading-progress/${effectiveUserId}`)
         .then(res => {
           if (!res.ok) throw new Error("Failed to fetch reading progress");
           return res.json();
@@ -55,16 +61,16 @@ export function useStreak(userId?: number) {
         .then(data => {
           // Calculate total pages read
           const total = data.reduce((sum: number, progress: any) => {
-            // Rough estimation: 1 page = ~15 ayahs
-            return sum + Math.ceil(progress.lastReadAyah / 15);
+            return sum + (progress.pagesRead || 1);
           }, 0);
           setPagesRead(total);
         })
         .catch(error => {
           console.error("Error fetching reading progress:", error);
+          setPagesRead(0);
         });
     }
-  }, [userId]);
+  }, [effectiveUserId]);
   
   const updateStreak = async () => {
     const today = new Date().toISOString().split('T')[0];
@@ -87,7 +93,7 @@ export function useStreak(userId?: number) {
     const newLongestStreak = Math.max(newStreak, longestStreak);
     
     // Update local storage if not authenticated
-    if (!userId) {
+    if (!effectiveUserId) {
       localStorage.setItem("myquran-streak", newStreak.toString());
       localStorage.setItem("myquran-longest-streak", newLongestStreak.toString());
       localStorage.setItem("myquran-last-read-date", today);
@@ -109,7 +115,7 @@ export function useStreak(userId?: number) {
     // Update via API if authenticated
     try {
       const response = await apiRequest("POST", "/api/streaks", {
-        userId,
+        userId: effectiveUserId,
         currentStreak: newStreak,
         longestStreak: newLongestStreak,
         lastReadDate: today,
@@ -138,19 +144,45 @@ export function useStreak(userId?: number) {
     }
   };
   
-  const incrementPagesRead = async (pages: number = 1) => {
+  const incrementPagesRead = async (pages: number = 1, surahId?: number, ayahNumber?: number) => {
     const newPagesRead = pagesRead + pages;
     
     // Update local storage if not authenticated
-    if (!userId) {
+    if (!effectiveUserId) {
       localStorage.setItem("myquran-pages-read", newPagesRead.toString());
       setPagesRead(newPagesRead);
       return;
     }
     
-    // In a real app, we would update the server-side pages read count
-    // For this MVP, we'll just update the local state
-    setPagesRead(newPagesRead);
+    // Create reading progress entry in database
+    try {
+      const today = new Date().toISOString().split('T')[0];
+      const response = await apiRequest("POST", "/api/reading-progress", {
+        userId: effectiveUserId,
+        surahId: surahId || 1,
+        lastReadAyah: ayahNumber || 1,
+        pagesRead: pages,
+        dateRead: today,
+        isCompleted: false,
+      });
+      
+      if (response.ok) {
+        setPagesRead(newPagesRead);
+        
+        // Check for new achievements from the response
+        const data = await response.json();
+        if (data.newAchievements && data.newAchievements.length > 0) {
+          toast({
+            title: "Achievement Unlocked!",
+            description: `You earned ${data.newAchievements.length} new badge${data.newAchievements.length > 1 ? 's' : ''}!`,
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error creating reading progress:", error);
+      // Still update local state even if API fails
+      setPagesRead(newPagesRead);
+    }
   };
   
   return { 

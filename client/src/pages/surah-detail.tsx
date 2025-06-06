@@ -70,10 +70,10 @@ export default function SurahDetail() {
   useEffect(() => {
     if (surah) {
       updateStreak();
-      incrementPagesRead(1);
+      incrementPagesRead(1, surahId, currentAyah);
       // Achievement tracking is handled automatically by the reading progress system
     }
-  }, [surah, updateStreak, incrementPagesRead]);
+  }, [surah, updateStreak, incrementPagesRead, surahId, currentAyah]);
   
   // Handle audio playback
   useEffect(() => {
