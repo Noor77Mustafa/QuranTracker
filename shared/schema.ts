@@ -65,6 +65,10 @@ export const insertStreakSchema = createInsertSchema(streaks).pick({
   currentStreak: true,
   longestStreak: true,
   lastReadDate: true,
+}).extend({
+  lastReadDate: z.string().or(z.date()).transform((val) => 
+    typeof val === 'string' ? new Date(val) : val
+  ).optional(),
 });
 
 export const achievements = pgTable("achievements", {

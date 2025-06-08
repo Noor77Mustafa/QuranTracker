@@ -118,7 +118,7 @@ export function useStreak(userId?: number) {
         userId: effectiveUserId,
         currentStreak: newStreak,
         longestStreak: newLongestStreak,
-        lastReadDate: new Date(today),
+        lastReadDate: today,
       });
       
       if (response.ok) {
