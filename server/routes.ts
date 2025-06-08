@@ -97,6 +97,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Streak routes
   app.post("/api/streaks", async (req, res) => {
     try {
+      console.log("Received streak data:", JSON.stringify(req.body, null, 2));
       const streakData = insertStreakSchema.parse(req.body);
       const streak = await dbStorage.createOrUpdateStreak(streakData);
       
@@ -109,8 +110,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error) {
       if (error instanceof z.ZodError) {
+        console.log("Streak validation errors:", JSON.stringify(error.errors, null, 2));
         res.status(400).json({ message: "Invalid streak data", errors: error.errors });
       } else {
+        console.log("Streak database error:", error);
         res.status(500).json({ message: handleDbError(error) });
       }
     }
