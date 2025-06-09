@@ -26,7 +26,25 @@ export default function Profile() {
   const { streak, longestStreak, pagesRead } = useStreak();
   const { achievements } = useAchievements();
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
-  const [activeTab, setActiveTab] = useState<'progress' | 'achievements' | 'quests' | 'settings'>('progress');
+  const [activeTab, setActiveTab] = useState<'progress' | 'achievements' | 'history' | 'quests' | 'settings'>('progress');
+  
+  // Use authenticated user data directly
+  const user: UserProfile | undefined = authUser ? {
+    id: authUser.id,
+    username: authUser.username,
+    displayName: authUser.displayName || authUser.username,
+    level: authUser.level || 1,
+    xp: authUser.xp || 0,
+    points: authUser.points || 0,
+    joinedAt: authUser.lastActive || new Date().toISOString(),
+    avatarUrl: authUser.avatarUrl
+  } : undefined;
+
+  // Fetch reading progress for history tab
+  const { data: readingHistory = [], isLoading: historyLoading } = useQuery({
+    queryKey: ["/api/reading-progress", user?.id],
+    enabled: !!user?.id && activeTab === 'history',
+  });
   const [isGoalDialogOpen, setIsGoalDialogOpen] = useState(false);
   const [readingGoal, setReadingGoal] = useState<{
     pagesPerDay: number;
@@ -116,7 +134,13 @@ export default function Profile() {
               </div>
               <Progress value={quranProgress} className="h-2 mb-6" />
               
-              <Button variant="outline" className="w-full">View Reading History</Button>
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={() => setActiveTab('history')}
+              >
+                View Reading History
+              </Button>
             </div>
           </div>
           
@@ -142,6 +166,13 @@ export default function Profile() {
             >
               <span className="material-symbols-rounded mr-1 text-sm align-text-bottom">military_tech</span>
               Achievements
+            </button>
+            <button 
+              className={`px-4 py-2 whitespace-nowrap ${activeTab === "history" ? "border-b-2 border-primary text-primary font-medium" : "text-gray-500 dark:text-gray-400"}`}
+              onClick={() => setActiveTab("history")}
+            >
+              <span className="material-symbols-rounded mr-1 text-sm align-text-bottom">history</span>
+              History
             </button>
             <button 
               className={`px-4 py-2 whitespace-nowrap ${activeTab === "settings" ? "border-b-2 border-primary text-primary font-medium" : "text-gray-500 dark:text-gray-400"}`}
@@ -235,6 +266,76 @@ export default function Profile() {
                   />
                 )}
               </div>
+            </div>
+          )}
+          
+          {activeTab === "history" && (
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
+              <h2 className="text-lg font-semibold mb-4">Reading History</h2>
+              
+              {historyLoading ? (
+                <div className="text-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+                  <p className="text-gray-500 dark:text-gray-400 mt-2">Loading reading history...</p>
+                </div>
+              ) : readingHistory.length > 0 ? (
+                <div className="space-y-4">
+                  {readingHistory.map((entry: any) => (
+                    <div key={entry.id} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <h3 className="font-medium">Surah {entry.surahId}</h3>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                            Read up to Ayah {entry.lastReadAyah}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-sm font-medium text-primary">
+                            {entry.pagesRead} page{entry.pagesRead !== 1 ? 's' : ''}
+                          </p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                            {new Date(entry.dateRead).toLocaleDateString()}
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {entry.isCompleted && (
+                        <div className="flex items-center text-green-600 dark:text-green-400 text-sm">
+                          <span className="material-symbols-rounded mr-1 text-sm">check_circle</span>
+                          Completed
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                  
+                  <div className="mt-6 p-4 bg-primary/5 dark:bg-primary/10 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium">Total Progress</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          {readingHistory.length} reading session{readingHistory.length !== 1 ? 's' : ''}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-lg font-semibold text-primary">
+                          {readingHistory.reduce((total: number, entry: any) => total + (entry.pagesRead || 0), 0)} pages
+                        </p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">total read</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="material-symbols-rounded text-gray-400 text-2xl">book</span>
+                  </div>
+                  <p className="text-gray-500 dark:text-gray-400 mb-2">No reading history yet</p>
+                  <p className="text-sm text-gray-400 dark:text-gray-500">
+                    Start reading the Quran to track your progress here
+                  </p>
+                </div>
+              )}
             </div>
           )}
           
