@@ -28,23 +28,6 @@ export default function Profile() {
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
   const [activeTab, setActiveTab] = useState<'progress' | 'achievements' | 'history' | 'quests' | 'settings'>('progress');
   
-  // Use authenticated user data directly
-  const user: UserProfile | undefined = authUser ? {
-    id: authUser.id,
-    username: authUser.username,
-    displayName: authUser.displayName || authUser.username,
-    level: authUser.level || 1,
-    xp: authUser.xp || 0,
-    points: authUser.points || 0,
-    joinedAt: authUser.lastActive || new Date().toISOString(),
-    avatarUrl: authUser.avatarUrl
-  } : undefined;
-
-  // Fetch reading progress for history tab
-  const { data: readingHistory = [], isLoading: historyLoading } = useQuery({
-    queryKey: ["/api/reading-progress", user?.id],
-    enabled: !!user?.id && activeTab === 'history',
-  });
   const [isGoalDialogOpen, setIsGoalDialogOpen] = useState(false);
   const [readingGoal, setReadingGoal] = useState<{
     pagesPerDay: number;
@@ -63,6 +46,12 @@ export default function Profile() {
     joinedAt: authUser.lastActive || new Date().toISOString(),
     avatarUrl: authUser.avatarUrl
   } : undefined;
+
+  // Fetch reading progress for history tab
+  const { data: readingHistory = [], isLoading: historyLoading } = useQuery({
+    queryKey: ["/api/reading-progress", user?.id],
+    enabled: !!user?.id && activeTab === 'history',
+  });
   
   // Set page title
   useEffect(() => {
