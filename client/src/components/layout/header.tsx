@@ -25,11 +25,6 @@ export default function Header() {
     setIsMobileMenuOpen(false);
   };
 
-  const handleSignInClick = () => {
-    // Navigate to sign in page
-    navigate("/profile");
-  };
-
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-sm">
       {/* Skip to content link for keyboard users */}
@@ -74,12 +69,7 @@ export default function Header() {
           >
             <span className="material-symbols-rounded" aria-hidden="true">settings</span>
           </button>
-          <button 
-            className="hidden md:block bg-primary text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-primary/90 transition-colors focus-visible"
-            onClick={handleSignInClick}
-          >
-            Sign In
-          </button>
+
         </div>
       </div>
       
@@ -145,17 +135,7 @@ export default function Header() {
                 </span>
               </Link>
             </li>
-            <li role="menuitem" className="md:hidden">
-              <button 
-                onClick={handleSignInClick} 
-                className="w-full text-left block py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus-visible"
-              >
-                <span className="flex items-center">
-                  <span className="material-symbols-rounded mr-3" aria-hidden="true">login</span>
-                  Sign In
-                </span>
-              </button>
-            </li>
+
           </ul>
         </nav>
       </div>
