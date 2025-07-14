@@ -97,3 +97,33 @@ The application is configured for deployment on Replit:
 3. **Type Checking**: Use `npm run check` to verify TypeScript types
 4. **Production Build**: Use `npm run build` to create optimized production build
 5. **Production Start**: Use `npm run start` to run the application in production mode
+
+## App Store Deployment
+
+The application is fully prepared for app store deployment as a Progressive Web App (PWA):
+
+### PWA Features
+- **Web App Manifest**: Complete manifest with app metadata, icons, and shortcuts
+- **Service Worker**: Offline functionality and caching strategy
+- **App Icons**: Multiple sizes (72x72 to 512x512) with Islamic design
+- **Responsive Design**: Optimized for mobile and desktop
+- **Performance**: Lighthouse-optimized for app store requirements
+
+### Deployment Process
+1. **Prepare App**: Run `./deploy-to-app-store.sh` to generate deployment package
+2. **Deploy to Production**: Use Replit's deployment feature for HTTPS domain
+3. **Generate App Packages**: Use PWA Builder CLI to create native app packages
+4. **Submit to Stores**: Follow platform-specific guidelines for submission
+
+### App Store Information
+- **Bundle ID**: com.myquran.app
+- **Categories**: Books & Reference, Education, Lifestyle
+- **Features**: Quran reading, Hadith collections, Dua learning, progress tracking
+- **Target Platforms**: iOS App Store, Google Play Store, Microsoft Store
+
+### Files Created
+- `public/manifest.json` - PWA manifest with all required metadata
+- `public/icon*.svg` - App icons in multiple sizes
+- `app-store-config.json` - App store submission configuration
+- `deploy-app-store.md` - Complete deployment guide
+- `deploy-to-app-store.sh` - Automated deployment preparation script

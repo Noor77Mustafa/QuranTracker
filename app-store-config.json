@@ -1,0 +1,77 @@
+{
+  "appInfo": {
+    "name": "MyQuran",
+    "fullName": "MyQuran - Explore the Quran and Track Your Progress",
+    "description": "A comprehensive Islamic app for exploring the Quran, reading authentic Hadiths, learning Duas, and tracking your spiritual progress with achievements and reading streaks.",
+    "version": "1.0.0",
+    "buildNumber": "1",
+    "bundleId": "com.myquran.app",
+    "author": "MyQuran Team",
+    "website": "https://myquran.app",
+    "supportEmail": "support@myquran.app",
+    "privacyPolicy": "https://myquran.app/privacy",
+    "termsOfService": "https://myquran.app/terms"
+  },
+  "categories": {
+    "primary": "Books & Reference",
+    "secondary": ["Education", "Lifestyle"]
+  },
+  "keywords": [
+    "Quran",
+    "Islam",
+    "Muslim",
+    "Hadith",
+    "Dua",
+    "Prayer",
+    "Islamic",
+    "Arabic",
+    "Religion",
+    "Spiritual",
+    "Reading",
+    "Progress",
+    "Achievement"
+  ],
+  "features": [
+    "Complete Quran text with multiple translations",
+    "Authentic Hadith collections (Bukhari, Muslim, and more)",
+    "Comprehensive Dua collection with audio",
+    "Reading progress tracking with streaks",
+    "Achievement system for motivation",
+    "Offline reading capability",
+    "Beautiful, respectful design",
+    "Search functionality",
+    "Bookmarks and notes",
+    "Dark mode support",
+    "Mobile-optimized interface"
+  ],
+  "screenshots": {
+    "mobile": [
+      {
+        "filename": "mobile-home.png",
+        "description": "Home screen with reading progress and achievements"
+      },
+      {
+        "filename": "mobile-quran.png",
+        "description": "Quran reading interface with beautiful typography"
+      },
+      {
+        "filename": "mobile-hadith.png",
+        "description": "Hadith collection browser with search"
+      },
+      {
+        "filename": "mobile-profile.png",
+        "description": "User profile with achievements and streaks"
+      }
+    ],
+    "tablet": [
+      {
+        "filename": "tablet-reading.png",
+        "description": "Enhanced reading experience on larger screens"
+      }
+    ]
+  },
+  "appStoreOptimization": {
+    "shortDescription": "Explore the Quran, read Hadiths, learn Duas, and track your spiritual progress with achievements.",
+    "longDescription": "MyQuran is your comprehensive Islamic companion, designed to help you explore the Quran, read authentic Hadiths, learn Duas, and track your spiritual journey with a beautiful, respectful interface.\n\nFEATURES:\n• Complete Quran with multiple translations\n• Authentic Hadith collections from Bukhari, Muslim, and other major compilations\n• Comprehensive Dua collection with Arabic text and translations\n• Reading progress tracking with streak counters\n• Achievement system to motivate consistent reading\n• Offline reading capability for uninterrupted access\n• Beautiful, respectful design honoring Islamic traditions\n• Advanced search functionality across all content\n• Bookmarks and personal notes\n• Dark mode for comfortable reading\n• Mobile-optimized interface\n\nWhether you're a student of Islam, a practicing Muslim, or someone interested in learning about Islamic teachings, MyQuran provides authentic, verified content in a modern, user-friendly format.\n\nStart your spiritual journey today with MyQuran – where tradition meets technology."
+  }
+}
