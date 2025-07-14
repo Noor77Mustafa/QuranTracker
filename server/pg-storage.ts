@@ -5,12 +5,13 @@ import {
   Streak, InsertStreak, Achievement, InsertAchievement,
   ReadingGoal, InsertReadingGoal, Bookmark, InsertBookmark,
   Reflection, InsertReflection, Quest, InsertQuest, UserQuest, 
-  InsertUserQuest
+  InsertUserQuest, Hadith, InsertHadith, HadithBookmark, InsertHadithBookmark
 } from "@shared/schema";
-import { and, eq } from "drizzle-orm";
+import { and, eq, like, or } from "drizzle-orm";
 import { 
   users, readingProgress, streaks, achievements, 
-  readingGoals, bookmarks, reflections, quests, userQuests 
+  readingGoals, bookmarks, reflections, quests, userQuests,
+  hadiths, hadithBookmarks
 } from "@shared/schema";
 
 export class PgStorage implements IStorage {
@@ -226,5 +227,88 @@ export class PgStorage implements IStorage {
     return db.select()
       .from(userQuests)
       .where(eq(userQuests.userId, userId));
+  }
+
+  // Hadith operations
+  async createHadith(hadith: InsertHadith): Promise<Hadith> {
+    const [newHadith] = await db.insert(hadiths)
+      .values(hadith)
+      .returning();
+    return newHadith;
+  }
+
+  async getHadithById(id: string): Promise<Hadith | undefined> {
+    const [hadith] = await db.select()
+      .from(hadiths)
+      .where(eq(hadiths.id, id));
+    return hadith;
+  }
+
+  async getHadithsByCollection(collection: string): Promise<Hadith[]> {
+    return db.select()
+      .from(hadiths)
+      .where(eq(hadiths.collection, collection));
+  }
+
+  async getHadithsByVolume(collection: string, volume: number): Promise<Hadith[]> {
+    return db.select()
+      .from(hadiths)
+      .where(
+        and(
+          eq(hadiths.collection, collection),
+          eq(hadiths.volume, volume)
+        )
+      );
+  }
+
+  async getHadithsByBook(collection: string, book: number): Promise<Hadith[]> {
+    return db.select()
+      .from(hadiths)
+      .where(
+        and(
+          eq(hadiths.collection, collection),
+          eq(hadiths.book, book)
+        )
+      );
+  }
+
+  async searchHadiths(query: string): Promise<Hadith[]> {
+    const searchTerm = `%${query}%`;
+    return db.select()
+      .from(hadiths)
+      .where(
+        or(
+          like(hadiths.englishText, searchTerm),
+          like(hadiths.arabicText, searchTerm),
+          like(hadiths.narrator, searchTerm),
+          like(hadiths.bookTitle, searchTerm)
+        )
+      );
+  }
+
+  async createHadithBookmark(bookmark: InsertHadithBookmark): Promise<HadithBookmark> {
+    const [newBookmark] = await db.insert(hadithBookmarks)
+      .values(bookmark)
+      .returning();
+    return newBookmark;
+  }
+
+  async getHadithBookmarksByUserId(userId: number): Promise<HadithBookmark[]> {
+    return db.select()
+      .from(hadithBookmarks)
+      .where(eq(hadithBookmarks.userId, userId));
+  }
+
+  async deleteHadithBookmark(userId: number, hadithId: string): Promise<boolean> {
+    const result = await db.delete(hadithBookmarks)
+      .where(
+        and(
+          eq(hadithBookmarks.userId, userId),
+          eq(hadithBookmarks.hadithId, hadithId)
+        )
+      )
+      .returning();
+    
+    return result.length > 0;
   }
 }

@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { PgStorage } from "./pg-storage";
-import { insertAchievementSchema, insertReadingGoalSchema, insertReadingProgressSchema, insertStreakSchema, insertUserSchema, insertBookmarkSchema, insertReflectionSchema, insertQuestSchema, insertUserQuestSchema } from "@shared/schema";
+import { insertAchievementSchema, insertReadingGoalSchema, insertReadingProgressSchema, insertStreakSchema, insertUserSchema, insertBookmarkSchema, insertReflectionSchema, insertQuestSchema, insertUserQuestSchema, insertHadithSchema, insertHadithBookmarkSchema } from "@shared/schema";
 import { handleDbError } from "./db";
 import { z } from "zod";
 import { getAIResponse } from "./openai-routes";
@@ -382,6 +382,130 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: handleDbError(error) });
     }
   });
+
+  // Hadith API routes
+  app.get("/api/hadiths/collection/:collection", async (req, res) => {
+    try {
+      const { collection } = req.params;
+      const hadiths = await dbStorage.getHadithsByCollection(collection);
+      res.json(hadiths);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  app.get("/api/hadiths/collection/:collection/volume/:volume", async (req, res) => {
+    try {
+      const { collection, volume } = req.params;
+      const hadiths = await dbStorage.getHadithsByVolume(collection, parseInt(volume));
+      res.json(hadiths);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  app.get("/api/hadiths/collection/:collection/book/:book", async (req, res) => {
+    try {
+      const { collection, book } = req.params;
+      const hadiths = await dbStorage.getHadithsByBook(collection, parseInt(book));
+      res.json(hadiths);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  app.get("/api/hadiths/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const hadith = await dbStorage.getHadithById(id);
+      if (!hadith) {
+        return res.status(404).json({ message: "Hadith not found" });
+      }
+      res.json(hadith);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  app.get("/api/hadiths/search", async (req, res) => {
+    try {
+      const { q } = req.query;
+      if (!q || typeof q !== 'string') {
+        return res.status(400).json({ message: "Search query required" });
+      }
+      const hadiths = await dbStorage.searchHadiths(q);
+      res.json(hadiths);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  app.post("/api/hadith-bookmarks", isAuthenticated, async (req, res) => {
+    try {
+      const { hadithId } = req.body;
+      const userId = (req as any).user.id;
+      
+      const bookmark = await dbStorage.createHadithBookmark({
+        userId,
+        hadithId
+      });
+      
+      res.status(201).json(bookmark);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  app.get("/api/hadith-bookmarks", isAuthenticated, async (req, res) => {
+    try {
+      const userId = (req as any).user.id;
+      const bookmarks = await dbStorage.getHadithBookmarksByUserId(userId);
+      res.json(bookmarks);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  app.delete("/api/hadith-bookmarks/:hadithId", isAuthenticated, async (req, res) => {
+    try {
+      const { hadithId } = req.params;
+      const userId = (req as any).user.id;
+      
+      const deleted = await dbStorage.deleteHadithBookmark(userId, hadithId);
+      if (!deleted) {
+        return res.status(404).json({ message: "Bookmark not found" });
+      }
+      
+      res.json({ message: "Bookmark deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  // Initialize hadith data
+  const initializeHadithData = async () => {
+    try {
+      const { BUKHARI_VOLUME_1 } = await import("./hadith-data");
+      console.log("Initializing hadith data...");
+      
+      // Check if hadiths are already loaded
+      const existingHadiths = await dbStorage.getHadithsByCollection("bukhari");
+      if (existingHadiths.length === 0) {
+        // Load Bukhari Volume 1 hadiths
+        for (const hadith of BUKHARI_VOLUME_1) {
+          await dbStorage.createHadith(hadith);
+        }
+        console.log(`Loaded ${BUKHARI_VOLUME_1.length} hadiths from Bukhari Volume 1`);
+      } else {
+        console.log(`Found ${existingHadiths.length} existing hadiths in database`);
+      }
+    } catch (error) {
+      console.error("Error initializing hadith data:", error);
+    }
+  };
+
+  // Initialize hadith data on startup
+  initializeHadithData();
 
   // OpenAI routes
   app.post("/api/ai/chat", getAIResponse);

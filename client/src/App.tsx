@@ -23,7 +23,7 @@ const Bookmarks = lazy(() => import("@/pages/bookmarks"));
 const ExploreCategory = lazy(() => import("@/pages/explore-category"));
 const Hadiths = lazy(() => import("@/pages/hadiths"));
 const HadithDetail = lazy(() => import("@/pages/hadith-detail"));
-const HadithCollection = lazy(() => import("@/pages/hadith-collection"));
+const HadithCollection = lazy(() => import("@/pages/enhanced-hadith-collection"));
 const Duas = lazy(() => import("@/pages/duas"));
 const DuaDetail = lazy(() => import("@/pages/dua-detail"));
 const DuaCollection = lazy(() => import("@/pages/dua-collection"));

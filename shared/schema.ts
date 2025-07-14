@@ -180,6 +180,51 @@ export const insertReflectionSchema = createInsertSchema(reflections).pick({
   isPrivate: true,
 });
 
+// Hadith table for complete collections
+export const hadiths = pgTable("hadiths", {
+  id: text("id").primaryKey(), // e.g., "bukhari-1-1-1"
+  volume: integer("volume").notNull(),
+  book: integer("book").notNull(),
+  bookTitle: text("book_title").notNull(),
+  hadithNumber: integer("hadith_number").notNull(),
+  arabicText: text("arabic_text"),
+  englishText: text("english_text").notNull(),
+  narrator: text("narrator").notNull(),
+  grade: text("grade").notNull(), // Sahih, Hasan, Da'if
+  collection: text("collection").notNull(), // bukhari, muslim, etc.
+  tags: text("tags").array(),
+  chapter: text("chapter"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertHadithSchema = createInsertSchema(hadiths).pick({
+  id: true,
+  volume: true,
+  book: true,
+  bookTitle: true,
+  hadithNumber: true,
+  arabicText: true,
+  englishText: true,
+  narrator: true,
+  grade: true,
+  collection: true,
+  tags: true,
+  chapter: true,
+});
+
+// Hadith bookmarks/favorites
+export const hadithBookmarks = pgTable("hadith_bookmarks", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  hadithId: text("hadith_id").notNull().references(() => hadiths.id),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertHadithBookmarkSchema = createInsertSchema(hadithBookmarks).pick({
+  userId: true,
+  hadithId: true,
+});
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type ReadingProgress = typeof readingProgress.$inferSelect;
@@ -198,3 +243,7 @@ export type Bookmark = typeof bookmarks.$inferSelect;
 export type InsertBookmark = z.infer<typeof insertBookmarkSchema>;
 export type Reflection = typeof reflections.$inferSelect;
 export type InsertReflection = z.infer<typeof insertReflectionSchema>;
+export type Hadith = typeof hadiths.$inferSelect;
+export type InsertHadith = z.infer<typeof insertHadithSchema>;
+export type HadithBookmark = typeof hadithBookmarks.$inferSelect;
+export type InsertHadithBookmark = z.infer<typeof insertHadithBookmarkSchema>;

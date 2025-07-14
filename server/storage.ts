@@ -8,7 +8,9 @@ import {
   type Bookmark, type InsertBookmark,
   type Reflection, type InsertReflection,
   type Quest, type InsertQuest,
-  type UserQuest, type InsertUserQuest
+  type UserQuest, type InsertUserQuest,
+  type Hadith, type InsertHadith,
+  type HadithBookmark, type InsertHadithBookmark
 } from "@shared/schema";
 
 // modify the interface with any CRUD methods
@@ -38,6 +40,17 @@ export interface IStorage {
   getQuestById(id: number): Promise<Quest | undefined>;
   createOrUpdateUserQuest(userQuest: InsertUserQuest): Promise<UserQuest>;
   getUserQuestsByUserId(userId: number): Promise<UserQuest[]>;
+  
+  // Hadith operations
+  createHadith(hadith: InsertHadith): Promise<Hadith>;
+  getHadithById(id: string): Promise<Hadith | undefined>;
+  getHadithsByCollection(collection: string): Promise<Hadith[]>;
+  getHadithsByVolume(collection: string, volume: number): Promise<Hadith[]>;
+  getHadithsByBook(collection: string, book: number): Promise<Hadith[]>;
+  searchHadiths(query: string): Promise<Hadith[]>;
+  createHadithBookmark(bookmark: InsertHadithBookmark): Promise<HadithBookmark>;
+  getHadithBookmarksByUserId(userId: number): Promise<HadithBookmark[]>;
+  deleteHadithBookmark(userId: number, hadithId: string): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
@@ -50,6 +63,8 @@ export class MemStorage implements IStorage {
   private reflections: Map<number, Reflection>;
   private quests: Map<number, Quest>;
   private userQuests: Map<number, UserQuest[]>;
+  private hadiths: Map<string, Hadith>;
+  private hadithBookmarks: Map<number, HadithBookmark[]>;
   
   currentId: number;
   currentProgressId: number;
@@ -59,6 +74,7 @@ export class MemStorage implements IStorage {
   currentReflectionId: number;
   currentQuestId: number;
   currentUserQuestId: number;
+  currentHadithBookmarkId: number;
 
   constructor() {
     this.users = new Map();
@@ -70,6 +86,8 @@ export class MemStorage implements IStorage {
     this.reflections = new Map();
     this.quests = new Map();
     this.userQuests = new Map();
+    this.hadiths = new Map();
+    this.hadithBookmarks = new Map();
     
     this.currentId = 1;
     this.currentProgressId = 1;
@@ -79,6 +97,7 @@ export class MemStorage implements IStorage {
     this.currentReflectionId = 1;
     this.currentQuestId = 1;
     this.currentUserQuestId = 1;
+    this.currentHadithBookmarkId = 1;
   }
 
   async getUser(id: number): Promise<User | undefined> {
@@ -386,6 +405,79 @@ export class MemStorage implements IStorage {
 
   async getUserQuestsByUserId(userId: number): Promise<UserQuest[]> {
     return this.userQuests.get(userId) || [];
+  }
+
+  // Hadith operations
+  async createHadith(hadith: InsertHadith): Promise<Hadith> {
+    const newHadith: Hadith = {
+      ...hadith,
+      createdAt: new Date()
+    };
+    this.hadiths.set(hadith.id, newHadith);
+    return newHadith;
+  }
+
+  async getHadithById(id: string): Promise<Hadith | undefined> {
+    return this.hadiths.get(id);
+  }
+
+  async getHadithsByCollection(collection: string): Promise<Hadith[]> {
+    return Array.from(this.hadiths.values()).filter(h => h.collection === collection);
+  }
+
+  async getHadithsByVolume(collection: string, volume: number): Promise<Hadith[]> {
+    return Array.from(this.hadiths.values()).filter(h => 
+      h.collection === collection && h.volume === volume
+    );
+  }
+
+  async getHadithsByBook(collection: string, book: number): Promise<Hadith[]> {
+    return Array.from(this.hadiths.values()).filter(h => 
+      h.collection === collection && h.book === book
+    );
+  }
+
+  async searchHadiths(query: string): Promise<Hadith[]> {
+    const searchTerm = query.toLowerCase();
+    return Array.from(this.hadiths.values()).filter(h => 
+      h.englishText.toLowerCase().includes(searchTerm) ||
+      h.arabicText?.toLowerCase().includes(searchTerm) ||
+      h.narrator.toLowerCase().includes(searchTerm) ||
+      h.bookTitle.toLowerCase().includes(searchTerm) ||
+      h.tags?.some(tag => tag.toLowerCase().includes(searchTerm))
+    );
+  }
+
+  async createHadithBookmark(bookmark: InsertHadithBookmark): Promise<HadithBookmark> {
+    const id = this.currentHadithBookmarkId++;
+    const newBookmark: HadithBookmark = {
+      ...bookmark,
+      id,
+      createdAt: new Date()
+    };
+    
+    const userBookmarks = this.hadithBookmarks.get(bookmark.userId) || [];
+    userBookmarks.push(newBookmark);
+    this.hadithBookmarks.set(bookmark.userId, userBookmarks);
+    
+    return newBookmark;
+  }
+
+  async getHadithBookmarksByUserId(userId: number): Promise<HadithBookmark[]> {
+    return this.hadithBookmarks.get(userId) || [];
+  }
+
+  async deleteHadithBookmark(userId: number, hadithId: string): Promise<boolean> {
+    const userBookmarks = this.hadithBookmarks.get(userId) || [];
+    const bookmarkIndex = userBookmarks.findIndex(b => b.hadithId === hadithId);
+    
+    if (bookmarkIndex >= 0) {
+      userBookmarks.splice(bookmarkIndex, 1);
+      this.hadithBookmarks.set(userId, userBookmarks);
+      return true;
+    }
+    
+    return false;
   }
 }
 
