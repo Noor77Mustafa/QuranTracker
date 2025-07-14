@@ -1,4 +1,4 @@
-import type { Express } from "express";
+import express, { type Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { PgStorage } from "./pg-storage";
@@ -9,6 +9,7 @@ import { getAIResponse } from "./openai-routes";
 import { setupAuth, isAuthenticated } from "./auth";
 import { AchievementService } from "./achievement-service";
 import cookieParser from "cookie-parser";
+import path from "path";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Set up middlewares
@@ -16,6 +17,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Set up authentication
   setupAuth(app);
+  
+  // Serve static files from public directory (must be before other routes)
+  app.use(express.static(path.resolve(process.cwd(), 'public')));
   
   // Create PostgreSQL storage
   const pgStorage = new PgStorage();
