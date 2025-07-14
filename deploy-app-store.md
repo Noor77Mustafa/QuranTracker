@@ -3,6 +3,11 @@
 ## Overview
 This guide provides instructions for deploying MyQuran PWA to various app stores.
 
+## Known Issue: Windows Package Generation
+PWABuilder's Windows package generation currently has a bug with SVG icons that causes crashes during package creation. This doesn't affect Android or iOS packages, which are the most important for app store deployment.
+
+**Workaround**: Focus on Android and iOS packages first, then use alternative methods for Windows deployment.
+
 ## Prerequisites
 - Node.js 18+
 - App store developer accounts
@@ -53,6 +58,13 @@ pwabuilder https://your-deployed-app-url.com
 3. Ensure offline functionality works properly
 
 ##### Microsoft Store (Windows)
+**Note**: PWABuilder Windows package generation currently has issues with SVG icons.
+
+**Alternative Approaches**:
+1. **Direct PWA Submission**: Microsoft Store accepts PWAs directly
+2. **PWABuilder CLI**: Use command line version which may work better
+3. **Manual MSIX Creation**: Create Windows package manually
+4. **Skip Windows Initially**: Focus on Android/iOS for primary launch
 1. Use PWA Builder for Windows MSIX package
 2. Follow Microsoft's PWA requirements
 
