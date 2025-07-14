@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useAuth } from "@/hooks/use-auth";
 import ReadingGoalDialog from "@/components/ReadingGoalDialog";
+import ThemeSelector from "@/components/theme-selector";
 
 // Mock user data - in a real app, this would come from the API
 interface UserProfile {
@@ -34,6 +35,7 @@ export default function Profile() {
     minutesPerDay: number;
     completionTarget?: string;
   } | null>(null);
+  const [isThemeSelectorOpen, setIsThemeSelectorOpen] = useState(false);
   
   // Use authenticated user data directly
   const user: UserProfile | undefined = authUser ? {
@@ -532,25 +534,38 @@ export default function Profile() {
                 
                 <div>
                   <h3 className="font-medium mb-2">Appearance</h3>
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-2">
-                        <span className="material-symbols-rounded text-gray-600 dark:text-gray-300">dark_mode</span>
-                        <p>Dark Mode</p>
+                  <div className="space-y-3">
+                    <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-2">
+                          <span className="material-symbols-rounded text-gray-600 dark:text-gray-300">palette</span>
+                          <p>Theme</p>
+                        </div>
+                        <Button variant="outline" size="sm" onClick={() => setIsThemeSelectorOpen(true)}>
+                          Choose Theme
+                        </Button>
                       </div>
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input 
-                          type="checkbox" 
-                          className="sr-only peer"
-                          defaultChecked={document.documentElement.classList.contains('dark')}
-                          onChange={() => {
-                            const isDark = document.documentElement.classList.contains('dark');
-                            document.documentElement.classList.toggle('dark', !isDark);
-                            localStorage.setItem('theme', isDark ? 'light' : 'dark');
-                          }}
-                        />
-                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-                      </label>
+                    </div>
+                    <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-2">
+                          <span className="material-symbols-rounded text-gray-600 dark:text-gray-300">dark_mode</span>
+                          <p>Dark Mode</p>
+                        </div>
+                        <label className="relative inline-flex items-center cursor-pointer">
+                          <input 
+                            type="checkbox" 
+                            className="sr-only peer"
+                            defaultChecked={document.documentElement.classList.contains('dark')}
+                            onChange={() => {
+                              const isDark = document.documentElement.classList.contains('dark');
+                              document.documentElement.classList.toggle('dark', !isDark);
+                              localStorage.setItem('theme', isDark ? 'light' : 'dark');
+                            }}
+                          />
+                          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -619,6 +634,12 @@ export default function Profile() {
           </div>
         </div>
       )}
+      
+      {/* Theme Selector Dialog */}
+      <ThemeSelector 
+        open={isThemeSelectorOpen} 
+        onOpenChange={setIsThemeSelectorOpen}
+      />
     </main>
   );
 }

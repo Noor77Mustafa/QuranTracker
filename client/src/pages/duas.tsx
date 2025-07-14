@@ -96,12 +96,21 @@ const DUA_CATEGORIES = [
   },
   {
     id: "forgiveness-repentance",
-    name: "Forgiveness & Repentance",
-    arabicName: "أدعية الاستغفار والتوبة",
-    description: "Supplications for seeking Allah's forgiveness and guidance towards repentance.",
+    name: "Forgiveness & Inner Peace",
+    arabicName: "أدعية الاستغفار والسلام الداخلي",
+    description: "Supplications for seeking Allah's forgiveness, inner peace, and spiritual tranquility. Focus on healing the heart and soul.",
     count: 22,
     icon: "favorite",
     source: "Sahih Bukhari, Abu Dawud, Tirmidhi"
+  },
+  {
+    id: "healing",
+    name: "Healing & Wellness",
+    arabicName: "أدعية الشفاء والعافية",
+    description: "Prophetic supplications for physical, mental, emotional and spiritual healing. Includes duas for anxiety, grief, and inner wellness.",
+    count: 16,
+    icon: "health_and_safety",
+    source: "Sahih Bukhari, Sahih Muslim, Tirmidhi"
   },
   {
     id: "protection-refuge",

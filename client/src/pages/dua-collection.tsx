@@ -111,6 +111,88 @@ const CATEGORY_DUAS = {
       translation: "I seek forgiveness from Allah, besides whom there is no god, the Ever-Living, the Sustainer, and I repent to Him.",
       source: "Abu Dawud, Tirmidhi",
       recitation: "Anytime"
+    },
+    {
+      id: "forgiveness-3",
+      name: "Prophet's Forgiveness Dua",
+      arabicName: "دعاء النبي للمغفرة",
+      arabicText: "رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيمُ",
+      transliteration: "Rabbi-ghfir li wa tub 'alayya innaka antat-tawwabur-rahim",
+      translation: "My Lord, forgive me and accept my repentance. You are the Most Relenting, the Most Merciful.",
+      source: "Abu Dawud, Tirmidhi",
+      recitation: "100 times daily as Prophet ﷺ did"
+    },
+    {
+      id: "forgiveness-4",
+      name: "Forgiveness for All Sins",
+      arabicName: "الاستغفار الشامل",
+      arabicText: "اللَّهُمَّ إِنِّي ظَلَمْتُ نَفْسِي ظُلْمًا كَثِيرًا، وَلاَ يَغْفِرُ الذُّنُوبَ إِلاَّ أَنْتَ، فَاغْفِرْ لِي مَغْفِرَةً مِنْ عِنْدِكَ، وَارْحَمْنِي، إِنَّكَ أَنْتَ الْغَفُورُ الرَّحِيمُ",
+      transliteration: "Allahumma inni dhalamtu nafsi dhulman kathiran, wa la yaghfirudh-dhunuba illa ant, faghfir li maghfiratan min 'indik, warhamni, innaka antal-ghafurur-rahim",
+      translation: "O Allah, I have wronged myself greatly, and none forgives sins except You. So grant me forgiveness from You and have mercy on me. You are the Most Forgiving, the Most Merciful.",
+      source: "Sahih al-Bukhari & Muslim",
+      recitation: "After prayers and whenever feeling remorseful"
+    },
+    {
+      id: "forgiveness-5",
+      name: "Inner Peace & Forgiveness",
+      arabicName: "السلام الداخلي والمغفرة",
+      arabicText: "اللَّهُمَّ أَنْتَ السَّلاَمُ، وَمِنْكَ السَّلاَمُ، تَبَارَكْتَ يَا ذَا الْجَلاَلِ وَالإِكْرَامِ",
+      transliteration: "Allahumma antas-salam, wa minkas-salam, tabarakta ya dhal-jalali wal-ikram",
+      translation: "O Allah, You are Peace and from You comes peace. Blessed are You, O Possessor of majesty and honor.",
+      source: "Sahih Muslim",
+      recitation: "After each prayer for inner peace"
+    }
+  ],
+  "healing": [
+    {
+      id: "healing-1",
+      name: "Prophet's Healing Dua",
+      arabicName: "دعاء الشفاء النبوي",
+      arabicText: "اللَّهُمَّ رَبَّ النَّاسِ، أَذْهِبِ الْبَأْسَ، اِشْفِ أَنْتَ الشَّافِي، لاَ شِفَاءَ إِلاَّ شِفَاؤُكَ، شِفَاءً لاَ يُغَادِرُ سَقَمًا",
+      transliteration: "Allahumma rabban-nas, adhhib al-ba's, ishfi antash-shafi, la shifa'a illa shifa'uk, shifa'an la yughadiru saqama",
+      translation: "O Allah, Lord of mankind, remove the affliction and grant healing. You are the Healer; there is no healing except Your healing - a healing that leaves no illness behind.",
+      source: "Sahih al-Bukhari & Muslim",
+      recitation: "Place hand on affected area while reciting"
+    },
+    {
+      id: "healing-2",
+      name: "Comprehensive Healing",
+      arabicName: "الشفاء الشامل",
+      arabicText: "بِسْمِ اللَّهِ أَرْقِيكَ، مِنْ كُلِّ شَيْءٍ يُؤْذِيكَ، مِنْ شَرِّ كُلِّ نَفْسٍ أَوْ عَيْنِ حَاسِدٍ، اللَّهُ يَشْفِيكَ، بِسْمِ اللَّهِ أَرْقِيكَ",
+      transliteration: "Bismillahi arqeek, min kulli shay'in yu'dheek, min sharri kulli nafsin aw 'aynin hasid, Allahu yashfeek, bismillahi arqeek",
+      translation: "In the name of Allah, I perform ruqyah for you, from everything that harms you, from the evil of every soul or envious eye. May Allah heal you. In the name of Allah, I perform ruqyah for you.",
+      source: "Sahih Muslim",
+      recitation: "For physical and spiritual healing"
+    },
+    {
+      id: "healing-3",
+      name: "Mental & Emotional Healing",
+      arabicName: "شفاء القلب والعقل",
+      arabicText: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَأَعُوذُ بِكَ مِنَ الْعَجْزِ وَالْكَسَلِ، وَأَعُوذُ بِكَ مِنَ الْجُبْنِ وَالْبُخْلِ، وَأَعُوذُ بِكَ مِنْ غَلَبَةِ الدَّيْنِ وَقَهْرِ الرِّجَالِ",
+      transliteration: "Allahumma inni a'udhu bika minal-hammi wal-hazan, wa a'udhu bika minal-'ajzi wal-kasal, wa a'udhu bika minal-jubni wal-bukhl, wa a'udhu bika min ghalabatid-dayni wa qahrir-rijal",
+      translation: "O Allah, I seek refuge in You from anxiety and grief, from weakness and laziness, from cowardice and miserliness, and from being overcome by debt and overpowered by people.",
+      source: "Sahih al-Bukhari",
+      recitation: "For relief from anxiety and emotional distress"
+    },
+    {
+      id: "healing-4",
+      name: "Heart Healing & Tranquility",
+      arabicName: "شفاء القلب والطمأنينة",
+      arabicText: "يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ",
+      transliteration: "Ya muqallibal-qulub, thabbit qalbi 'ala dinik",
+      translation: "O Turner of hearts, make my heart firm upon Your religion.",
+      source: "Tirmidhi",
+      recitation: "For spiritual healing and steadfastness"
+    },
+    {
+      id: "healing-5",
+      name: "Healing Through Quran",
+      arabicName: "الشفاء بالقرآن",
+      arabicText: "وَنُنَزِّلُ مِنَ الْقُرْآنِ مَا هُوَ شِفَاءٌ وَرَحْمَةٌ لِّلْمُؤْمِنِينَ",
+      transliteration: "Wa nunazzilu minal-Qur'ani ma huwa shifa'un wa rahmatun lil-mu'minin",
+      translation: "And We send down of the Quran that which is healing and mercy for the believers.",
+      source: "Quran 17:82",
+      recitation: "Recite with conviction for healing"
     }
   ]
 };
@@ -129,10 +211,16 @@ const CATEGORY_INFO = {
     source: "The Holy Quran"
   },
   "forgiveness-repentance": {
-    name: "Forgiveness & Repentance",
-    arabicName: "أدعية الاستغفار والتوبة",
-    description: "Supplications for seeking Allah's forgiveness and guidance towards repentance.",
+    name: "Forgiveness & Inner Peace",
+    arabicName: "أدعية الاستغفار والسلام الداخلي",
+    description: "Supplications for seeking Allah's forgiveness, inner peace, and spiritual tranquility. Focus on healing the heart and soul.",
     source: "Sahih Bukhari, Abu Dawud, Tirmidhi"
+  },
+  "healing": {
+    name: "Healing & Wellness",
+    arabicName: "أدعية الشفاء والعافية",
+    description: "Prophetic supplications for physical, mental, emotional and spiritual healing. Includes duas for anxiety, grief, and inner wellness.",
+    source: "Sahih Bukhari, Sahih Muslim, Tirmidhi"
   }
 };
 

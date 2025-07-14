@@ -72,13 +72,13 @@ export default function EnhancedHadithCollection() {
 
   // Fetch hadiths from the database
   const { data: hadiths = [], isLoading: hadithsLoading, error } = useQuery({
-    queryKey: ["/api/hadiths/collection", collectionId],
+    queryKey: [`/api/hadiths/collection/${collectionId}`],
     enabled: !!collectionId,
   });
 
   // Fetch volumes for Bukhari (available)
   const { data: volumes = [], isLoading: volumesLoading } = useQuery({
-    queryKey: ["/api/hadiths/volumes", collectionId],
+    queryKey: [`/api/hadiths/volumes/${collectionId}`],
     enabled: collectionId === 'bukhari',
   });
 
