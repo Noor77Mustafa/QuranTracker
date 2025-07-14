@@ -7,8 +7,23 @@ type TabType = "surah" | "juz" | "revelation";
 export default function SurahExplorer() {
   const [activeTab, setActiveTab] = useState<TabType>("surah");
   
-  // Display all 114 surahs 
-  const displayedSurahs = surahs;
+  // Sort surahs based on current tab
+  const displayedSurahs = [...surahs].sort((a, b) => {
+    if (activeTab === "juz") {
+      // Sort by Juz number, then by surah number within the same Juz
+      const compareValue = (a.juzNumber || 0) - (b.juzNumber || 0);
+      if (compareValue === 0) {
+        return a.number - b.number;
+      }
+      return compareValue;
+    } else if (activeTab === "revelation") {
+      // Sort by revelation order
+      return (a.revelationOrder || 0) - (b.revelationOrder || 0);
+    } else {
+      // Sort by surah number (default)
+      return a.number - b.number;
+    }
+  });
   
   return (
     <div className="mt-8">
@@ -49,8 +64,15 @@ export default function SurahExplorer() {
               <p className="text-sm text-gray-500 dark:text-gray-400">{surah.englishNameTranslation}</p>
               <div className="flex flex-wrap gap-2 mt-1">
                 <p className="text-xs text-gray-400 dark:text-gray-500">{surah.numberOfAyahs} Ayahs</p>
-                <span className="text-xs bg-primary/10 text-primary px-1.5 rounded">Juz {Math.ceil(surah.number / 5)}</span>
-                <span className="text-xs bg-secondary/10 text-secondary px-1.5 rounded">Rev #{surah.revelationType === "Meccan" ? 114 - surah.number : Math.floor(surah.number / 2)}</span>
+                <span className="text-xs bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-200 px-1.5 rounded">
+                  {surah.revelationType}
+                </span>
+                {surah.juzNumber && activeTab === "juz" && (
+                  <span className="text-xs bg-primary/10 text-primary px-1.5 rounded">Juz {surah.juzNumber}</span>
+                )}
+                {surah.revelationOrder && activeTab === "revelation" && (
+                  <span className="text-xs bg-secondary/10 text-secondary px-1.5 rounded">Rev #{surah.revelationOrder}</span>
+                )}
               </div>
             </div>
             <div className="flex flex-col items-end">

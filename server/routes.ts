@@ -394,6 +394,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/hadiths/volumes/:collection", async (req, res) => {
+    try {
+      const { collection } = req.params;
+      const hadiths = await dbStorage.getHadithsByCollection(collection);
+      const volumes = [...new Set(hadiths.map(h => h.volume))].sort((a, b) => a - b);
+      res.json(volumes);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
   app.get("/api/hadiths/collection/:collection/volume/:volume", async (req, res) => {
     try {
       const { collection, volume } = req.params;
