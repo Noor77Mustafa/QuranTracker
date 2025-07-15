@@ -1,5 +1,8 @@
 import { HadithEntry } from "./hadith-data";
 import { ALL_BUKHARI_EXTENDED } from "./hadith-collections/bukhari-extended";
+import { MUSLIM_EXTENDED } from "./hadith-collections/muslim-extended";
+import { ALL_OTHER_COLLECTIONS_EXTENDED } from "./hadith-collections/other-collections-extended";
+import { ALL_COMPREHENSIVE_HADITHS } from "./hadith-collections/comprehensive-hadiths";
 
 // Sahih Muslim Collection
 export const SAHIH_MUSLIM_COLLECTION: HadithEntry[] = [
@@ -265,6 +268,9 @@ export const HAKIM_COLLECTION: HadithEntry[] = [
 // Combine all collections
 export const ALL_HADITH_COLLECTIONS: HadithEntry[] = [
   ...ALL_BUKHARI_EXTENDED,
+  ...MUSLIM_EXTENDED,
+  ...ALL_OTHER_COLLECTIONS_EXTENDED,
+  ...ALL_COMPREHENSIVE_HADITHS,
   ...SAHIH_MUSLIM_COLLECTION,
   ...ABU_DAWUD_COLLECTION,
   ...TIRMIDHI_COLLECTION,
