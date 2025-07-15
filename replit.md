@@ -10,6 +10,7 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+- **July 15, 2025**: Fixed PWABuilder ImageGenerator error by replacing SVG icons with PNG icons (192x192 and 512x512) in manifest.json for Windows app package compatibility
 - **July 15, 2025**: Fixed chapter navigation bug where switching between chapters would maintain previous verse position instead of starting at verse 1
 - **July 15, 2025**: Added safety checks to prevent "Cannot read properties of undefined" errors when accessing ayah data
 - **July 15, 2025**: Reduced excessive API calls by optimizing reading progress tracking to only trigger once per surah visit
