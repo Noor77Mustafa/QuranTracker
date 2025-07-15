@@ -78,6 +78,12 @@ export function useStreak(userId?: number) {
     // If already read today, don't increment streak
     if (lastReadDate === today) return;
     
+    // Prevent duplicate streak updates for the same day
+    const streakKey = `streak-${effectiveUserId}-${today}`;
+    if (localStorage.getItem(streakKey)) {
+      return; // Already updated today
+    }
+    
     // Check if streak should be continued or reset
     // If last read was yesterday, continue streak
     // Otherwise reset to 1
@@ -126,6 +132,9 @@ export function useStreak(userId?: number) {
         setLongestStreak(newLongestStreak);
         setLastReadDate(today);
         
+        // Mark as updated for today
+        localStorage.setItem(streakKey, 'true');
+        
         // Show toast notification
         if (newStreak > streak) {
           toast({
@@ -154,9 +163,16 @@ export function useStreak(userId?: number) {
       return;
     }
     
+    // Prevent duplicate calls for the same surah on the same day
+    const today = new Date().toISOString().split('T')[0];
+    const progressKey = `progress-${effectiveUserId}-${surahId}-${today}`;
+    
+    if (localStorage.getItem(progressKey)) {
+      return; // Already tracked today for this surah
+    }
+    
     // Create reading progress entry in database
     try {
-      const today = new Date().toISOString().split('T')[0];
       const response = await apiRequest("POST", "/api/reading-progress", {
         userId: effectiveUserId,
         surahId: surahId || 1,
@@ -168,6 +184,9 @@ export function useStreak(userId?: number) {
       
       if (response.ok) {
         setPagesRead(newPagesRead);
+        
+        // Mark as tracked for today
+        localStorage.setItem(progressKey, 'true');
         
         // Check for new achievements from the response
         const data = await response.json();

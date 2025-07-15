@@ -8,6 +8,13 @@ MyQuran is a mobile-friendly Progressive Web Application (PWA) designed to help 
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes
+
+- **July 15, 2025**: Fixed chapter navigation bug where switching between chapters would maintain previous verse position instead of starting at verse 1
+- **July 15, 2025**: Added safety checks to prevent "Cannot read properties of undefined" errors when accessing ayah data
+- **July 15, 2025**: Reduced excessive API calls by optimizing reading progress tracking to only trigger once per surah visit
+- **July 15, 2025**: Completed comprehensive hadith collection implementation with 200+ hadiths across all major collections (Bukhari, Muslim, Abu Dawud, Tirmidhi, Nasa'i, Ibn Majah, Ahmad, Malik, Darimi, Tabarani, Bayhaqi, Hakim)
+
 ## System Architecture
 
 ### Frontend Architecture
