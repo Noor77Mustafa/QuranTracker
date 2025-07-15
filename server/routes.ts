@@ -501,16 +501,49 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const initializeHadithData = async () => {
     try {
       const { BUKHARI_VOLUME_1 } = await import("./hadith-data");
+      const { COMPLETE_HADITH_COLLECTION, NAWAWI_FORTY_HADITH, MUSLIM_HADITH_SAMPLE } = await import("./complete-hadith-data");
       console.log("Initializing hadith data...");
       
       // Check if hadiths are already loaded
       const existingHadiths = await dbStorage.getHadithsByCollection("bukhari");
-      if (existingHadiths.length === 0) {
-        // Load Bukhari Volume 1 hadiths
-        for (const hadith of BUKHARI_VOLUME_1) {
-          await dbStorage.createHadith(hadith);
+      if (existingHadiths.length < 100) {
+        // Load all Bukhari hadiths
+        const allBukhariHadiths = [...BUKHARI_VOLUME_1, ...COMPLETE_HADITH_COLLECTION];
+        for (const hadith of allBukhariHadiths) {
+          try {
+            await dbStorage.createHadith(hadith);
+          } catch (err) {
+            // Skip duplicate entries
+            if (!err?.message?.includes('duplicate')) {
+              console.error(`Error loading hadith ${hadith.id}:`, err);
+            }
+          }
         }
-        console.log(`Loaded ${BUKHARI_VOLUME_1.length} hadiths from Bukhari Volume 1`);
+        console.log(`Loaded ${allBukhariHadiths.length} Bukhari hadiths`);
+        
+        // Load Nawawi's Forty Hadith
+        for (const hadith of NAWAWI_FORTY_HADITH) {
+          try {
+            await dbStorage.createHadith(hadith);
+          } catch (err) {
+            if (!err?.message?.includes('duplicate')) {
+              console.error(`Error loading Nawawi hadith ${hadith.id}:`, err);
+            }
+          }
+        }
+        console.log(`Loaded ${NAWAWI_FORTY_HADITH.length} Nawawi hadiths`);
+        
+        // Load Muslim hadith sample
+        for (const hadith of MUSLIM_HADITH_SAMPLE) {
+          try {
+            await dbStorage.createHadith(hadith);
+          } catch (err) {
+            if (!err?.message?.includes('duplicate')) {
+              console.error(`Error loading Muslim hadith ${hadith.id}:`, err);
+            }
+          }
+        }
+        console.log(`Loaded ${MUSLIM_HADITH_SAMPLE.length} Muslim hadiths`);
       } else {
         console.log(`Found ${existingHadiths.length} existing hadiths in database`);
       }
@@ -521,6 +554,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Initialize hadith data on startup
   initializeHadithData();
+
+  // Dua routes
+  app.get("/api/duas", async (req, res) => {
+    try {
+      const { COMPLETE_DUA_COLLECTION } = await import("./complete-dua-collection");
+      const { category } = req.query;
+      
+      let duas = COMPLETE_DUA_COLLECTION;
+      if (category) {
+        // Map category ID to actual category name
+        const categoryMap: Record<string, string> = {
+          'daily-routine': 'Daily Routine',
+          'prayer': 'Prayer',
+          'healing': 'Healing',
+          'mental-health': 'Mental Health',
+          'forgiveness': 'Forgiveness',
+          'protection': 'Protection',
+          'family': 'Family',
+          'success': 'Success',
+          'travel': 'Travel',
+          'women-s-duas': 'Women\'s Duas',
+          'morning-evening': 'Morning Evening',
+          'quranic': 'Quranic',
+          'special-occasions': 'Special Occasions'
+        };
+        const categoryName = categoryMap[category.toString()] || category.toString();
+        duas = duas.filter(dua => dua.category === categoryName);
+      }
+      
+      res.json(duas);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  app.get("/api/duas/categories", async (req, res) => {
+    try {
+      const { DUA_CATEGORIES } = await import("./complete-dua-collection");
+      res.json(DUA_CATEGORIES);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  app.get("/api/duas/featured", async (req, res) => {
+    try {
+      const { COMPLETE_DUA_COLLECTION, FEATURED_DUAS } = await import("./complete-dua-collection");
+      const featuredDuas = COMPLETE_DUA_COLLECTION.filter(dua => FEATURED_DUAS.includes(dua.id));
+      res.json(featuredDuas);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
+
+  app.get("/api/duas/:id", async (req, res) => {
+    try {
+      const { COMPLETE_DUA_COLLECTION } = await import("./complete-dua-collection");
+      const dua = COMPLETE_DUA_COLLECTION.find(d => d.id === req.params.id);
+      
+      if (!dua) {
+        return res.status(404).json({ message: "Dua not found" });
+      }
+      
+      res.json(dua);
+    } catch (error) {
+      res.status(500).json({ message: handleDbError(error) });
+    }
+  });
 
   // OpenAI routes
   app.post("/api/ai/chat", getAIResponse);

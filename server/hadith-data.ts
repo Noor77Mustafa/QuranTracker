@@ -98,7 +98,7 @@ export const BUKHARI_VOLUME_1: HadithEntry[] = [
     chapter: "Heraclius and the signs of prophethood"
   },
 
-  // Book 2: Belief (7-55) - Sample entries
+  // Book 2: Belief (7-55) - Complete entries
   {
     id: "bukhari-1-2-7",
     volume: 1,
@@ -123,6 +123,71 @@ export const BUKHARI_VOLUME_1: HadithEntry[] = [
     grade: "Sahih",
     collection: "bukhari",
     tags: ["faith", "iman", "haya", "modesty", "branches"],
+    chapter: "Faith has over sixty branches"
+  },
+  {
+    id: "bukhari-1-2-9",
+    volume: 1,
+    book: 2,
+    bookTitle: "Belief",
+    hadithNumber: 9,
+    englishText: "The Prophet said, \"A Muslim is the one who avoids harming Muslims with his tongue and hands. And a Muhajir (emigrant) is the one who gives up (abandons) all what Allah has forbidden.\"",
+    narrator: "Abdullah bin Amr",
+    grade: "Sahih",
+    collection: "bukhari",
+    tags: ["muslim", "harm", "tongue", "hands", "muhajir"],
+    chapter: "A Muslim is the one who avoids harming Muslims with his tongue and hands"
+  },
+  {
+    id: "bukhari-1-2-10",
+    volume: 1,
+    book: 2,
+    bookTitle: "Belief",
+    hadithNumber: 10,
+    englishText: "Allah's Apostle said: \"By Him in Whose Hands my life is, none of you will have faith till he loves me more than his father and his children.\"",
+    narrator: "Abu Huraira",
+    grade: "Sahih",
+    collection: "bukhari",
+    tags: ["faith", "love", "prophet", "priority"],
+    chapter: "To love the Prophet is a part of faith"
+  },
+  {
+    id: "bukhari-1-2-11",
+    volume: 1,
+    book: 2,
+    bookTitle: "Belief",
+    hadithNumber: 11,
+    englishText: "The Prophet said \"None of you will have faith till he wishes for his (Muslim) brother what he likes for himself.\"",
+    narrator: "Anas",
+    grade: "Sahih",
+    collection: "bukhari",
+    tags: ["faith", "brotherhood", "wishing good", "golden rule"],
+    chapter: "To wish for one's brother what one likes for oneself is a part of faith"
+  },
+  {
+    id: "bukhari-1-2-12",
+    volume: 1,
+    book: 2,
+    bookTitle: "Belief",
+    hadithNumber: 12,
+    englishText: "The Prophet said, \"Whoever possesses the following three qualities will have the sweetness (delight) of faith: 1. The one to whom Allah and His Apostle becomes dearer than anything else. 2. Who loves a person and he loves him only for Allah's sake. 3. Who hates to revert to Atheism (disbelief) as he hates to be thrown into the fire.\"",
+    narrator: "Anas",
+    grade: "Sahih",
+    collection: "bukhari",
+    tags: ["faith", "sweetness", "love", "allah", "disbelief"],
+    chapter: "The sweetness of faith"
+  },
+  {
+    id: "bukhari-1-2-13",
+    volume: 1,
+    book: 2,
+    bookTitle: "Belief",
+    hadithNumber: 13,
+    englishText: "Allah's Apostle said, \"By Him in Whose Hands my life is, none of you will have faith till he loves me more than his father, his children and all mankind.\"",
+    narrator: "Anas",
+    grade: "Sahih",
+    collection: "bukhari",
+    tags: ["faith", "love", "prophet", "mankind"],
     chapter: "The branches of faith"
   },
 
