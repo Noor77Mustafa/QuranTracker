@@ -51,6 +51,11 @@ export default function SurahDetail() {
     setIsLoading(true);
     setError(null);
     
+    // Reset to first ayah when changing surahs unless ayah is specified in URL
+    if (!ayahParam) {
+      setCurrentAyah(1);
+    }
+    
     getSurah(surahId)
       .then((data) => {
         setSurah(data);
@@ -64,16 +69,16 @@ export default function SurahDetail() {
         setIsLoading(false);
         console.error("Error loading surah:", err);
       });
-  }, [surahId]);
+  }, [surahId, ayahParam]);
   
-  // Update reading streak when visiting a surah
+  // Update reading streak when visiting a surah (only once per surah)
   useEffect(() => {
     if (surah) {
       updateStreak();
-      incrementPagesRead(1, surahId, currentAyah);
+      incrementPagesRead(1, surahId, 1);
       // Achievement tracking is handled automatically by the reading progress system
     }
-  }, [surah, updateStreak, incrementPagesRead, surahId, currentAyah]);
+  }, [surah, updateStreak, incrementPagesRead, surahId]);
   
   // Handle audio playback
   useEffect(() => {
@@ -239,6 +244,13 @@ export default function SurahDetail() {
   }
   
   const currentAyahData = surah.ayahs[currentAyah - 1];
+  
+  // Safety check to ensure currentAyahData exists
+  if (!currentAyahData) {
+    // Reset to first ayah if current ayah is out of bounds
+    setCurrentAyah(1);
+    return null;
+  }
   
   return (
     <main id="main-content" className="container mx-auto px-4 py-4">
