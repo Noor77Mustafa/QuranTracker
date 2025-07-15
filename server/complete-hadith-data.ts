@@ -2,9 +2,11 @@
 // This file contains comprehensive hadith data organized by volumes and books
 
 import { HadithEntry } from './hadith-data';
+import { ALL_HADITH_COLLECTIONS } from './all-hadith-collections';
 
 // Additional hadiths from all volumes
 export const COMPLETE_HADITH_COLLECTION: HadithEntry[] = [
+  ...ALL_HADITH_COLLECTIONS,
   // Volume 1 - Book 2: Belief (continued)
   {
     id: "bukhari-1-2-14",
