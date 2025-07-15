@@ -54,8 +54,8 @@ function Router() {
             <Route path="/hadiths" component={Hadiths} />
             <Route path="/hadith/collection/:collectionId" component={HadithCollection} />
             <Route path="/hadith/:id" component={HadithDetail} />
-            <Route path="/duas" component={Duas} />
-            <Route path="/dua/category/:categoryId" component={DuaCollection} />
+            <Route path="/duas" component={DuaCollection} />
+            <Route path="/duas/:category" component={DuaCollection} />
             <Route path="/dua/:id" component={DuaDetail} />
             <Route path="/progress" component={Progress} />
             <Route path="/profile/goals" component={ProfileGoals} />

@@ -104,7 +104,14 @@ export default function EnhancedHadithCollection() {
 
   // Get unique volumes and books from hadiths
   const uniqueVolumes = [...new Set(hadiths.map((h: any) => h.volume))].sort((a, b) => a - b);
-  const uniqueBooks = [...new Set(hadiths.map((h: any) => ({ book: h.book, title: h.bookTitle })))];
+  const uniqueBooksMap = new Map();
+  hadiths.forEach((h: any) => {
+    if (!uniqueBooksMap.has(h.book)) {
+      uniqueBooksMap.set(h.book, h.bookTitle);
+    }
+  });
+  const uniqueBooks = Array.from(uniqueBooksMap, ([book, title]) => ({ book, title }))
+    .sort((a, b) => a.book - b.book);
 
   if (!collectionInfo && !loading) {
     return (
@@ -234,7 +241,7 @@ export default function EnhancedHadithCollection() {
               <select
                 value={selectedVolume || ""}
                 onChange={(e) => setSelectedVolume(e.target.value ? parseInt(e.target.value) : null)}
-                className="px-3 py-2 border rounded-md text-sm"
+                className="px-3 py-2 border rounded-md text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
               >
                 <option value="">All Volumes</option>
                 {uniqueVolumes.map(volume => (
@@ -244,11 +251,13 @@ export default function EnhancedHadithCollection() {
               <select
                 value={selectedBook || ""}
                 onChange={(e) => setSelectedBook(e.target.value ? parseInt(e.target.value) : null)}
-                className="px-3 py-2 border rounded-md text-sm"
+                className="px-3 py-2 border rounded-md text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
               >
                 <option value="">All Books</option>
-                {uniqueBooks.map(book => (
-                  <option key={book.book} value={book.book}>Book {book.book}</option>
+                {uniqueBooks.map(({book, title}, index) => (
+                  <option key={`${book}-${index}`} value={book}>
+                    Book {book}: {title}
+                  </option>
                 ))}
               </select>
             </div>
