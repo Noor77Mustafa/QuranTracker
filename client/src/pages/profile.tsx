@@ -50,7 +50,7 @@ export default function Profile() {
   } : undefined;
 
   // Fetch reading progress for history tab
-  const { data: readingHistory = [], isLoading: historyLoading } = useQuery({
+  const { data: readingHistory = [], isLoading: historyLoading } = useQuery<any[]>({
     queryKey: ["/api/reading-progress", user?.id],
     enabled: !!user?.id && activeTab === 'history',
   });

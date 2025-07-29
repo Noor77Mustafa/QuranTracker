@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Hadith } from "@/types/hadith";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Search, BookOpen, User, Calendar, Star, Heart, CheckCircle, Clock } from "lucide-react";
@@ -71,13 +72,13 @@ export default function EnhancedHadithCollection() {
   const collectionInfo = COLLECTION_INFO[collectionId as keyof typeof COLLECTION_INFO];
 
   // Fetch hadiths from the database
-  const { data: hadiths = [], isLoading: hadithsLoading, error } = useQuery({
+  const { data: hadiths = [], isLoading: hadithsLoading, error } = useQuery<Hadith[]>({
     queryKey: [`/api/hadiths/collection/${collectionId}`],
     enabled: !!collectionId,
   });
 
   // Fetch volumes for Bukhari (available)
-  const { data: volumes = [], isLoading: volumesLoading } = useQuery({
+  const { data: volumes = [], isLoading: volumesLoading } = useQuery<number[]>({
     queryKey: [`/api/hadiths/volumes/${collectionId}`],
     enabled: collectionId === 'bukhari',
   });
@@ -103,7 +104,7 @@ export default function EnhancedHadithCollection() {
   });
 
   // Get unique volumes and books from hadiths
-  const uniqueVolumes = [...new Set(hadiths.map((h: any) => h.volume))].sort((a, b) => a - b);
+  const uniqueVolumes = Array.from(new Set(hadiths.map((h: any) => h.volume))).sort((a, b) => a - b);
   const uniqueBooksMap = new Map();
   hadiths.forEach((h: any) => {
     if (!uniqueBooksMap.has(h.book)) {
