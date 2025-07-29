@@ -126,10 +126,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/streaks/:userId", async (req, res) => {
     try {
       const userId = parseInt(req.params.userId);
-      const streak = await dbStorage.getStreakByUserId(userId);
+      let streak = await dbStorage.getStreakByUserId(userId);
       
+      // If no streak exists, create a default one
       if (!streak) {
-        return res.status(404).json({ message: "Streak not found" });
+        const defaultStreakData = {
+          userId,
+          currentStreak: 0,
+          longestStreak: 0,
+          lastReadDate: undefined
+        };
+        streak = await dbStorage.createOrUpdateStreak(defaultStreakData);
       }
       
       res.json(streak);
