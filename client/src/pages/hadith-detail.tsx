@@ -14,6 +14,8 @@ import { Badge } from "@/components/ui/badge";
 import { Share2, BookmarkPlus, Copy, ArrowLeft, User, BookOpen, Volume2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
+import { useHadithBookmarks } from "@/hooks/use-hadith-bookmarks";
+import { Hadith } from "@/types/hadith";
 
 export default function HadithDetail() {
   const [match, params] = useRoute("/hadith/:id");
@@ -21,7 +23,7 @@ export default function HadithDetail() {
   const hadithId = params?.id || "";
 
   // Fetch hadith from API
-  const { data: hadith, isLoading, error } = useQuery({
+  const { data: hadith, isLoading, error } = useQuery<Hadith>({
     queryKey: [`/api/hadiths/${hadithId}`],
     enabled: !!hadithId && match,
   });
@@ -74,12 +76,34 @@ export default function HadithDetail() {
     }
   };
 
+  const { addBookmark, removeBookmark, isBookmarked, getBookmark } =
+    useHadithBookmarks();
+
   const handleBookmark = () => {
-    // TODO: Implement bookmark functionality
-    toast({
-      title: "Bookmarked",
-      description: "This hadith has been added to your bookmarks.",
-    });
+    if (!hadith) return;
+
+    if (isBookmarked(hadithId)) {
+      const bookmark = getBookmark(hadithId);
+      if (bookmark) {
+        removeBookmark(bookmark.id);
+        toast({
+          title: "Bookmark removed",
+          description: "This hadith was removed from your bookmarks.",
+        });
+      }
+    } else {
+      addBookmark({
+        hadithId,
+        collection: hadith.collection,
+        englishText: hadith.englishText,
+        arabicText: hadith.arabicText,
+      });
+
+      toast({
+        title: "Bookmarked",
+        description: "This hadith has been added to your bookmarks.",
+      });
+    }
   };
 
   if (!match) return null;
