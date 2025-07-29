@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getSurah, getVerses } from "@/lib/api-client";
+import { getSurah, getVerses, Surah, Verse } from "@/lib/api-client";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -9,8 +9,8 @@ interface QuranReaderProps {
 }
 
 export default function QuranReader({ surahId, initialVerseNumber = 1 }: QuranReaderProps) {
-  const [surah, setSurah] = useState<any>(null);
-  const [verses, setVerses] = useState<any[]>([]);
+  const [surah, setSurah] = useState<Surah | null>(null);
+  const [verses, setVerses] = useState<Verse[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
