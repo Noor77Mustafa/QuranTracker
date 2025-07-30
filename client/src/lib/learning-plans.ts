@@ -85,7 +85,7 @@ export const learningPlans: LearningPlan[] = [
             title: "Self-Discipline and Willpower",
             content:
               "The consistent daily practice of denying immediate gratification for a higher purpose strengthens one's willpower and self-discipline. This enhanced self-control often extends beyond the month of Ramadan, helping Muslims make better choices in various aspects of life.\n\nThis spiritual training helps overcome harmful habits and inclinations, leading to personal growth and development. Many Muslims report breaking negative habits during Ramadan and establishing positive ones that continue throughout the year.",
-            videoUrl: "https://www.youtube.com/embed/ifllgTA2pmY",
+            videoUrl: "https://www.youtube.com/watch?v=dKR9xOQKiYA",
           },
         ],
       },
@@ -112,7 +112,7 @@ export const learningPlans: LearningPlan[] = [
             title: "Managing Emotions and Responses",
             content:
               "Hunger and thirst can sometimes lead to irritability, making emotional management an essential aspect of mindful fasting. The Prophet Muhammad ﷺ taught that when fasting, if someone tries to argue or fight with you, you should say, 'I am fasting.'\n\nThis simple reminder serves as a pattern interrupt, helping the fasting person maintain composure and mindfulness even in challenging situations. It transforms potential negative interactions into opportunities for spiritual growth and self-control.",
-            videoUrl: "https://www.youtube.com/embed/ramO7E8r-8Y",
+            videoUrl: "https://www.youtube.com/watch?v=ennXDlHNiBM",
           },
         ],
       },
@@ -149,7 +149,7 @@ export const learningPlans: LearningPlan[] = [
             title: "Case Study: Surah Al-Asr",
             content:
               "Let's examine Surah Al-Asr (Chapter 103) through a historical lens. This short yet profound surah was revealed in Mecca during a time when the early Muslims faced significant persecution.\n\nThe surah's emphasis on the passage of time, righteous deeds, and mutual encouragement to persevere in truth directly addressed the challenges faced by the small Muslim community. Understanding this context deepens our appreciation of the surah's message about the importance of faith, good deeds, and community support during difficult times.",
-            videoUrl: "https://www.youtube.com/embed/XW0CO2F-q60",
+            videoUrl: "https://www.youtube.com/watch?v=aF-gi9kX5FQ",
           },
         ],
       },
@@ -176,7 +176,7 @@ export const learningPlans: LearningPlan[] = [
             title: "Word Choice and Precision",
             content:
               "The Quran is known for its precise word choices, where seemingly synonymous terms actually carry subtle but significant differences in meaning. For instance, the Quran uses different words for 'fear' (khawf, khashya, taqwa) each conveying distinct psychological states.\n\nThis precision extends to grammatical structures, verb tenses, and pronoun usage. When analyzed carefully, these linguistic features often reveal insights that enhance our understanding of the text's message.",
-            videoUrl: "https://www.youtube.com/embed/kUzM0R1O8kg",
+            videoUrl: "https://www.youtube.com/watch?v=Hvu2GWX1WZ0",
           },
         ],
       },
@@ -203,7 +203,7 @@ export const learningPlans: LearningPlan[] = [
             title: "Case Study: Justice in the Quran",
             content:
               "The concept of justice appears throughout the Quran, addressed in various contexts including personal conduct, family relations, commerce, and governance. By examining these diverse passages together, we gain a multi-dimensional understanding of the Quranic approach to justice.\n\nThis thematic lens reveals that justice in the Quran is not merely a legal concept but is deeply connected to the qualities of mercy, moderation, and truthfulness. The result is a comprehensive ethical framework that can be applied across different domains of life.",
-            videoUrl: "https://www.youtube.com/embed/PxCLXDhS6m4",
+            videoUrl: "https://www.youtube.com/watch?v=qqiU9GgEgPY",
           },
         ],
       },
@@ -240,7 +240,7 @@ export const learningPlans: LearningPlan[] = [
             title: "Key Themes",
             content:
               "Several key themes run throughout Surah al-Hadid:\n\n1. Divine Sovereignty: The surah emphasizes Allah's complete control over creation and His perfect knowledge of all things.\n\n2. The Reality of This World: It repeatedly emphasizes the temporary nature of worldly life and the permanence of the Hereafter.\n\n3. Generosity and Sacrifice: The surah strongly encourages believers to spend their wealth in charity and in the cause of Allah.\n\n4. Balance Between Spirituality and Material Progress: The mention of iron highlights the importance of material strength alongside spiritual development.\n\nThese themes create a comprehensive worldview that balances spiritual aspirations with material realities.",
-            videoUrl: "https://www.youtube.com/embed/tqOuHU_wxKQ",
+            videoUrl: "https://www.youtube.com/watch?v=7_vvORv0HAk",
           },
         ],
       },
@@ -267,7 +267,7 @@ export const learningPlans: LearningPlan[] = [
             title: "Symbolic Meaning",
             content:
               "Beyond its literal meaning, iron in Surah al-Hadid carries symbolic significance. Iron represents strength, resilience, and the material foundations necessary for human civilization and justice. It symbolizes the balance between spiritual values (represented by the Scripture) and material strength (represented by iron).\n\nJust as iron needs to be heated, beaten, and shaped to become useful, human souls often require trials and challenges to develop moral strength and character. This symbolism reminds believers that spiritual development doesn't mean neglecting material progress and strength—both are necessary for a balanced life and a just society.",
-            videoUrl: "https://www.youtube.com/embed/FYdeL2Mgtys",
+            videoUrl: "https://www.youtube.com/watch?v=OkNnB5sXEws",
           },
         ],
       },
@@ -294,7 +294,7 @@ export const learningPlans: LearningPlan[] = [
             title: "Developing Spiritual Resilience",
             content:
               "Iron's properties of strength and resilience serve as a metaphor for spiritual strength. Just as iron must go through intense heat and pressure to become strong and useful, our spirits often develop through trials and challenges.\n\nPractical applications include:\n\n1. Approaching hardships as opportunities for spiritual growth rather than mere obstacles\n2. Developing regular spiritual practices that strengthen the heart, such as dhikr (remembrance of Allah) and reflection on the Quran\n3. Building communities that support each other during difficulties, sharing both material resources and spiritual strength\n4. Recognizing that spiritual transformation, like the forging of iron, is a process that takes time and consistent effort",
-            videoUrl: "https://www.youtube.com/embed/2J4uzCZ8ZRA",
+            videoUrl: "https://www.youtube.com/watch?v=lc2-ZnwdUhI",
           },
         ],
       },
@@ -331,7 +331,7 @@ export const learningPlans: LearningPlan[] = [
             title: "The Islamic Perspective",
             content:
               "From an Islamic perspective, consistency in worship is highly valued. The Prophet Muhammad ﷺ said, 'The most beloved of deeds to Allah are those that are most consistent, even if they are small.' (Bukhari and Muslim)\n\nThis hadith emphasizes that Allah values consistency over intensity—a principle that directly applies to the post-Ramadan period. Additionally, voluntary fasting throughout the year is encouraged, with specific recommendations for fasting six days in Shawwal (the month after Ramadan), three days during the middle of each lunar month, and on Mondays and Thursdays.\n\nThe Quran also encourages believers to 'maintain their prayers' (Surah Al-Mu'minun 23:9), indicating the importance of consistency in worship beyond special occasions.",
-            videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+            videoUrl: "https://www.youtube.com/watch?v=iazyu0foG8E",
           },
         ],
       },
@@ -358,7 +358,7 @@ export const learningPlans: LearningPlan[] = [
             title: "Developing a Personal Habit Plan",
             content:
               "Create a personalized plan for maintaining your Ramadan momentum by following these steps:\n\n1. Reflect on your Ramadan experience: What practices did you find most meaningful? Which ones would you like to continue?\n\n2. Set specific, measurable goals: Instead of 'read more Quran,' specify 'read 3 pages of Quran daily after fajr prayer.'\n\n3. Start with a 30-day commitment: Commit to your chosen practices for 30 days after Ramadan before evaluating and adjusting.\n\n4. Create accountability: Find a friend or family member to check in with regularly about your spiritual habits.\n\n5. Plan celebrations: Reward yourself in halal ways when you reach milestones (e.g., 30 consecutive days of your practice).\n\nRemember that stumbling in your habits is normal and part of the growth process. The key is to recommit and continue forward.",
-            videoUrl: "https://www.youtube.com/embed/9bZkp7q19f0",
+            videoUrl: "https://www.youtube.com/watch?v=XU4gXp9jvhE",
           },
         ],
       },
@@ -385,7 +385,7 @@ export const learningPlans: LearningPlan[] = [
             title: "Communal Reflection Practices",
             content:
               "While individual reflection is valuable, community support enhances sustainability. Consider these approaches to communal reflection:\n\n1. Reflection Circles: Form a small group (halaqah) that meets weekly to discuss spiritual goals, share challenges, and offer mutual support.\n\n2. Accountability Partnerships: Pair up with a trusted friend for weekly check-ins about spiritual practices and goals.\n\n3. Family Reflections: Establish a weekly family meeting where family members share their spiritual experiences and support each other's growth.\n\n4. Community Classes: Attend regular knowledge circles at your local mosque to maintain connection with spiritual learning.\n\nCommunal reflection combines the benefits of personal accountability with social support, making it particularly effective for maintaining momentum after Ramadan.",
-            videoUrl: "https://www.youtube.com/embed/5qap5aO4i9A",
+            videoUrl: "https://www.youtube.com/watch?v=Sr97LqjGuUM",
           },
         ],
       },
