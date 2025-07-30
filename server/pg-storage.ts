@@ -7,7 +7,7 @@ import {
   Reflection, InsertReflection, Quest, InsertQuest, UserQuest, 
   InsertUserQuest, Hadith, InsertHadith, HadithBookmark, InsertHadithBookmark
 } from "@shared/schema";
-import { and, eq, like, or } from "drizzle-orm";
+import { and, eq, like, or, asc } from "drizzle-orm";
 import { 
   users, readingProgress, streaks, achievements, 
   readingGoals, bookmarks, reflections, quests, userQuests,
@@ -247,7 +247,12 @@ export class PgStorage implements IStorage {
   async getHadithsByCollection(collection: string): Promise<Hadith[]> {
     return db.select()
       .from(hadiths)
-      .where(eq(hadiths.collection, collection));
+      .where(eq(hadiths.collection, collection))
+      .orderBy(
+        asc(hadiths.volume),
+        asc(hadiths.book),
+        asc(hadiths.hadithNumber)
+      );
   }
 
   async getHadithsByVolume(collection: string, volume: number): Promise<Hadith[]> {
@@ -258,6 +263,10 @@ export class PgStorage implements IStorage {
           eq(hadiths.collection, collection),
           eq(hadiths.volume, volume)
         )
+      )
+      .orderBy(
+        asc(hadiths.book),
+        asc(hadiths.hadithNumber)
       );
   }
 
@@ -269,7 +278,8 @@ export class PgStorage implements IStorage {
           eq(hadiths.collection, collection),
           eq(hadiths.book, book)
         )
-      );
+      )
+      .orderBy(asc(hadiths.hadithNumber));
   }
 
   async searchHadiths(query: string): Promise<Hadith[]> {
