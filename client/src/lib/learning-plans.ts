@@ -290,7 +290,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "The Islamic Perspective",
             content: "From an Islamic perspective, consistency in worship is highly valued. The Prophet Muhammad ﷺ said, 'The most beloved of deeds to Allah are those that are most consistent, even if they are small.' (Bukhari and Muslim)\n\nThis hadith emphasizes that Allah values consistency over intensity—a principle that directly applies to the post-Ramadan period. Additionally, voluntary fasting throughout the year is encouraged, with specific recommendations for fasting six days in Shawwal (the month after Ramadan), three days during the middle of each lunar month, and on Mondays and Thursdays.\n\nThe Quran also encourages believers to 'maintain their prayers' (Surah Al-Mu'minun 23:9), indicating the importance of consistency in worship beyond special occasions.",
-            videoUrl: "https://www.youtube.com/embed/example-islamic-perspective"
+            videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
           }
         ]
       },
@@ -313,7 +313,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "Developing a Personal Habit Plan",
             content: "Create a personalized plan for maintaining your Ramadan momentum by following these steps:\n\n1. Reflect on your Ramadan experience: What practices did you find most meaningful? Which ones would you like to continue?\n\n2. Set specific, measurable goals: Instead of 'read more Quran,' specify 'read 3 pages of Quran daily after fajr prayer.'\n\n3. Start with a 30-day commitment: Commit to your chosen practices for 30 days after Ramadan before evaluating and adjusting.\n\n4. Create accountability: Find a friend or family member to check in with regularly about your spiritual habits.\n\n5. Plan celebrations: Reward yourself in halal ways when you reach milestones (e.g., 30 consecutive days of your practice).\n\nRemember that stumbling in your habits is normal and part of the growth process. The key is to recommit and continue forward.",
-            videoUrl: "https://www.youtube.com/embed/example-habit-plan"
+            videoUrl: "https://www.youtube.com/embed/9bZkp7q19f0"
           }
         ]
       },
@@ -336,7 +336,7 @@ export const learningPlans: LearningPlan[] = [
           {
             title: "Communal Reflection Practices",
             content: "While individual reflection is valuable, community support enhances sustainability. Consider these approaches to communal reflection:\n\n1. Reflection Circles: Form a small group (halaqah) that meets weekly to discuss spiritual goals, share challenges, and offer mutual support.\n\n2. Accountability Partnerships: Pair up with a trusted friend for weekly check-ins about spiritual practices and goals.\n\n3. Family Reflections: Establish a weekly family meeting where family members share their spiritual experiences and support each other's growth.\n\n4. Community Classes: Attend regular knowledge circles at your local mosque to maintain connection with spiritual learning.\n\nCommunal reflection combines the benefits of personal accountability with social support, making it particularly effective for maintaining momentum after Ramadan.",
-            videoUrl: "https://www.youtube.com/embed/example-communal-reflection"
+            videoUrl: "https://www.youtube.com/embed/5qap5aO4i9A"
           }
         ]
       }

@@ -422,19 +422,34 @@ export class MemStorage implements IStorage {
   }
 
   async getHadithsByCollection(collection: string): Promise<Hadith[]> {
-    return Array.from(this.hadiths.values()).filter(h => h.collection === collection);
+    return Array.from(this.hadiths.values())
+      .filter(h => h.collection === collection)
+      .sort((a, b) => {
+        if (a.volume !== b.volume) {
+          return a.volume - b.volume;
+        }
+        if (a.book !== b.book) {
+          return a.book - b.book;
+        }
+        return a.hadithNumber - b.hadithNumber;
+      });
   }
 
   async getHadithsByVolume(collection: string, volume: number): Promise<Hadith[]> {
-    return Array.from(this.hadiths.values()).filter(h => 
-      h.collection === collection && h.volume === volume
-    );
+    return Array.from(this.hadiths.values())
+      .filter(h => h.collection === collection && h.volume === volume)
+      .sort((a, b) => {
+        if (a.book !== b.book) {
+          return a.book - b.book;
+        }
+        return a.hadithNumber - b.hadithNumber;
+      });
   }
 
   async getHadithsByBook(collection: string, book: number): Promise<Hadith[]> {
-    return Array.from(this.hadiths.values()).filter(h => 
-      h.collection === collection && h.book === book
-    );
+    return Array.from(this.hadiths.values())
+      .filter(h => h.collection === collection && h.book === book)
+      .sort((a, b) => a.hadithNumber - b.hadithNumber);
   }
 
   async searchHadiths(query: string): Promise<Hadith[]> {

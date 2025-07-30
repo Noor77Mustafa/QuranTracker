@@ -28,12 +28,18 @@ export const fetchSurah = async (surahNumber: number): Promise<Surah> => {
       `${quranApiBaseUrl}/surah/${surahNumber}`
     );
     const arabicData = await arabicResponse.json();
-    
+    if (arabicData.code !== 200) {
+      throw new Error("Failed to fetch surah data");
+    }
+
     // Fetch English translation
     const translationResponse = await fetch(
       `${quranApiBaseUrl}/surah/${surahNumber}/en.asad`
     );
     const translationData = await translationResponse.json();
+    if (translationData.code !== 200) {
+      throw new Error("Failed to fetch surah data");
+    }
     
     // Fetch transliteration
     const transliterationResponse = await fetch(
@@ -71,17 +77,6 @@ export const fetchSurah = async (surahNumber: number): Promise<Surah> => {
   }
 };
 
-// Cache for storing already fetched surahs
-const surahCache = new Map<number, Surah>();
-
 export const getSurah = async (surahNumber: number): Promise<Surah> => {
-  // Check if the surah is in the cache
-  if (surahCache.has(surahNumber)) {
-    return surahCache.get(surahNumber)!;
-  }
-  
-  // If not, fetch it and store in cache
-  const surah = await fetchSurah(surahNumber);
-  surahCache.set(surahNumber, surah);
-  return surah;
+  return fetchSurah(surahNumber);
 };
