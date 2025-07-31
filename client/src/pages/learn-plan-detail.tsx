@@ -155,15 +155,11 @@ export default function LearningPlanDetail() {
                         
                         {section.imageUrl && (
                           <div className="mt-4 rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-700 p-4 flex justify-center">
-                            <svg width="250" height="200" viewBox="0 0 250 200" xmlns="http://www.w3.org/2000/svg">
-                              <rect width="250" height="200" fill="#f8f9fa"/>
-                              <circle cx="125" cy="80" r="50" fill="#e3f2fd"/>
-                              <path d="M125 130 Q 75 180 125 180 Q 175 180 125 130" fill="#bbdefb"/>
-                              <text x="125" y="85" fontFamily="Arial" fontSize="14" fill="#1565c0" textAnchor="middle">{section.title}</text>
-                              <text x="125" y="105" fontFamily="Arial" fontSize="10" fill="#1565c0" textAnchor="middle">
-                                {`Illustration for ${section.title}`}
-                              </text>
-                            </svg>
+                            <img
+                              src={section.imageUrl}
+                              alt={section.title}
+                              className="max-h-48 w-auto object-contain"
+                            />
                           </div>
                         )}
                         
