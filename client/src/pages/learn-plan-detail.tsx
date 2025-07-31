@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { learningPlans } from "@/lib/learning-plans";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 
 export default function LearningPlanDetail() {
   const [, params] = useRoute("/learn/plan/:id");
@@ -12,9 +15,63 @@ export default function LearningPlanDetail() {
   const [activeTab, setActiveTab] = useState("content");
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [notes, setNotes] = useState("");
+  const [existingReflection, setExistingReflection] = useState<any>(null);
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   // Find the plan from the data
   const plan = learningPlans.find(p => p.id === planId);
+
+  // Get user info
+  const { data: user } = useQuery({
+    queryKey: ["/api/auth/me"],
+    staleTime: 5 * 60 * 1000,
+  });
+
+  // Get existing notes for this learning plan
+  const { data: reflections = [] } = useQuery({
+    queryKey: ["/api/reflections", (user as any)?.id],
+    enabled: !!(user as any)?.id,
+  });
+
+  // Create or update notes mutation
+  const notesMutation = useMutation({
+    mutationFn: async (noteData: { content: string }) => {
+      if (existingReflection) {
+        return await fetch(`/api/reflections/${existingReflection.id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content: noteData.content }),
+        }).then(res => res.json());
+      } else {
+        return await fetch("/api/reflections", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: (user as any)?.id,
+            title: `${plan?.title} - Learning Notes`,
+            content: noteData.content,
+            isPrivate: true,
+          }),
+        }).then(res => res.json());
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/reflections", (user as any)?.id] });
+      toast({
+        title: "Notes saved!",
+        description: "Your learning notes have been saved successfully.",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error saving notes",
+        description: "There was a problem saving your notes. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
 
   useEffect(() => {
     if (plan) {
@@ -27,6 +84,31 @@ export default function LearningPlanDetail() {
       setLoading(false);
     }
   }, [plan, planId]);
+
+  // Load existing notes when reflections are available
+  useEffect(() => {
+    if (Array.isArray(reflections) && plan) {
+      const planNotes = reflections.find((r: any) => 
+        r.title?.includes(plan.title) && r.title?.includes("Learning Notes")
+      );
+      if (planNotes) {
+        setExistingReflection(planNotes);
+        setNotes(planNotes.content || "");
+      }
+    }
+  }, [reflections, plan]);
+
+  const handleSaveNotes = () => {
+    if (!notes.trim()) {
+      toast({
+        title: "No notes to save",
+        description: "Please write some notes before saving.",
+        variant: "destructive",
+      });
+      return;
+    }
+    notesMutation.mutate({ content: notes });
+  };
 
   if (loading) {
     return (
@@ -257,9 +339,21 @@ export default function LearningPlanDetail() {
             <textarea 
               className="w-full h-40 p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:outline-none resize-none"
               placeholder="Write your notes here..."
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
             ></textarea>
             
-            <Button className="mt-4">Save Notes</Button>
+            <div className="flex justify-between items-center mt-4">
+              <div className="text-sm text-gray-500 dark:text-gray-400">
+                {existingReflection ? "Notes will be updated" : "Notes will be saved as new"}
+              </div>
+              <Button 
+                onClick={handleSaveNotes}
+                disabled={notesMutation.isPending || !notes.trim()}
+              >
+                {notesMutation.isPending ? "Saving..." : "Save Notes"}
+              </Button>
+            </div>
           </div>
         </TabsContent>
       </Tabs>
