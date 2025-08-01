@@ -63,9 +63,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Reading progress routes
-  app.post("/api/reading-progress", async (req, res) => {
+  app.post("/api/reading-progress", isAuthenticated, async (req, res) => {
     try {
-      const progressData = insertReadingProgressSchema.parse(req.body);
+      const userId = (req as any).user.id;
+      const progressData = insertReadingProgressSchema.parse({ ...req.body, userId });
       const progress = await dbStorage.createOrUpdateReadingProgress(progressData);
       
       // Check for achievements when progress is updated
@@ -88,9 +89,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/reading-progress/:userId", async (req, res) => {
+  app.get("/api/reading-progress", isAuthenticated, async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = (req as any).user.id;
       const progress = await dbStorage.getReadingProgressByUserId(userId);
       res.json(progress);
     } catch (error) {
@@ -99,14 +100,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Streak routes
-  app.post("/api/streaks", async (req, res) => {
+  app.post("/api/streaks", isAuthenticated, async (req, res) => {
     try {
       console.log("Received streak data:", JSON.stringify(req.body, null, 2));
-      const streakData = insertStreakSchema.parse(req.body);
+      const userId = (req as any).user.id;
+      const streakData = insertStreakSchema.parse({ ...req.body, userId });
       const streak = await dbStorage.createOrUpdateStreak(streakData);
       
       // Check for streak-based achievements
-      const newAchievements = await achievementService.onStreakUpdated(streakData.userId);
+      const newAchievements = await achievementService.onStreakUpdated(userId);
       
       res.status(201).json({ 
         streak, 
@@ -123,9 +125,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/streaks/:userId", async (req, res) => {
+  app.get("/api/streaks", isAuthenticated, async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = (req as any).user.id;
       let streak = await dbStorage.getStreakByUserId(userId);
       
       // If no streak exists, create a default one
@@ -146,9 +148,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Achievement routes
-  app.post("/api/achievements", async (req, res) => {
+  app.post("/api/achievements", isAuthenticated, async (req, res) => {
     try {
-      const achievementData = insertAchievementSchema.parse(req.body);
+      const userId = (req as any).user.id;
+      const achievementData = insertAchievementSchema.parse({ ...req.body, userId });
       const achievement = await dbStorage.createAchievement(achievementData);
       res.status(201).json(achievement);
     } catch (error) {
@@ -160,9 +163,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/achievements/:userId", async (req, res) => {
+  app.get("/api/achievements", isAuthenticated, async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = (req as any).user.id;
       const achievements = await dbStorage.getAchievementsByUserId(userId);
       res.json(achievements);
     } catch (error) {
@@ -171,9 +174,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Reading goal routes
-  app.post("/api/reading-goals", async (req, res) => {
+  app.post("/api/reading-goals", isAuthenticated, async (req, res) => {
     try {
-      const goalData = insertReadingGoalSchema.parse(req.body);
+      const userId = (req as any).user.id;
+      const goalData = insertReadingGoalSchema.parse({ ...req.body, userId });
       const goal = await dbStorage.createOrUpdateReadingGoal(goalData);
       res.status(201).json(goal);
     } catch (error) {
@@ -185,15 +189,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/reading-goals/:userId", async (req, res) => {
+  app.get("/api/reading-goals", isAuthenticated, async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = (req as any).user.id;
       const goal = await dbStorage.getReadingGoalByUserId(userId);
-      
+
       if (!goal) {
         return res.status(404).json({ message: "Reading goal not found" });
       }
-      
+
       res.json(goal);
     } catch (error) {
       res.status(500).json({ message: handleDbError(error) });
@@ -201,9 +205,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Bookmark routes
-  app.post("/api/bookmarks", async (req, res) => {
+  app.post("/api/bookmarks", isAuthenticated, async (req, res) => {
     try {
-      const bookmarkData = insertBookmarkSchema.parse(req.body);
+      const userId = (req as any).user.id;
+      const bookmarkData = insertBookmarkSchema.parse({ ...req.body, userId });
       const bookmark = await dbStorage.createBookmark(bookmarkData);
       res.status(201).json(bookmark);
     } catch (error) {
@@ -215,9 +220,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/bookmarks/:userId", async (req, res) => {
+  app.get("/api/bookmarks", isAuthenticated, async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = (req as any).user.id;
       const bookmarks = await dbStorage.getBookmarksByUserId(userId);
       res.json(bookmarks);
     } catch (error) {
@@ -225,15 +230,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/bookmarks/:id", async (req, res) => {
+  app.delete("/api/bookmarks/:id", isAuthenticated, async (req, res) => {
     try {
       const bookmarkId = parseInt(req.params.id);
-      const success = await dbStorage.deleteBookmark(bookmarkId);
-      
+      const userId = (req as any).user.id;
+      const success = await dbStorage.deleteBookmark(bookmarkId, userId);
+
       if (!success) {
         return res.status(404).json({ message: "Bookmark not found" });
       }
-      
+
       res.status(200).json({ message: "Bookmark deleted successfully" });
     } catch (error) {
       res.status(500).json({ message: handleDbError(error) });
@@ -241,9 +247,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Reflection/Journal routes
-  app.post("/api/reflections", async (req, res) => {
+  app.post("/api/reflections", isAuthenticated, async (req, res) => {
     try {
-      const reflectionData = insertReflectionSchema.parse(req.body);
+      const userId = (req as any).user.id;
+      const reflectionData = insertReflectionSchema.parse({ ...req.body, userId });
       const reflection = await dbStorage.createReflection(reflectionData);
       res.status(201).json(reflection);
     } catch (error) {
@@ -255,9 +262,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/reflections/:userId", async (req, res) => {
+  app.get("/api/reflections", isAuthenticated, async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = (req as any).user.id;
       const reflections = await dbStorage.getReflectionsByUserId(userId);
       res.json(reflections);
     } catch (error) {
@@ -265,30 +272,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/reflections/:id", async (req, res) => {
+  app.patch("/api/reflections/:id", isAuthenticated, async (req, res) => {
     try {
       const reflectionId = parseInt(req.params.id);
-      const updatedReflection = await dbStorage.updateReflection(reflectionId, req.body);
-      
+      const userId = (req as any).user.id;
+      const updatedReflection = await dbStorage.updateReflection(reflectionId, userId, req.body);
+
       if (!updatedReflection) {
         return res.status(404).json({ message: "Reflection not found" });
       }
-      
+
       res.json(updatedReflection);
     } catch (error) {
       res.status(500).json({ message: handleDbError(error) });
     }
   });
 
-  app.delete("/api/reflections/:id", async (req, res) => {
+  app.delete("/api/reflections/:id", isAuthenticated, async (req, res) => {
     try {
       const reflectionId = parseInt(req.params.id);
-      const success = await dbStorage.deleteReflection(reflectionId);
-      
+      const userId = (req as any).user.id;
+      const success = await dbStorage.deleteReflection(reflectionId, userId);
+
       if (!success) {
-        return res.status(404).json({ message: "Reflection not found" });
+      return res.status(404).json({ message: "Reflection not found" });
       }
-      
+
       res.status(200).json({ message: "Reflection deleted successfully" });
     } catch (error) {
       res.status(500).json({ message: handleDbError(error) });
@@ -335,9 +344,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // User Quest progress routes
-  app.post("/api/user-quests", async (req, res) => {
+  app.post("/api/user-quests", isAuthenticated, async (req, res) => {
     try {
-      const userQuestData = insertUserQuestSchema.parse(req.body);
+      const userId = (req as any).user.id;
+      const userQuestData = insertUserQuestSchema.parse({ ...req.body, userId });
       const userQuest = await dbStorage.createOrUpdateUserQuest(userQuestData);
       res.status(201).json(userQuest);
     } catch (error) {
@@ -349,9 +359,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/user-quests/:userId", async (req, res) => {
+  app.get("/api/user-quests", isAuthenticated, async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = (req as any).user.id;
       const userQuests = await dbStorage.getUserQuestsByUserId(userId);
       res.json(userQuests);
     } catch (error) {

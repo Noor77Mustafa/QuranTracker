@@ -32,7 +32,7 @@ export function useStreak(userId?: number) {
   useEffect(() => {
     if (effectiveUserId) {
       setIsLoading(true);
-      fetch(`/api/streaks/${effectiveUserId}`)
+      fetch(`/api/streaks`, { credentials: "include" })
         .then(res => {
           if (!res.ok) throw new Error("Failed to fetch streak data");
           return res.json();
@@ -51,9 +51,9 @@ export function useStreak(userId?: number) {
         .finally(() => {
           setIsLoading(false);
         });
-        
+
       // Also fetch pages read
-      fetch(`/api/reading-progress/${effectiveUserId}`)
+      fetch(`/api/reading-progress`, { credentials: "include" })
         .then(res => {
           if (!res.ok) throw new Error("Failed to fetch reading progress");
           return res.json();
@@ -121,7 +121,6 @@ export function useStreak(userId?: number) {
     // Update via API if authenticated
     try {
       const response = await apiRequest("POST", "/api/streaks", {
-        userId: effectiveUserId,
         currentStreak: newStreak,
         longestStreak: newLongestStreak,
         lastReadDate: today,
@@ -174,7 +173,6 @@ export function useStreak(userId?: number) {
     // Create reading progress entry in database
     try {
       const response = await apiRequest("POST", "/api/reading-progress", {
-        userId: effectiveUserId,
         surahId: surahId || 1,
         lastReadAyah: ayahNumber || 1,
         pagesRead: pages,

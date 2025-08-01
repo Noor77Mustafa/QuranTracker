@@ -30,11 +30,11 @@ export interface IStorage {
   getReadingGoalByUserId(userId: number): Promise<ReadingGoal | undefined>;
   createBookmark(bookmark: InsertBookmark): Promise<Bookmark>;
   getBookmarksByUserId(userId: number): Promise<Bookmark[]>;
-  deleteBookmark(id: number): Promise<boolean>;
+  deleteBookmark(id: number, userId: number): Promise<boolean>;
   createReflection(reflection: InsertReflection): Promise<Reflection>;
   getReflectionsByUserId(userId: number): Promise<Reflection[]>;
-  updateReflection(id: number, reflection: Partial<InsertReflection>): Promise<Reflection | undefined>;
-  deleteReflection(id: number): Promise<boolean>;
+  updateReflection(id: number, userId: number, reflection: Partial<InsertReflection>): Promise<Reflection | undefined>;
+  deleteReflection(id: number, userId: number): Promise<boolean>;
   createQuest(quest: InsertQuest): Promise<Quest>;
   getActiveQuests(): Promise<Quest[]>;
   getQuestById(id: number): Promise<Quest | undefined>;
@@ -279,8 +279,13 @@ export class MemStorage implements IStorage {
     );
   }
 
-  async deleteBookmark(id: number): Promise<boolean> {
-    return this.bookmarks.delete(id);
+  async deleteBookmark(id: number, userId: number): Promise<boolean> {
+    const bookmark = this.bookmarks.get(id);
+    if (bookmark && bookmark.userId === userId) {
+      this.bookmarks.delete(id);
+      return true;
+    }
+    return false;
   }
 
   // Reflection methods
@@ -308,13 +313,13 @@ export class MemStorage implements IStorage {
     );
   }
 
-  async updateReflection(id: number, reflection: Partial<InsertReflection>): Promise<Reflection | undefined> {
+  async updateReflection(id: number, userId: number, reflection: Partial<InsertReflection>): Promise<Reflection | undefined> {
     const existingReflection = this.reflections.get(id);
-    
-    if (!existingReflection) {
+
+    if (!existingReflection || existingReflection.userId !== userId) {
       return undefined;
     }
-    
+
     const updatedReflection: Reflection = {
       ...existingReflection,
       surahId: reflection.surahId !== undefined ? reflection.surahId : existingReflection.surahId,
@@ -324,13 +329,18 @@ export class MemStorage implements IStorage {
       isPrivate: reflection.isPrivate !== undefined ? reflection.isPrivate : existingReflection.isPrivate,
       updatedAt: new Date()
     };
-    
+
     this.reflections.set(id, updatedReflection);
     return updatedReflection;
   }
 
-  async deleteReflection(id: number): Promise<boolean> {
-    return this.reflections.delete(id);
+  async deleteReflection(id: number, userId: number): Promise<boolean> {
+    const existingReflection = this.reflections.get(id);
+    if (!existingReflection || existingReflection.userId !== userId) {
+      return false;
+    }
+    this.reflections.delete(id);
+    return true;
   }
 
   // Quest methods

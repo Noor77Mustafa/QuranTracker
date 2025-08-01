@@ -42,14 +42,15 @@ export default function LearningPlanDetail() {
         return await fetch(`/api/reflections/${existingReflection.id}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({ content: noteData.content }),
         }).then(res => res.json());
       } else {
         return await fetch("/api/reflections", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({
-            userId: (user as any)?.id,
             title: `${plan?.title} - Learning Notes`,
             content: noteData.content,
             isPrivate: true,

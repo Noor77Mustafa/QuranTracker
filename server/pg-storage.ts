@@ -143,9 +143,9 @@ export class PgStorage implements IStorage {
       .where(eq(bookmarks.userId, userId));
   }
 
-  async deleteBookmark(id: number): Promise<boolean> {
+  async deleteBookmark(id: number, userId: number): Promise<boolean> {
     const result = await db.delete(bookmarks)
-      .where(eq(bookmarks.id, id))
+      .where(and(eq(bookmarks.id, id), eq(bookmarks.userId, userId)))
       .returning();
     return result.length > 0;
   }
@@ -164,17 +164,17 @@ export class PgStorage implements IStorage {
       .where(eq(reflections.userId, userId));
   }
 
-  async updateReflection(id: number, reflection: Partial<InsertReflection>): Promise<Reflection | undefined> {
+  async updateReflection(id: number, userId: number, reflection: Partial<InsertReflection>): Promise<Reflection | undefined> {
     const [updated] = await db.update(reflections)
       .set(reflection)
-      .where(eq(reflections.id, id))
+      .where(and(eq(reflections.id, id), eq(reflections.userId, userId)))
       .returning();
     return updated;
   }
 
-  async deleteReflection(id: number): Promise<boolean> {
+  async deleteReflection(id: number, userId: number): Promise<boolean> {
     const result = await db.delete(reflections)
-      .where(eq(reflections.id, id))
+      .where(and(eq(reflections.id, id), eq(reflections.userId, userId)))
       .returning();
     return result.length > 0;
   }

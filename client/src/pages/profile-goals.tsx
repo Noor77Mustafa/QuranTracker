@@ -25,10 +25,7 @@ export default function ProfileGoals() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({
-          userId: user?.id,
-          ...goalData,
-        }),
+        body: JSON.stringify(goalData),
       });
       
       if (!response.ok) {
