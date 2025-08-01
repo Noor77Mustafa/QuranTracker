@@ -5,3 +5,8 @@ server/public
 vite.config.ts.*
 *.tar.gz
 attached_assets/
+
+# Environment variables (copy from .env.example)
+.env
+.env.*
+!.env.example
