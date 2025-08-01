@@ -55,7 +55,7 @@ export function useStreak(userId?: number) {
         .then(data => {
           // Calculate total pages read
           const total = data.reduce((sum: number, progress: any) => {
-            return sum + (progress.pagesRead || 1);
+            return sum + (progress.pagesRead ?? 1);
           }, 0);
           setPagesRead(total);
         })
