@@ -614,10 +614,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // AI chat route (authenticated users only).
+  // AI chat routes (authenticated users only).
   // Limited to 5 requests per minute per IP and messages up to 500 characters.
   const aiLimiter = rateLimit({ windowMs: 60 * 1000, max: 5 });
   app.post("/api/ai/chat", isAuthenticated, aiLimiter, getAIResponse);
+  // Backwards compatibility for older clients that used /api/ai
+  app.post("/api/ai", isAuthenticated, aiLimiter, getAIResponse);
 
   // Create HTTP server
   const httpServer = createServer(app);
