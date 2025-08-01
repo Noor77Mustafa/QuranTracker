@@ -51,12 +51,13 @@ export default function AIAssistantFAB() {
     
     try {
       // Call our server API endpoint
-      const response = await fetch('/api/ai/chat', {
+      const response = await fetch('/api/ai', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ message: currentQuery }),
+        credentials: 'include',
       });
       
       if (!response.ok) {

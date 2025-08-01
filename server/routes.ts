@@ -630,8 +630,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // OpenAI routes
-  app.post("/api/ai/chat", getAIResponse);
+    // OpenAI routes
+    app.post("/api/ai", isAuthenticated, getAIResponse);
 
   // Create HTTP server
   const httpServer = createServer(app);

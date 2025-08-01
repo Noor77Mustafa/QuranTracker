@@ -15,7 +15,11 @@ Always maintain a tone of respect when discussing religious matters.
 If you don't know something or are uncertain, acknowledge that rather than providing potentially incorrect information.
 `;
 
-export async function getAIResponse(req: Request, res: Response) {
+export async function getAIResponse(req: Request & { user?: any }, res: Response) {
+  if (!req.user) {
+    return res.status(401).json({ error: "Not authenticated" });
+  }
+
   const { message } = req.body;
   
   if (!message) {
