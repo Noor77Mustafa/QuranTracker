@@ -12,6 +12,11 @@ export const users = pgTable("users", {
   level: integer("level").default(1).notNull(),
   xp: integer("xp").default(0).notNull(),
   points: integer("points").default(0).notNull(),
+  hadithsRead: integer("hadiths_read").default(0).notNull(),
+  bukhariHadithsRead: integer("bukhari_hadiths_read").default(0).notNull(),
+  hadithCollectionsRead: integer("hadith_collections_read").default(0).notNull(),
+  duasLearned: integer("duas_learned").default(0).notNull(),
+  morningDhikrCompleted: integer("morning_dhikr_completed").default(0).notNull(),
   avatarUrl: text("avatar_url"),
   lastActive: timestamp("last_active"),
   preferences: json("preferences").$type<{
@@ -226,7 +231,7 @@ export const insertHadithBookmarkSchema = createInsertSchema(hadithBookmarks).pi
 });
 
 export type User = typeof users.$inferSelect;
-export type InsertUser = z.infer<typeof insertUserSchema>;
+export type InsertUser = typeof users.$inferInsert;
 export type ReadingProgress = typeof readingProgress.$inferSelect;
 export type InsertReadingProgress = z.infer<typeof insertReadingProgressSchema>;
 export type Streak = typeof streaks.$inferSelect;

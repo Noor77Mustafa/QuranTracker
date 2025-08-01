@@ -20,6 +20,7 @@ export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  updateUser(id: number, user: Partial<User>): Promise<User | undefined>;
   createOrUpdateReadingProgress(progress: InsertReadingProgress): Promise<ReadingProgress>;
   getReadingProgressByUserId(userId: number): Promise<ReadingProgress[]>;
   createOrUpdateStreak(streak: InsertStreak): Promise<Streak>;
@@ -112,8 +113,8 @@ export class MemStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.currentId++;
-    const user: User = { 
-      ...insertUser, 
+    const user: User = {
+      ...insertUser,
       id,
       displayName: insertUser.displayName || null,
       email: insertUser.email || null,
@@ -121,12 +122,25 @@ export class MemStorage implements IStorage {
       level: insertUser.level || 1,
       xp: insertUser.xp || 0,
       points: insertUser.points || 0,
+      hadithsRead: insertUser.hadithsRead ?? 0,
+      bukhariHadithsRead: insertUser.bukhariHadithsRead ?? 0,
+      hadithCollectionsRead: insertUser.hadithCollectionsRead ?? 0,
+      duasLearned: insertUser.duasLearned ?? 0,
+      morningDhikrCompleted: insertUser.morningDhikrCompleted ?? 0,
       avatarUrl: insertUser.avatarUrl || null,
       lastActive: null,
       preferences: insertUser.preferences || null
     };
     this.users.set(id, user);
     return user;
+  }
+
+  async updateUser(id: number, user: Partial<User>): Promise<User | undefined> {
+    const existing = this.users.get(id);
+    if (!existing) return undefined;
+    const updated: User = { ...existing, ...user };
+    this.users.set(id, updated);
+    return updated;
   }
 
   async createOrUpdateReadingProgress(progress: InsertReadingProgress): Promise<ReadingProgress> {

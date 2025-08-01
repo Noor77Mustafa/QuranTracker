@@ -1,4 +1,5 @@
 import { PgStorage } from "./pg-storage";
+import type { User } from "@shared/schema";
 
 // Islamic Knowledge Badge System - Same as frontend for consistency
 const ISLAMIC_BADGES = {
@@ -183,28 +184,29 @@ export class AchievementService {
     try {
       // Get reading progress
       const readingProgress = await this.storage.getReadingProgressByUserId(userId);
-      
+
       // Get streak data
       const streak = await this.storage.getStreakByUserId(userId);
-      
+
+      // Get user counters
+      const user = await this.storage.getUser(userId);
+
       // Calculate stats from reading progress
       const ayahsRead = readingProgress.reduce((total, progress) => total + progress.lastReadAyah, 0);
       const surahsStarted = readingProgress.length;
       const surahsCompleted = readingProgress.filter(p => p.isCompleted).length;
-      
-      // For now, we'll use placeholder values for hadith/dua stats
-      // These would be tracked when users interact with those sections
+
       return {
         ayahsRead,
         surahsStarted,
         surahsCompleted,
         meccanSurahsCompleted: Math.floor(surahsCompleted * 0.6), // Approximate
         medinanSurahsCompleted: Math.floor(surahsCompleted * 0.4), // Approximate
-        hadithsRead: 0, // Would be tracked from hadith reading activity
-        bukhariHadithsRead: 0, // Would be tracked from Bukhari collection activity
-        hadithCollectionsRead: 0, // Would be tracked from collection browsing
-        duasLearned: 0, // Would be tracked from dua reading activity
-        morningDhikrCompleted: 0, // Would be tracked from morning dhikr completion
+        hadithsRead: user?.hadithsRead || 0,
+        bukhariHadithsRead: user?.bukhariHadithsRead || 0,
+        hadithCollectionsRead: user?.hadithCollectionsRead || 0,
+        duasLearned: user?.duasLearned || 0,
+        morningDhikrCompleted: user?.morningDhikrCompleted || 0,
         currentStreak: streak?.currentStreak || 0,
         longestStreak: streak?.longestStreak || 0,
         namesOfAllahLearned: 0 // Would be tracked from educational content
@@ -234,14 +236,10 @@ export class AchievementService {
       // Get current user data
       const user = await this.storage.getUser(userId);
       if (!user) return;
-      
+
       const newXP = user.xp + xpAmount;
       const newLevel = Math.floor(newXP / 1000) + 1; // Every 1000 XP = 1 level
-      
-      // Update user XP and level
-      // Note: This would require adding an updateUser method to storage
-      // For now, we'll log the XP award
-      console.log(`Awarded ${xpAmount} XP to user ${userId}. New XP: ${newXP}, New Level: ${newLevel}`);
+      await this.storage.updateUser(userId, { xp: newXP, level: newLevel });
     } catch (error) {
       console.error("Error awarding XP:", error);
     }
@@ -264,15 +262,34 @@ export class AchievementService {
 
   // Method to be called when user reads a hadith
   async onHadithRead(userId: number, collection?: string): Promise<string[]> {
-    // Here we would track hadith reading stats
-    // For now, just check achievements
+    const user = await this.storage.getUser(userId);
+    if (user) {
+      const updates: Partial<User> = {
+        hadithsRead: user.hadithsRead + 1
+      };
+      if (collection?.toLowerCase() === "bukhari") {
+        updates.bukhariHadithsRead = user.bukhariHadithsRead + 1;
+      }
+      if (collection) {
+        updates.hadithCollectionsRead = user.hadithCollectionsRead + 1;
+      }
+      await this.storage.updateUser(userId, updates);
+    }
     return await this.checkAndAwardAchievements(userId);
   }
 
   // Method to be called when user learns a dua
   async onDuaLearned(userId: number, category?: string): Promise<string[]> {
-    // Here we would track dua learning stats
-    // For now, just check achievements
+    const user = await this.storage.getUser(userId);
+    if (user) {
+      const updates: Partial<User> = {
+        duasLearned: user.duasLearned + 1
+      };
+      if (category === "morning_dhikr") {
+        updates.morningDhikrCompleted = user.morningDhikrCompleted + 1;
+      }
+      await this.storage.updateUser(userId, updates);
+    }
     return await this.checkAndAwardAchievements(userId);
   }
 }

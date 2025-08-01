@@ -31,6 +31,14 @@ export class PgStorage implements IStorage {
     return newUser;
   }
 
+  async updateUser(id: number, user: Partial<User>): Promise<User | undefined> {
+    const [updated] = await db.update(users)
+      .set(user)
+      .where(eq(users.id, id))
+      .returning();
+    return updated;
+  }
+
   // Reading progress operations
   async createOrUpdateReadingProgress(progress: InsertReadingProgress): Promise<ReadingProgress> {
     const { userId, surahId } = progress;
