@@ -17,7 +17,14 @@ If you don't know something or are uncertain, acknowledge that rather than provi
 
 const MAX_INPUT_LENGTH = 500;
 
-export async function getAIResponse(req: Request, res: Response) {
+export async function getAIResponse(
+  req: Request & { user?: any },
+  res: Response
+) {
+  if (!req.user) {
+    return res.status(401).json({ error: "Not authenticated" });
+  }
+
   const { message } = req.body;
 
   if (!message || typeof message !== "string") {
@@ -43,11 +50,11 @@ export async function getAIResponse(req: Request, res: Response) {
     return res.json({ 
       content: response.choices[0].message.content 
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error getting AI response:", error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       error: "An error occurred while getting AI response",
-      message: error.message 
+      message: error.message
     });
   }
 }
