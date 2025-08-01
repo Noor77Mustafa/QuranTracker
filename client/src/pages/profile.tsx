@@ -9,6 +9,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { useAuth } from "@/hooks/use-auth";
 import ReadingGoalDialog from "@/components/ReadingGoalDialog";
 import ThemeSelector from "@/components/theme-selector";
+import { Link } from "wouter";
 
 // Mock user data - in a real app, this would come from the API
 interface UserProfile {
@@ -125,12 +126,19 @@ export default function Profile() {
               </div>
               <Progress value={quranProgress} className="h-2 mb-6" />
               
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full"
                 onClick={() => setActiveTab('history')}
               >
                 View Reading History
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full mt-2"
+                asChild
+              >
+                <Link href="/bookmarks">Bookmarks & Notes</Link>
               </Button>
             </div>
           </div>
