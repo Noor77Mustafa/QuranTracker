@@ -108,6 +108,23 @@ The application is configured for deployment on Replit:
 4. **Production Build**: Use `npm run build` to create optimized production build
 5. **Production Start**: Use `npm run start` to run the application in production mode
 
+### Quran Data Submodule
+
+The Quran text and metadata live in a Git submodule located at `Quran/`.
+Clone the submodule and keep it updated with:
+
+```
+git submodule update --init --recursive
+git submodule update --remote Quran   # pull latest changes
+```
+
+After updating the submodule, commit the new reference in the main repo:
+
+```
+git add Quran
+git commit -m "Update Quran submodule"
+```
+
 ## App Store Deployment
 
 The application is fully prepared for app store deployment as a Progressive Web App (PWA):
