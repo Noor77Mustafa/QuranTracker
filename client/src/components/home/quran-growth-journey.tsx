@@ -3,7 +3,6 @@ import { useStreak } from "@/hooks/use-streak";
 import { useAchievements } from "@/hooks/use-achievements";
 
 export default function QuranGrowthJourney() {
-  // We'll use placeholder data for now and integrate with real data from API later
   const { streak, pagesRead } = useStreak();
   const { achievements } = useAchievements();
   

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { apiRequest } from "@/lib/queryClient";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -32,12 +32,9 @@ export function useStreak(userId?: number) {
   useEffect(() => {
     if (effectiveUserId) {
       setIsLoading(true);
-      fetch(`/api/streaks/${effectiveUserId}`)
-        .then(res => {
-          if (!res.ok) throw new Error("Failed to fetch streak data");
-          return res.json();
-        })
-        .then(data => {
+      apiRequest("GET", `/api/streaks/${effectiveUserId}`)
+        .then(async res => {
+          const data = await res.json();
           setStreak(data.currentStreak || 0);
           setLongestStreak(data.longestStreak || 0);
           if (data.lastReadDate) setLastReadDate(data.lastReadDate);
@@ -51,13 +48,10 @@ export function useStreak(userId?: number) {
         .finally(() => {
           setIsLoading(false);
         });
-        
+
       // Also fetch pages read
-      fetch(`/api/reading-progress/${effectiveUserId}`)
-        .then(res => {
-          if (!res.ok) throw new Error("Failed to fetch reading progress");
-          return res.json();
-        })
+      apiRequest("GET", `/api/reading-progress/${effectiveUserId}`)
+        .then(res => res.json())
         .then(data => {
           // Calculate total pages read
           const total = data.reduce((sum: number, progress: any) => {
@@ -126,15 +120,15 @@ export function useStreak(userId?: number) {
         longestStreak: newLongestStreak,
         lastReadDate: today,
       });
-      
+
       if (response.ok) {
         setStreak(newStreak);
         setLongestStreak(newLongestStreak);
         setLastReadDate(today);
-        
+
         // Mark as updated for today
         localStorage.setItem(streakKey, 'true');
-        
+
         // Show toast notification
         if (newStreak > streak) {
           toast({
@@ -142,6 +136,20 @@ export function useStreak(userId?: number) {
             description: `You're on a ${newStreak} day streak. Keep it up!`,
           });
         }
+
+        // Check for new achievements and refresh data
+        try {
+          const data = await response.json();
+          if (data.newAchievements && data.newAchievements.length > 0) {
+            toast({
+              title: "Achievement Unlocked!",
+              description: `You earned ${data.newAchievements.length} new badge${data.newAchievements.length > 1 ? 's' : ''}!`,
+            });
+          }
+        } catch {
+          // ignore json parse errors
+        }
+        queryClient.invalidateQueries({ queryKey: ["/api/achievements", effectiveUserId] });
       }
     } catch (error) {
       console.error("Error updating streak:", error);
@@ -196,6 +204,7 @@ export function useStreak(userId?: number) {
             description: `You earned ${data.newAchievements.length} new badge${data.newAchievements.length > 1 ? 's' : ''}!`,
           });
         }
+        queryClient.invalidateQueries({ queryKey: ["/api/achievements", effectiveUserId] });
       }
     } catch (error) {
       console.error("Error creating reading progress:", error);
