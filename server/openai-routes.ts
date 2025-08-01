@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import OpenAI from "openai";
 
-// Initialize the OpenAI client
-const openai = new OpenAI({
+// Initialize the OpenAI client conditionally
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
-});
+}) : null;
 
 // The system prompt that guides the AI to provide Quranic knowledge
 const SYSTEM_PROMPT = `You are a knowledgeable assistant specialized in Islamic and Quranic studies. 
@@ -23,6 +23,10 @@ export async function getAIResponse(
 ) {
   if (!req.user) {
     return res.status(401).json({ error: "Not authenticated" });
+  }
+
+  if (!openai) {
+    return res.status(503).json({ error: "AI service is not configured. Please contact the administrator." });
   }
 
   const { message } = req.body;

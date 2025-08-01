@@ -33,9 +33,16 @@ async function createSessionTable() {
 export function setupAuth(app: express.Express) {
   // Create session table
   createSessionTable();
-  const sessionSecret = process.env.SESSION_SECRET;
+  let sessionSecret = process.env.SESSION_SECRET;
+  
+  // For development, generate a session secret if not provided
   if (!sessionSecret) {
-    throw new Error("SESSION_SECRET environment variable is required");
+    if (process.env.NODE_ENV === 'development') {
+      sessionSecret = 'dev_session_secret_' + Math.random().toString(36).substring(7);
+      console.log('Using generated session secret for development');
+    } else {
+      throw new Error("SESSION_SECRET environment variable is required in production");
+    }
   }
 
   // Session middleware
