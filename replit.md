@@ -98,6 +98,7 @@ The application is configured for deployment on Replit:
 3. **Production Serving**: Express serves the static frontend and API endpoints
 4. **Database**: Uses PostgreSQL (as indicated by the Replit configuration)
 5. **Scaling**: Configured for autoscaling via Replit's deployment options
+6. **Environment Variables**: Set `SESSION_SECRET` for secure session handling
 
 ## Development Workflow
 
