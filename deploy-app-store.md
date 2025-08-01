@@ -12,6 +12,7 @@ PWABuilder's Windows package generation currently has a bug with SVG icons that 
 - Node.js 18+
 - App store developer accounts
 - PWA Builder CLI or similar tools
+- SESSION_SECRET environment variable configured for session management
 
 ## Build Process
 

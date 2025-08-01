@@ -33,6 +33,10 @@ async function createSessionTable() {
 export function setupAuth(app: express.Express) {
   // Create session table
   createSessionTable();
+  const sessionSecret = process.env.SESSION_SECRET;
+  if (!sessionSecret) {
+    throw new Error("SESSION_SECRET environment variable is required");
+  }
 
   // Session middleware
   app.use(
@@ -41,7 +45,7 @@ export function setupAuth(app: express.Express) {
         pool,
         tableName: 'session', // Use the session table
       }),
-      secret: process.env.SESSION_SECRET || 'myquran-secret-key',
+      secret: sessionSecret,
       resave: false,
       saveUninitialized: false,
       cookie: {
