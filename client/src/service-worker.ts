@@ -1,23 +1,34 @@
 // This is a basic service worker for caching assets and providing offline functionality
-const CACHE_NAME = 'myquran-cache-v1';
-const CACHE_URLS = [
-  '/',
-  '/index.html',
-  '/src/index.css',
-  '/src/main.tsx',
-  '/src/App.tsx',
-  'https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans:wght@400;500;600;700&display=swap',
-  'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,0..200'
-];
+const CACHE_NAME = "myquran-cache-v1";
 
-// Install event - cache basic assets
-self.addEventListener('install', (event: any) => {
+async function getAssetUrls(): Promise<string[]> {
+  const urls = ["/", "/index.html"];
+
+  try {
+    const response = await fetch("/manifest.json");
+    if (response.ok) {
+      const manifest = await response.json();
+      Object.values(manifest).forEach((entry: any) => {
+        if (entry.file) urls.push("/" + entry.file);
+        if (entry.css) urls.push(...entry.css.map((c: string) => "/" + c));
+        if (entry.assets) urls.push(...entry.assets.map((a: string) => "/" + a));
+      });
+    }
+  } catch (err) {
+    console.error("Failed to fetch asset manifest", err);
+  }
+
+  return urls;
+}
+
+// Install event - cache assets from manifest
+self.addEventListener("install", (event: any) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Opened cache');
-        return cache.addAll(CACHE_URLS);
-      })
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
+      const assets = await getAssetUrls();
+      await cache.addAll(assets);
+    })(),
   );
 });
 
