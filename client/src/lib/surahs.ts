@@ -50,7 +50,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[1],
     juzNumber: 1,
-    revelationOrder: 87
+    revelationOrder: 88
   },
   {
     id: 3,
@@ -62,7 +62,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[2],
     juzNumber: 3,
-    revelationOrder: 89
+    revelationOrder: 90
   },
   {
     id: 4,
@@ -74,7 +74,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[3],
     juzNumber: 4,
-    revelationOrder: 92
+    revelationOrder: 93
   },
   {
     id: 5,
@@ -86,7 +86,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[4],
     juzNumber: 6,
-    revelationOrder: 112
+    revelationOrder: 113
   },
   {
     id: 6,
@@ -122,7 +122,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[7],
     juzNumber: 9,
-    revelationOrder: 88
+    revelationOrder: 89
   },
   {
     id: 9,
@@ -134,7 +134,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[8],
     juzNumber: 10,
-    revelationOrder: 113
+    revelationOrder: 114
   },
   {
     id: 10,
@@ -156,7 +156,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Hud",
     numberOfAyahs: 123,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[10]
+    arabicNumber: arabicNumbers[10],
+    juzNumber: 11,
+    revelationOrder: 52
   },
   {
     id: 12,
@@ -166,7 +168,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Joseph",
     numberOfAyahs: 111,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[11]
+    arabicNumber: arabicNumbers[11],
+    juzNumber: 12,
+    revelationOrder: 53
   },
   {
     id: 13,
@@ -176,7 +180,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Thunder",
     numberOfAyahs: 43,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[12]
+    arabicNumber: arabicNumbers[12],
+    juzNumber: 13,
+    revelationOrder: 97
   },
   {
     id: 14,
@@ -186,7 +192,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Abraham",
     numberOfAyahs: 52,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[13]
+    arabicNumber: arabicNumbers[13],
+    juzNumber: 13,
+    revelationOrder: 72
   },
   {
     id: 15,
@@ -196,7 +204,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Rocky Tract",
     numberOfAyahs: 99,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[14]
+    arabicNumber: arabicNumbers[14],
+    juzNumber: 14,
+    revelationOrder: 54
   },
   {
     id: 16,
@@ -206,7 +216,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Bee",
     numberOfAyahs: 128,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[15]
+    arabicNumber: arabicNumbers[15],
+    juzNumber: 14,
+    revelationOrder: 70
   },
   {
     id: 17,
@@ -216,7 +228,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Night Journey",
     numberOfAyahs: 111,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[16]
+    arabicNumber: arabicNumbers[16],
+    juzNumber: 15,
+    revelationOrder: 50
   },
   {
     id: 18,
@@ -226,7 +240,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Cave",
     numberOfAyahs: 110,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[17]
+    arabicNumber: arabicNumbers[17],
+    juzNumber: 15,
+    revelationOrder: undefined
   },
   {
     id: 19,
@@ -236,7 +252,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Mary",
     numberOfAyahs: 98,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[18]
+    arabicNumber: arabicNumbers[18],
+    juzNumber: 16,
+    revelationOrder: 44
   },
   {
     id: 20,
@@ -246,7 +264,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Ta-Ha",
     numberOfAyahs: 135,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[19]
+    arabicNumber: arabicNumbers[19],
+    juzNumber: 16,
+    revelationOrder: 45
   },
   {
     id: 21,
@@ -256,7 +276,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Prophets",
     numberOfAyahs: 112,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[20]
+    arabicNumber: arabicNumbers[20],
+    juzNumber: 17,
+    revelationOrder: 73
   },
   {
     id: 22,
@@ -266,7 +288,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Pilgrimage",
     numberOfAyahs: 78,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[21]
+    arabicNumber: arabicNumbers[21],
+    juzNumber: 17,
+    revelationOrder: 104
   },
   {
     id: 23,
@@ -276,7 +300,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Believers",
     numberOfAyahs: 118,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[22]
+    arabicNumber: arabicNumbers[22],
+    juzNumber: 18,
+    revelationOrder: 74
   },
   {
     id: 24,
@@ -286,7 +312,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Light",
     numberOfAyahs: 64,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[23]
+    arabicNumber: arabicNumbers[23],
+    juzNumber: 18,
+    revelationOrder: 103
   },
   {
     id: 25,
@@ -296,7 +324,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Criterion",
     numberOfAyahs: 77,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[24]
+    arabicNumber: arabicNumbers[24],
+    juzNumber: 18,
+    revelationOrder: 42
   },
   {
     id: 26,
@@ -306,7 +336,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Poets",
     numberOfAyahs: 227,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[25]
+    arabicNumber: arabicNumbers[25],
+    juzNumber: 19,
+    revelationOrder: 47
   },
   {
     id: 27,
@@ -316,7 +348,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Ant",
     numberOfAyahs: 93,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[26]
+    arabicNumber: arabicNumbers[26],
+    juzNumber: 19,
+    revelationOrder: 48
   },
   {
     id: 28,
@@ -326,7 +360,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Stories",
     numberOfAyahs: 88,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[27]
+    arabicNumber: arabicNumbers[27],
+    juzNumber: 20,
+    revelationOrder: 49
   },
   {
     id: 29,
@@ -336,7 +372,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Spider",
     numberOfAyahs: 69,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[28]
+    arabicNumber: arabicNumbers[28],
+    juzNumber: 20,
+    revelationOrder: 85
   },
   {
     id: 30,
@@ -346,7 +384,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Romans",
     numberOfAyahs: 60,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[29]
+    arabicNumber: arabicNumbers[29],
+    juzNumber: 21,
+    revelationOrder: 84
   },
   {
     id: 31,
@@ -356,7 +396,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Luqman",
     numberOfAyahs: 34,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[30]
+    arabicNumber: arabicNumbers[30],
+    juzNumber: 21,
+    revelationOrder: 57
   },
   {
     id: 32,
@@ -366,7 +408,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Prostration",
     numberOfAyahs: 30,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[31]
+    arabicNumber: arabicNumbers[31],
+    juzNumber: 21,
+    revelationOrder: 75
   },
   {
     id: 33,
@@ -376,7 +420,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Combined Forces",
     numberOfAyahs: 73,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[32]
+    arabicNumber: arabicNumbers[32],
+    juzNumber: 21,
+    revelationOrder: 91
   },
   {
     id: 34,
@@ -386,7 +432,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Sheba",
     numberOfAyahs: 54,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[33]
+    arabicNumber: arabicNumbers[33],
+    juzNumber: 22,
+    revelationOrder: 58
   },
   {
     id: 35,
@@ -396,7 +444,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Originator",
     numberOfAyahs: 45,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[34]
+    arabicNumber: arabicNumbers[34],
+    juzNumber: 22,
+    revelationOrder: 43
   },
   {
     id: 36,
@@ -406,7 +456,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Ya Sin",
     numberOfAyahs: 83,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[35]
+    arabicNumber: arabicNumbers[35],
+    juzNumber: 22,
+    revelationOrder: 41
   },
   {
     id: 37,
@@ -416,7 +468,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Those who set the Ranks",
     numberOfAyahs: 182,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[36]
+    arabicNumber: arabicNumbers[36],
+    juzNumber: 23,
+    revelationOrder: 56
   },
   {
     id: 38,
@@ -426,7 +480,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Letter Sad",
     numberOfAyahs: 88,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[37]
+    arabicNumber: arabicNumbers[37],
+    juzNumber: 23,
+    revelationOrder: 38
   },
   {
     id: 39,
@@ -436,7 +492,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Troops",
     numberOfAyahs: 75,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[38]
+    arabicNumber: arabicNumbers[38],
+    juzNumber: 23,
+    revelationOrder: 59
   },
   {
     id: 40,
@@ -446,7 +504,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Forgiver",
     numberOfAyahs: 85,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[39]
+    arabicNumber: arabicNumbers[39],
+    juzNumber: 24,
+    revelationOrder: 60
   },
   {
     id: 41,
@@ -456,7 +516,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Explained in Detail",
     numberOfAyahs: 54,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[40]
+    arabicNumber: arabicNumbers[40],
+    juzNumber: 24,
+    revelationOrder: 61
   },
   {
     id: 42,
@@ -466,7 +528,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Consultation",
     numberOfAyahs: 53,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[41]
+    arabicNumber: arabicNumbers[41],
+    juzNumber: 25,
+    revelationOrder: 62
   },
   {
     id: 43,
@@ -476,7 +540,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Ornaments of Gold",
     numberOfAyahs: 89,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[42]
+    arabicNumber: arabicNumbers[42],
+    juzNumber: 25,
+    revelationOrder: 63
   },
   {
     id: 44,
@@ -486,7 +552,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Smoke",
     numberOfAyahs: 59,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[43]
+    arabicNumber: arabicNumbers[43],
+    juzNumber: 25,
+    revelationOrder: 64
   },
   {
     id: 45,
@@ -496,7 +564,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Crouching",
     numberOfAyahs: 37,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[44]
+    arabicNumber: arabicNumbers[44],
+    juzNumber: 25,
+    revelationOrder: 65
   },
   {
     id: 46,
@@ -506,7 +576,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Wind-Curved Sandhills",
     numberOfAyahs: 35,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[45]
+    arabicNumber: arabicNumbers[45],
+    juzNumber: 26,
+    revelationOrder: 66
   },
   {
     id: 47,
@@ -516,7 +588,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Muhammad",
     numberOfAyahs: 38,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[46]
+    arabicNumber: arabicNumbers[46],
+    juzNumber: 26,
+    revelationOrder: 96
   },
   {
     id: 48,
@@ -526,7 +600,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Victory",
     numberOfAyahs: 29,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[47]
+    arabicNumber: arabicNumbers[47],
+    juzNumber: 26,
+    revelationOrder: 112
   },
   {
     id: 49,
@@ -536,7 +612,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Rooms",
     numberOfAyahs: 18,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[48]
+    arabicNumber: arabicNumbers[48],
+    juzNumber: 26,
+    revelationOrder: 107
   },
   {
     id: 50,
@@ -546,7 +624,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Letter Qaf",
     numberOfAyahs: 45,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[49]
+    arabicNumber: arabicNumbers[49],
+    juzNumber: 26,
+    revelationOrder: 34
   },
   {
     id: 51,
@@ -556,7 +636,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Winnowing Winds",
     numberOfAyahs: 60,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[50]
+    arabicNumber: arabicNumbers[50],
+    juzNumber: 26,
+    revelationOrder: 67
   },
   {
     id: 52,
@@ -566,7 +648,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Mount",
     numberOfAyahs: 49,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[51]
+    arabicNumber: arabicNumbers[51],
+    juzNumber: 27,
+    revelationOrder: 76
   },
   {
     id: 53,
@@ -576,7 +660,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Star",
     numberOfAyahs: 62,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[52]
+    arabicNumber: arabicNumbers[52],
+    juzNumber: 27,
+    revelationOrder: 23
   },
   {
     id: 54,
@@ -586,7 +672,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Moon",
     numberOfAyahs: 55,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[53]
+    arabicNumber: arabicNumbers[53],
+    juzNumber: 27,
+    revelationOrder: 37
   },
   {
     id: 55,
@@ -596,7 +684,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Beneficent",
     numberOfAyahs: 78,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[54]
+    arabicNumber: arabicNumbers[54],
+    juzNumber: 27,
+    revelationOrder: 98
   },
   {
     id: 56,
@@ -606,7 +696,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Inevitable",
     numberOfAyahs: 96,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[55]
+    arabicNumber: arabicNumbers[55],
+    juzNumber: 27,
+    revelationOrder: 46
   },
   {
     id: 57,
@@ -616,7 +708,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Iron",
     numberOfAyahs: 29,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[56]
+    arabicNumber: arabicNumbers[56],
+    juzNumber: 27,
+    revelationOrder: 95
   },
   {
     id: 58,
@@ -626,7 +720,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Pleading Woman",
     numberOfAyahs: 22,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[57]
+    arabicNumber: arabicNumbers[57],
+    juzNumber: 28,
+    revelationOrder: 106
   },
   {
     id: 59,
@@ -636,7 +732,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Exile",
     numberOfAyahs: 24,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[58]
+    arabicNumber: arabicNumbers[58],
+    juzNumber: 28,
+    revelationOrder: 102
   },
   {
     id: 60,
@@ -646,7 +744,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "She That is to be Examined",
     numberOfAyahs: 13,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[59]
+    arabicNumber: arabicNumbers[59],
+    juzNumber: 28,
+    revelationOrder: 92
   },
   {
     id: 61,
@@ -656,7 +756,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Ranks",
     numberOfAyahs: 14,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[60]
+    arabicNumber: arabicNumbers[60],
+    juzNumber: 28,
+    revelationOrder: 110
   },
   {
     id: 62,
@@ -666,7 +768,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Congregation",
     numberOfAyahs: 11,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[61]
+    arabicNumber: arabicNumbers[61],
+    juzNumber: 28,
+    revelationOrder: 111
   },
   {
     id: 63,
@@ -676,7 +780,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Hypocrites",
     numberOfAyahs: 11,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[62]
+    arabicNumber: arabicNumbers[62],
+    juzNumber: 28,
+    revelationOrder: 105
   },
   {
     id: 64,
@@ -686,7 +792,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Mutual Disillusion",
     numberOfAyahs: 18,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[63]
+    arabicNumber: arabicNumbers[63],
+    juzNumber: 28,
+    revelationOrder: 109
   },
   {
     id: 65,
@@ -696,7 +804,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Divorce",
     numberOfAyahs: 12,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[64]
+    arabicNumber: arabicNumbers[64],
+    juzNumber: 28,
+    revelationOrder: 100
   },
   {
     id: 66,
@@ -706,7 +816,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Prohibition",
     numberOfAyahs: 12,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[65]
+    arabicNumber: arabicNumbers[65],
+    juzNumber: 28,
+    revelationOrder: 108
   },
   {
     id: 67,
@@ -716,7 +828,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Sovereignty",
     numberOfAyahs: 30,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[66]
+    arabicNumber: arabicNumbers[66],
+    juzNumber: 29,
+    revelationOrder: 77
   },
   {
     id: 68,
@@ -738,7 +852,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Reality",
     numberOfAyahs: 52,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[68]
+    arabicNumber: arabicNumbers[68],
+    juzNumber: 29,
+    revelationOrder: 78
   },
   {
     id: 70,
@@ -748,7 +864,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Ascending Stairways",
     numberOfAyahs: 44,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[69]
+    arabicNumber: arabicNumbers[69],
+    juzNumber: 29,
+    revelationOrder: 79
   },
   {
     id: 71,
@@ -758,7 +876,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Noah",
     numberOfAyahs: 28,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[70]
+    arabicNumber: arabicNumbers[70],
+    juzNumber: 29,
+    revelationOrder: 71
   },
   {
     id: 72,
@@ -768,7 +888,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Jinn",
     numberOfAyahs: 28,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[71]
+    arabicNumber: arabicNumbers[71],
+    juzNumber: 29,
+    revelationOrder: 40
   },
   {
     id: 73,
@@ -778,7 +900,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Enshrouded One",
     numberOfAyahs: 20,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[72]
+    arabicNumber: arabicNumbers[72],
+    juzNumber: 29,
+    revelationOrder: 3
   },
   {
     id: 74,
@@ -788,7 +912,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Cloaked One",
     numberOfAyahs: 56,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[73]
+    arabicNumber: arabicNumbers[73],
+    juzNumber: 29,
+    revelationOrder: 4
   },
   {
     id: 75,
@@ -798,7 +924,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Resurrection",
     numberOfAyahs: 40,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[74]
+    arabicNumber: arabicNumbers[74],
+    juzNumber: 29,
+    revelationOrder: 31
   },
   {
     id: 76,
@@ -808,7 +936,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Man",
     numberOfAyahs: 31,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[75]
+    arabicNumber: arabicNumbers[75],
+    juzNumber: 29,
+    revelationOrder: 99
   },
   {
     id: 77,
@@ -818,7 +948,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Emissaries",
     numberOfAyahs: 50,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[76]
+    arabicNumber: arabicNumbers[76],
+    juzNumber: 29,
+    revelationOrder: 33
   },
   {
     id: 78,
@@ -828,7 +960,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Tidings",
     numberOfAyahs: 40,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[77]
+    arabicNumber: arabicNumbers[77],
+    juzNumber: 30,
+    revelationOrder: 80
   },
   {
     id: 79,
@@ -838,7 +972,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Those Who Drag Forth",
     numberOfAyahs: 46,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[78]
+    arabicNumber: arabicNumbers[78],
+    juzNumber: 30,
+    revelationOrder: 81
   },
   {
     id: 80,
@@ -848,7 +984,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "He Frowned",
     numberOfAyahs: 42,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[79]
+    arabicNumber: arabicNumbers[79],
+    juzNumber: 30,
+    revelationOrder: 24
   },
   {
     id: 81,
@@ -858,7 +996,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Overthrowing",
     numberOfAyahs: 29,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[80]
+    arabicNumber: arabicNumbers[80],
+    juzNumber: 30,
+    revelationOrder: 7
   },
   {
     id: 82,
@@ -868,7 +1008,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Cleaving",
     numberOfAyahs: 19,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[81]
+    arabicNumber: arabicNumbers[81],
+    juzNumber: 30,
+    revelationOrder: 82
   },
   {
     id: 83,
@@ -878,7 +1020,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Defrauding",
     numberOfAyahs: 36,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[82]
+    arabicNumber: arabicNumbers[82],
+    juzNumber: 30,
+    revelationOrder: 86
   },
   {
     id: 84,
@@ -888,7 +1032,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Sundering",
     numberOfAyahs: 25,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[83]
+    arabicNumber: arabicNumbers[83],
+    juzNumber: 30,
+    revelationOrder: 83
   },
   {
     id: 85,
@@ -898,7 +1044,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Mansions of the Stars",
     numberOfAyahs: 22,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[84]
+    arabicNumber: arabicNumbers[84],
+    juzNumber: 30,
+    revelationOrder: 27
   },
   {
     id: 86,
@@ -908,7 +1056,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Nightcomer",
     numberOfAyahs: 17,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[85]
+    arabicNumber: arabicNumbers[85],
+    juzNumber: 30,
+    revelationOrder: 36
   },
   {
     id: 87,
@@ -918,7 +1068,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Most High",
     numberOfAyahs: 19,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[86]
+    arabicNumber: arabicNumbers[86],
+    juzNumber: 30,
+    revelationOrder: 8
   },
   {
     id: 88,
@@ -928,7 +1080,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Overwhelming",
     numberOfAyahs: 26,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[87]
+    arabicNumber: arabicNumbers[87],
+    juzNumber: 30,
+    revelationOrder: 68
   },
   {
     id: 89,
@@ -938,7 +1092,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Dawn",
     numberOfAyahs: 30,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[88]
+    arabicNumber: arabicNumbers[88],
+    juzNumber: 30,
+    revelationOrder: 10
   },
   {
     id: 90,
@@ -948,7 +1104,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The City",
     numberOfAyahs: 20,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[89]
+    arabicNumber: arabicNumbers[89],
+    juzNumber: 30,
+    revelationOrder: 35
   },
   {
     id: 91,
@@ -958,7 +1116,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Sun",
     numberOfAyahs: 15,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[90]
+    arabicNumber: arabicNumbers[90],
+    juzNumber: 30,
+    revelationOrder: 26
   },
   {
     id: 92,
@@ -968,7 +1128,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Night",
     numberOfAyahs: 21,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[91]
+    arabicNumber: arabicNumbers[91],
+    juzNumber: 30,
+    revelationOrder: 9
   },
   {
     id: 93,
@@ -978,7 +1140,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Morning Hours",
     numberOfAyahs: 11,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[92]
+    arabicNumber: arabicNumbers[92],
+    juzNumber: 30,
+    revelationOrder: 11
   },
   {
     id: 94,
@@ -988,7 +1152,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Relief",
     numberOfAyahs: 8,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[93]
+    arabicNumber: arabicNumbers[93],
+    juzNumber: 30,
+    revelationOrder: 12
   },
   {
     id: 95,
@@ -998,7 +1164,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Fig",
     numberOfAyahs: 8,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[94]
+    arabicNumber: arabicNumbers[94],
+    juzNumber: 30,
+    revelationOrder: 28
   },
   {
     id: 96,
@@ -1020,7 +1188,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Power",
     numberOfAyahs: 5,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[96]
+    arabicNumber: arabicNumbers[96],
+    juzNumber: 30,
+    revelationOrder: 25
   },
   {
     id: 98,
@@ -1030,7 +1200,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Clear Proof",
     numberOfAyahs: 8,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[97]
+    arabicNumber: arabicNumbers[97],
+    juzNumber: 30,
+    revelationOrder: 101
   },
   {
     id: 99,
@@ -1040,7 +1212,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Earthquake",
     numberOfAyahs: 8,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[98]
+    arabicNumber: arabicNumbers[98],
+    juzNumber: 30,
+    revelationOrder: 94
   },
   {
     id: 100,
@@ -1050,7 +1224,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Courser",
     numberOfAyahs: 11,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[99]
+    arabicNumber: arabicNumbers[99],
+    juzNumber: 30,
+    revelationOrder: 14
   },
   {
     id: 101,
@@ -1060,7 +1236,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Calamity",
     numberOfAyahs: 11,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[100]
+    arabicNumber: arabicNumbers[100],
+    juzNumber: 30,
+    revelationOrder: 30
   },
   {
     id: 102,
@@ -1070,7 +1248,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Rivalry in world increase",
     numberOfAyahs: 8,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[101]
+    arabicNumber: arabicNumbers[101],
+    juzNumber: 30,
+    revelationOrder: 16
   },
   {
     id: 103,
@@ -1080,7 +1260,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Declining Day",
     numberOfAyahs: 3,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[102]
+    arabicNumber: arabicNumbers[102],
+    juzNumber: 30,
+    revelationOrder: 13
   },
   {
     id: 104,
@@ -1090,7 +1272,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Traducer",
     numberOfAyahs: 9,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[103]
+    arabicNumber: arabicNumbers[103],
+    juzNumber: 30,
+    revelationOrder: 32
   },
   {
     id: 105,
@@ -1100,7 +1284,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Elephant",
     numberOfAyahs: 5,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[104]
+    arabicNumber: arabicNumbers[104],
+    juzNumber: 30,
+    revelationOrder: 19
   },
   {
     id: 106,
@@ -1110,7 +1296,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Quraysh",
     numberOfAyahs: 4,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[105]
+    arabicNumber: arabicNumbers[105],
+    juzNumber: 30,
+    revelationOrder: 29
   },
   {
     id: 107,
@@ -1120,7 +1308,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Small Kindnesses",
     numberOfAyahs: 7,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[106]
+    arabicNumber: arabicNumbers[106],
+    juzNumber: 30,
+    revelationOrder: 17
   },
   {
     id: 108,
@@ -1130,7 +1320,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Abundance",
     numberOfAyahs: 3,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[107]
+    arabicNumber: arabicNumbers[107],
+    juzNumber: 30,
+    revelationOrder: 15
   },
   {
     id: 109,
@@ -1140,7 +1332,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Disbelievers",
     numberOfAyahs: 6,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[108]
+    arabicNumber: arabicNumbers[108],
+    juzNumber: 30,
+    revelationOrder: 18
   },
   {
     id: 110,
@@ -1150,7 +1344,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Divine Support",
     numberOfAyahs: 3,
     revelationType: "Medinan",
-    arabicNumber: arabicNumbers[109]
+    arabicNumber: arabicNumbers[109],
+    juzNumber: 30,
+    revelationOrder: undefined
   },
   {
     id: 111,
@@ -1160,7 +1356,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Palm Fiber",
     numberOfAyahs: 5,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[110]
+    arabicNumber: arabicNumbers[110],
+    juzNumber: 30,
+    revelationOrder: 6
   },
   {
     id: 112,
@@ -1170,7 +1368,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Sincerity",
     numberOfAyahs: 4,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[111]
+    arabicNumber: arabicNumbers[111],
+    juzNumber: 30,
+    revelationOrder: 22
   },
   {
     id: 113,
@@ -1180,7 +1380,9 @@ export const surahs: Surah[] = [
     englishNameTranslation: "The Daybreak",
     numberOfAyahs: 5,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[112]
+    arabicNumber: arabicNumbers[112],
+    juzNumber: 30,
+    revelationOrder: 20
   },
   {
     id: 114,
@@ -1190,6 +1392,8 @@ export const surahs: Surah[] = [
     englishNameTranslation: "Mankind",
     numberOfAyahs: 6,
     revelationType: "Meccan",
-    arabicNumber: arabicNumbers[113]
+    arabicNumber: arabicNumbers[113],
+    juzNumber: 30,
+    revelationOrder: 21
   }
 ];
