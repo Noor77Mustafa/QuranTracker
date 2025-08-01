@@ -15,11 +15,17 @@ Always maintain a tone of respect when discussing religious matters.
 If you don't know something or are uncertain, acknowledge that rather than providing potentially incorrect information.
 `;
 
+const MAX_INPUT_LENGTH = 500;
+
 export async function getAIResponse(req: Request, res: Response) {
   const { message } = req.body;
-  
-  if (!message) {
+
+  if (!message || typeof message !== "string") {
     return res.status(400).json({ error: "Message is required" });
+  }
+
+  if (message.length > MAX_INPUT_LENGTH) {
+    return res.status(400).json({ error: `Message is too long. Max length is ${MAX_INPUT_LENGTH} characters.` });
   }
   
   try {

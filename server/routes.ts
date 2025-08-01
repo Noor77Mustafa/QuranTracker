@@ -10,6 +10,7 @@ import { setupAuth, isAuthenticated } from "./auth";
 import { AchievementService } from "./achievement-service";
 import cookieParser from "cookie-parser";
 import path from "path";
+import rateLimit from "express-rate-limit";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Set up middlewares
@@ -630,8 +631,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // OpenAI routes
-  app.post("/api/ai/chat", getAIResponse);
+  // AI chat route (authenticated users only).
+  // Limited to 5 requests per minute per IP and messages up to 500 characters.
+  const aiLimiter = rateLimit({ windowMs: 60 * 1000, max: 5 });
+  app.post("/api/ai/chat", isAuthenticated, aiLimiter, getAIResponse);
 
   // Create HTTP server
   const httpServer = createServer(app);
