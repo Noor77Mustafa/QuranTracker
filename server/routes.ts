@@ -1,8 +1,7 @@
 import express, { type Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
 import { PgStorage } from "./pg-storage";
-import { insertAchievementSchema, insertReadingGoalSchema, insertReadingProgressSchema, insertStreakSchema, insertUserSchema, insertBookmarkSchema, insertReflectionSchema, insertQuestSchema, insertUserQuestSchema, insertHadithSchema, insertHadithBookmarkSchema } from "@shared/schema";
+import { insertAchievementSchema, insertReadingGoalSchema, insertReadingProgressSchema, insertStreakSchema, insertBookmarkSchema, insertReflectionSchema, insertQuestSchema, insertUserQuestSchema, insertHadithSchema, insertHadithBookmarkSchema } from "@shared/schema";
 import { handleDbError } from "./db";
 import { z } from "zod";
 import { getAIResponse } from "./openai-routes";
@@ -28,22 +27,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Create achievement service
   const achievementService = new AchievementService(pgStorage);
-  // User routes
-  app.post("/api/auth/register", async (req, res) => {
-    try {
-      const userData = insertUserSchema.parse(req.body);
-      const user = await dbStorage.createUser(userData);
-      // Don't return password in response
-      const { password, ...userWithoutPassword } = user;
-      res.status(201).json(userWithoutPassword);
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({ message: "Invalid user data", errors: error.errors });
-      } else {
-        res.status(500).json({ message: handleDbError(error) });
-      }
-    }
-  });
 
   app.get("/api/user/:id", async (req, res) => {
     try {
