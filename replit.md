@@ -10,6 +10,12 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+- **August 2, 2025**: Successfully completed migration from Replit Agent to Replit environment:
+  - Fixed database configuration to use PostgreSQL instead of Neon
+  - Made OpenAI integration conditional (works without API key)
+  - Implemented auto-generation of session secrets for development
+  - Fixed authentication dialog in profile page
+  - Added Juz grouping feature in Quran Explorer
 - **July 29, 2025**: Successfully migrated project from Replit Agent to Replit environment with PostgreSQL database, OpenAI integration, and full functionality restored
 - **July 16, 2025**: Fixed PWABuilder ImageGenerator error by creating high-quality PNG icons (192x192: 1707 bytes, 512x512: 6308 bytes) with Islamic crescent and star design, replacing previous minimal icons that were causing processing failures
 - **July 15, 2025**: Fixed chapter navigation bug where switching between chapters would maintain previous verse position instead of starting at verse 1

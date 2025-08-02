@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { surahs } from "@/lib/surahs";
+import { surahs, type Surah } from "@/lib/surahs";
 
 type SortType = "ascending" | "descending";
 type DisplayType = "surah" | "juz" | "revelation";
@@ -34,6 +34,16 @@ export default function Read() {
     
     return sortOrder === "ascending" ? compareValue : -compareValue;
   });
+  
+  // Group surahs by Juz for the Juz view
+  const surahsByJuz = displayType === "juz" ? sortedSurahs.reduce((acc, surah) => {
+    const juz = surah.juzNumber || 1;
+    if (!acc[juz]) {
+      acc[juz] = [];
+    }
+    acc[juz].push(surah);
+    return acc;
+  }, {} as Record<number, Surah[]>) : {};
   
   const toggleSortOrder = () => {
     setSortOrder(sortOrder === "ascending" ? "descending" : "ascending");
@@ -77,45 +87,75 @@ export default function Read() {
       </div>
       
       {/* Surah List */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {sortedSurahs.map((surah) => (
-          <Link 
-            key={surah.id} 
-            href={`/surah/${surah.id}`}
-            className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 hover:shadow-md transition flex justify-between"
-          >
-            <div>
-              <h3 className="font-medium">{surah.englishName}</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{surah.englishNameTranslation}</p>
-              <div className="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500">
-                <span>{surah.numberOfAyahs} Ayahs</span>
-                <span>•</span>
-                <span>{surah.revelationType}</span>
-                {displayType === "juz" && surah.juzNumber && (
-                  <>
-                    <span>•</span>
-                    <span>Juz {surah.juzNumber}</span>
-                  </>
-                )}
-                {displayType === "revelation" && surah.revelationOrder && (
-                  <>
-                    <span>•</span>
-                    <span>#{surah.revelationOrder}</span>
-                  </>
-                )}
+      {displayType === "juz" ? (
+        <div className="space-y-6">
+          {Object.entries(surahsByJuz).map(([juzNumber, juzSurahs]) => (
+            <div key={juzNumber} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
+              <h2 className="text-lg font-semibold mb-4 text-primary">
+                Juz {juzNumber}
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {juzSurahs.map((surah) => (
+                  <Link 
+                    key={surah.id} 
+                    href={`/surah/${surah.id}`}
+                    className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 hover:shadow-md transition flex justify-between"
+                  >
+                    <div>
+                      <h3 className="font-medium text-sm">{surah.englishName}</h3>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{surah.englishNameTranslation}</p>
+                      <div className="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500 mt-1">
+                        <span>{surah.numberOfAyahs} Ayahs</span>
+                        <span>•</span>
+                        <span>{surah.revelationType}</span>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <span className="font-amiri text-lg">{surah.arabicNumber}</span>
+                      <span className="text-xs text-gray-400 dark:text-gray-500">
+                        {surah.number.toString().padStart(3, '0')}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
               </div>
             </div>
-            <div className="flex flex-col items-end">
-              <span className="font-amiri text-xl">{surah.arabicNumber}</span>
-              <span className="text-xs text-gray-400 dark:text-gray-500">
-                {displayType === "juz" && surah.juzNumber ? `J${surah.juzNumber}` : 
-                 displayType === "revelation" && surah.revelationOrder ? `R${surah.revelationOrder}` :
-                 surah.number.toString().padStart(3, '0')}
-              </span>
-            </div>
-          </Link>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {sortedSurahs.map((surah) => (
+            <Link 
+              key={surah.id} 
+              href={`/surah/${surah.id}`}
+              className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 hover:shadow-md transition flex justify-between"
+            >
+              <div>
+                <h3 className="font-medium">{surah.englishName}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">{surah.englishNameTranslation}</p>
+                <div className="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500">
+                  <span>{surah.numberOfAyahs} Ayahs</span>
+                  <span>•</span>
+                  <span>{surah.revelationType}</span>
+                  {displayType === "revelation" && surah.revelationOrder && (
+                    <>
+                      <span>•</span>
+                      <span>#{surah.revelationOrder}</span>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="flex flex-col items-end">
+                <span className="font-amiri text-xl">{surah.arabicNumber}</span>
+                <span className="text-xs text-gray-400 dark:text-gray-500">
+                  {displayType === "revelation" && surah.revelationOrder ? `R${surah.revelationOrder}` :
+                   surah.number.toString().padStart(3, '0')}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </main>
   );
 }
