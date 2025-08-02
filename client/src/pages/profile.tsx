@@ -10,6 +10,7 @@ import { useAuth } from "@/hooks/use-auth";
 import ReadingGoalDialog from "@/components/ReadingGoalDialog";
 import ThemeSelector from "@/components/theme-selector";
 import { Link } from "wouter";
+import { AuthDialog } from "@/components/auth/AuthDialog";
 
 // Mock user data - in a real app, this would come from the API
 interface UserProfile {
@@ -37,6 +38,8 @@ export default function Profile() {
     completionTarget?: string;
   } | null>(null);
   const [isThemeSelectorOpen, setIsThemeSelectorOpen] = useState(false);
+  const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const [authDialogMode, setAuthDialogMode] = useState<"login" | "register">("login");
   
   // Use authenticated user data directly
   const user: UserProfile | undefined = authUser ? {
@@ -636,8 +639,25 @@ export default function Profile() {
               Create an account to track your reading progress, earn achievements, and customize your experience.
             </p>
             <div className="flex flex-col gap-3 max-w-xs mx-auto">
-              <Button className="w-full">Sign In</Button>
-              <Button variant="outline" className="w-full">Create Account</Button>
+              <Button 
+                className="w-full" 
+                onClick={() => {
+                  setAuthDialogMode("login");
+                  setShowAuthDialog(true);
+                }}
+              >
+                Sign In
+              </Button>
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={() => {
+                  setAuthDialogMode("register");
+                  setShowAuthDialog(true);
+                }}
+              >
+                Create Account
+              </Button>
             </div>
           </div>
         </div>
@@ -647,6 +667,12 @@ export default function Profile() {
       <ThemeSelector 
         open={isThemeSelectorOpen} 
         onOpenChange={setIsThemeSelectorOpen}
+      />
+      
+      {/* Auth Dialog */}
+      <AuthDialog 
+        open={showAuthDialog} 
+        setOpen={setShowAuthDialog}
       />
     </main>
   );
