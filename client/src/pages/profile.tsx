@@ -11,6 +11,7 @@ import ReadingGoalDialog from "@/components/ReadingGoalDialog";
 import ThemeSelector from "@/components/theme-selector";
 import { Link } from "wouter";
 import { AuthDialog } from "@/components/auth/AuthDialog";
+import { useBookmarks } from "@/hooks/use-bookmarks";
 
 // Mock user data - in a real app, this would come from the API
 interface UserProfile {
@@ -28,6 +29,7 @@ export default function Profile() {
   const { user: authUser, isAuthenticated, logout } = useAuth();
   const { streak, longestStreak, pagesRead } = useStreak();
   const { achievements } = useAchievements();
+  const { bookmarks } = useBookmarks();
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
   const [activeTab, setActiveTab] = useState<'progress' | 'achievements' | 'history' | 'quests' | 'settings'>('progress');
   
@@ -136,13 +138,46 @@ export default function Profile() {
               >
                 View Reading History
               </Button>
-              <Button
-                variant="outline"
-                className="w-full mt-2"
-                asChild
-              >
-                <Link href="/bookmarks">Bookmarks & Notes</Link>
-              </Button>
+              {bookmarks.length > 0 ? (
+                <div className="mt-4">
+                  <h2 className="font-medium mb-2">Recent Bookmarks</h2>
+                  <div className="space-y-2">
+                    {bookmarks.slice(0, 3).map(bookmark => (
+                      <div
+                        key={bookmark.id}
+                        className="p-3 bg-gray-50 dark:bg-gray-700 rounded-md"
+                      >
+                        <Link
+                          href={`/surah/${bookmark.surahId}?ayah=${bookmark.ayahNumber}`}
+                          className="font-medium text-primary"
+                        >
+                          {bookmark.surahName} - Ayah {bookmark.ayahNumber}
+                        </Link>
+                        {bookmark.notes && (
+                          <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                            {bookmark.notes}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <Button
+                    variant="outline"
+                    className="w-full mt-2"
+                    asChild
+                  >
+                    <Link href="/bookmarks">View All Bookmarks</Link>
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  variant="outline"
+                  className="w-full mt-2"
+                  asChild
+                >
+                  <Link href="/bookmarks">Bookmarks & Notes</Link>
+                </Button>
+              )}
             </div>
           </div>
           

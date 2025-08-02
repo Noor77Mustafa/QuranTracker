@@ -43,7 +43,14 @@ export default function SurahDetail() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const { updateStreak, incrementPagesRead } = useStreak();
   const { achievements } = useAchievements();
-  const { bookmarks, addBookmark, removeBookmark, isBookmarked, getBookmark } = useBookmarks();
+  const {
+    bookmarks,
+    addBookmark,
+    updateBookmark,
+    removeBookmark,
+    isBookmarked,
+    getBookmark
+  } = useBookmarks();
   const { toast } = useToast();
   
   // Fetch surah data
@@ -147,32 +154,26 @@ export default function SurahDetail() {
     const isAlreadyBookmarked = isBookmarked(surahId, currentAyah);
     
     if (isAlreadyBookmarked) {
-      // Get the existing bookmark
       const bookmark = getBookmark(surahId, currentAyah);
       if (bookmark) {
-        // Update the note
-        removeBookmark(bookmark.id);
-        addBookmark({
-          surahId,
-          surahName: surah.englishName,
-          ayahNumber: currentAyah,
-          notes: bookmarkNote
+        updateBookmark(bookmark.id, {
+          notes: bookmarkNote,
+          timestamp: Date.now()
         });
-        
+
         toast({
           title: "Bookmark updated",
           description: `Updated bookmark for ${surah.englishName} (${currentAyah})`,
         });
       }
     } else {
-      // Add new bookmark
       addBookmark({
         surahId,
         surahName: surah.englishName,
         ayahNumber: currentAyah,
         notes: bookmarkNote
       });
-      
+
       toast({
         title: "Bookmark added",
         description: `Bookmarked ${surah.englishName} (${currentAyah})`,
