@@ -503,9 +503,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         for (const hadith of allBukhariHadiths) {
           try {
             await dbStorage.createHadith(hadith);
-          } catch (err) {
+          } catch (err: unknown) {
             // Skip duplicate entries
-            if (!err?.message?.includes('duplicate')) {
+            if (!(err instanceof Error) || !err.message.includes('duplicate')) {
               console.error(`Error loading hadith ${hadith.id}:`, err);
             }
           }
@@ -516,8 +516,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         for (const hadith of NAWAWI_FORTY_HADITH) {
           try {
             await dbStorage.createHadith(hadith);
-          } catch (err) {
-            if (!err?.message?.includes('duplicate')) {
+          } catch (err: unknown) {
+            if (!(err instanceof Error) || !err.message.includes('duplicate')) {
               console.error(`Error loading Nawawi hadith ${hadith.id}:`, err);
             }
           }
@@ -528,8 +528,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         for (const hadith of MUSLIM_HADITH_SAMPLE) {
           try {
             await dbStorage.createHadith(hadith);
-          } catch (err) {
-            if (!err?.message?.includes('duplicate')) {
+          } catch (err: unknown) {
+            if (!(err instanceof Error) || !err.message.includes('duplicate')) {
               console.error(`Error loading Muslim hadith ${hadith.id}:`, err);
             }
           }
