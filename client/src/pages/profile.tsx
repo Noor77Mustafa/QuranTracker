@@ -3,6 +3,7 @@ import { useStreak } from "@/hooks/use-streak";
 import { useAchievements, Badge } from "@/hooks/use-achievements";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -46,14 +47,11 @@ export default function Profile() {
   });
   
   const [isGoalDialogOpen, setIsGoalDialogOpen] = useState(false);
-  const [readingGoal, setReadingGoal] = useState<{
-    pagesPerDay: number;
-    minutesPerDay: number;
-    completionTarget?: string;
-  } | null>(null);
   const [isThemeSelectorOpen, setIsThemeSelectorOpen] = useState(false);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [authDialogMode, setAuthDialogMode] = useState<"login" | "register">("login");
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [editedDisplayName, setEditedDisplayName] = useState("");
   
   // Use authenticated user data directly
   const user: UserProfile | undefined = authUser ? {
@@ -73,6 +71,12 @@ export default function Profile() {
     enabled: !!user?.id && activeTab === 'history',
   });
   
+  // Fetch user's reading goal
+  const { data: readingGoal, refetch: refetchGoal } = useQuery({
+    queryKey: [`/api/reading-goals/${authUser?.id}`],
+    enabled: !!authUser?.id,
+  });
+  
   // Set page title
   useEffect(() => {
     document.title = "Profile - MyQuran";
@@ -80,6 +84,56 @@ export default function Profile() {
   
   // Calculate progress percentage
   const quranProgress = Math.min(Math.round((pagesRead / 604) * 100), 100);
+  
+  // Save reading goal handler
+  const handleSaveGoal = async (goal: any) => {
+    if (!authUser?.id) return;
+    
+    try {
+      const response = await fetch(`/api/reading-goals`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          userId: authUser.id,
+          ...goal
+        }),
+      });
+      
+      if (response.ok) {
+        refetchGoal();
+      }
+    } catch (error) {
+      console.error('Error saving goal:', error);
+    }
+  };
+  
+  // Save profile handler
+  const handleSaveProfile = async () => {
+    if (!authUser?.id || !editedDisplayName) return;
+    
+    try {
+      const response = await fetch(`/api/auth/update-profile`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          displayName: editedDisplayName,
+        }),
+      });
+      
+      if (response.ok) {
+        setIsEditingProfile(false);
+        window.location.reload(); // Refresh to update user data
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
+  };
   
   return (
     <main className="container mx-auto px-4 py-4">
@@ -94,12 +148,42 @@ export default function Profile() {
                     user?.displayName?.charAt(0) || 'U'
                   }
                 </div>
-                <div>
+                <div className="flex-1">
                   <div className="flex items-center">
-                    <h1 className="text-xl font-semibold">{user?.displayName || 'User'}</h1>
-                    <div className="ml-2 px-2 py-0.5 bg-primary/10 text-primary rounded-full text-xs font-medium">
-                      Level {user?.level || 1}
-                    </div>
+                    {isEditingProfile ? (
+                      <div className="flex items-center gap-2">
+                        <Input
+                          value={editedDisplayName}
+                          onChange={(e) => setEditedDisplayName(e.target.value)}
+                          className="h-8 max-w-[200px]"
+                          placeholder="Display name"
+                        />
+                        <Button size="sm" onClick={handleSaveProfile}>
+                          Save
+                        </Button>
+                        <Button size="sm" variant="outline" onClick={() => setIsEditingProfile(false)}>
+                          Cancel
+                        </Button>
+                      </div>
+                    ) : (
+                      <>
+                        <h1 className="text-xl font-semibold">{user?.displayName || 'User'}</h1>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => {
+                            setEditedDisplayName(user?.displayName || '');
+                            setIsEditingProfile(true);
+                          }}
+                          className="ml-2"
+                        >
+                          <span className="material-symbols-rounded text-sm">edit</span>
+                        </Button>
+                        <div className="ml-2 px-2 py-0.5 bg-primary/10 text-primary rounded-full text-xs font-medium">
+                          Level {user?.level || 1}
+                        </div>
+                      </>
+                    )}
                   </div>
                   <p className="text-gray-500 dark:text-gray-400">
                     @{user?.username} · Joined: {user?.joinedAt ? new Date(user.joinedAt).toLocaleDateString() : 'Recently'}
@@ -308,10 +392,7 @@ export default function Profile() {
                     open={isGoalDialogOpen} 
                     setOpen={setIsGoalDialogOpen}
                     currentGoal={readingGoal || undefined}
-                    onSaveGoal={(goal) => {
-                      console.log("Saving goal:", goal);
-                      setReadingGoal(goal);
-                    }}
+                    onSaveGoal={handleSaveGoal}
                   />
                 )}
               </div>

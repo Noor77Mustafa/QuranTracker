@@ -173,6 +173,25 @@ export function setupAuth(app: express.Express) {
     }
     res.json(req.user);
   });
+  
+  app.put("/api/auth/update-profile", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const { displayName } = req.body;
+      const userId = req.user.id;
+      
+      const updatedUser = await pgStorage.updateUser(userId, { displayName });
+      
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      const { password: _, ...userWithoutPassword } = updatedUser;
+      res.json(userWithoutPassword);
+    } catch (error) {
+      console.error("Update profile error:", error);
+      res.status(500).json({ message: "Failed to update profile" });
+    }
+  });
 }
 
 // Middleware to check if user is authenticated

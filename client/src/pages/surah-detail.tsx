@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dialog";
 import { useStreak } from "@/hooks/use-streak";
 import { useAchievements } from "@/hooks/use-achievements";
-import { useBookmarks } from "@/hooks/use-bookmarks";
+import { useBookmarks } from "@/hooks/use-db-bookmarks";
 import { motion } from "framer-motion";
 import { SurahSearchIndex } from "@/components/surah/surah-search-index";
 import { useToast } from "@/hooks/use-toast";
@@ -36,6 +36,7 @@ export default function SurahDetail() {
   const [currentAyah, setCurrentAyah] = useState(ayahParam ? parseInt(ayahParam) : 1);
   const [showTranslation, setShowTranslation] = useState(true);
   const [showTransliteration, setShowTransliteration] = useState(false);
+  const [viewMode, setViewMode] = useState<'stacked' | 'side-by-side'>('stacked');
   const [isPlaying, setIsPlaying] = useState(false);
   const [bookmarkNote, setBookmarkNote] = useState("");
   const [showBookmarkDialog, setShowBookmarkDialog] = useState(false);
@@ -46,7 +47,6 @@ export default function SurahDetail() {
   const {
     bookmarks,
     addBookmark,
-    updateBookmark,
     removeBookmark,
     isBookmarked,
     getBookmark
@@ -80,12 +80,18 @@ export default function SurahDetail() {
   
   // Update reading streak when visiting a surah (only once per surah)
   useEffect(() => {
-    if (surah) {
-      updateStreak();
-      incrementPagesRead(1, surahId, 1);
-      // Achievement tracking is handled automatically by the reading progress system
+    if (surah && surahId) {
+      // Use a flag to track if we've already updated for this surah
+      const hasUpdatedKey = `surah_${surahId}_updated`;
+      const hasUpdated = sessionStorage.getItem(hasUpdatedKey);
+      
+      if (!hasUpdated) {
+        updateStreak();
+        incrementPagesRead(1, surahId, 1);
+        sessionStorage.setItem(hasUpdatedKey, 'true');
+      }
     }
-  }, [surah, updateStreak, incrementPagesRead, surahId]);
+  }, [surahId]); // Only depend on surahId to avoid infinite loops
   
   // Handle audio playback
   useEffect(() => {
@@ -139,8 +145,8 @@ export default function SurahDetail() {
     // If already bookmarked, load existing note
     if (surah && isBookmarked(surahId, currentAyah)) {
       const bookmark = getBookmark(surahId, currentAyah);
-      if (bookmark?.notes) {
-        setBookmarkNote(bookmark.notes);
+      if (bookmark?.note) {
+        setBookmarkNote(bookmark.note);
       }
     } else {
       setBookmarkNote("");
@@ -156,9 +162,12 @@ export default function SurahDetail() {
     if (isAlreadyBookmarked) {
       const bookmark = getBookmark(surahId, currentAyah);
       if (bookmark) {
-        updateBookmark(bookmark.id, {
-          notes: bookmarkNote,
-          timestamp: Date.now()
+        // Remove and re-add to update the note
+        removeBookmark(bookmark.id);
+        addBookmark({
+          surahId,
+          ayahNumber: currentAyah,
+          note: bookmarkNote
         });
 
         toast({
@@ -169,9 +178,8 @@ export default function SurahDetail() {
     } else {
       addBookmark({
         surahId,
-        surahName: surah.englishName,
         ayahNumber: currentAyah,
-        notes: bookmarkNote
+        note: bookmarkNote
       });
 
       toast({
@@ -302,47 +310,105 @@ export default function SurahDetail() {
                 />
                 <Label htmlFor="transliteration-toggle">Transliteration</Label>
               </div>
+              
+              <div className="flex items-center space-x-2">
+                <Switch 
+                  id="view-mode-toggle" 
+                  checked={viewMode === 'side-by-side'} 
+                  onCheckedChange={(checked) => setViewMode(checked ? 'side-by-side' : 'stacked')}
+                  aria-label="Toggle view mode"
+                />
+                <Label htmlFor="view-mode-toggle">Side-by-side</Label>
+              </div>
             </div>
           </div>
           
-          {/* Arabic Text */}
-          <motion.p 
-            key={`arabic-${currentAyah}`}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="font-amiri text-2xl md:text-3xl leading-loose text-right mb-4 arabic-text"
-            lang="ar"
-            dir="rtl"
-          >
-            {currentAyahData.text}
-          </motion.p>
-          
-          {/* Transliteration */}
-          {showTransliteration && (
-            <motion.p 
-              key={`transliteration-${currentAyah}`}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.05 }}
-              className="text-gray-600 dark:text-gray-400 italic mb-3 text-lg"
-            >
-              {currentAyahData.transliteration || "Transliteration not available for this ayah"}
-            </motion.p>
-          )}
-          
-          {/* Translation */}
-          {showTranslation && (
-            <motion.p 
-              key={`translation-${currentAyah}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-              className="text-gray-700 dark:text-gray-300 mb-6"
-              lang="en"
-            >
-              {currentAyahData.translation}
-            </motion.p>
+          {/* Ayah Content */}
+          {viewMode === 'side-by-side' ? (
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              {/* Arabic Column */}
+              <div>
+                <motion.p 
+                  key={`arabic-${currentAyah}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="font-amiri text-2xl md:text-3xl leading-loose text-right mb-4 arabic-text"
+                  lang="ar"
+                  dir="rtl"
+                >
+                  {currentAyahData.text}
+                </motion.p>
+              </div>
+              
+              {/* Translation/Transliteration Column */}
+              <div>
+                {showTransliteration && (
+                  <motion.p 
+                    key={`transliteration-${currentAyah}`}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.05 }}
+                    className="text-gray-600 dark:text-gray-400 italic mb-3 text-lg"
+                  >
+                    {currentAyahData.transliteration || "Transliteration not available for this ayah"}
+                  </motion.p>
+                )}
+                
+                {showTranslation && (
+                  <motion.p 
+                    key={`translation-${currentAyah}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 }}
+                    className="text-gray-700 dark:text-gray-300"
+                    lang="en"
+                  >
+                    {currentAyahData.translation}
+                  </motion.p>
+                )}
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* Stacked View */}
+              <motion.p 
+                key={`arabic-${currentAyah}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="font-amiri text-2xl md:text-3xl leading-loose text-right mb-4 arabic-text"
+                lang="ar"
+                dir="rtl"
+              >
+                {currentAyahData.text}
+              </motion.p>
+              
+              {showTransliteration && (
+                <motion.p 
+                  key={`transliteration-${currentAyah}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.05 }}
+                  className="text-gray-600 dark:text-gray-400 italic mb-3 text-lg"
+                >
+                  {currentAyahData.transliteration || "Transliteration not available for this ayah"}
+                </motion.p>
+              )}
+              
+              {showTranslation && (
+                <motion.p 
+                  key={`translation-${currentAyah}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
+                  className="text-gray-700 dark:text-gray-300 mb-6"
+                  lang="en"
+                >
+                  {currentAyahData.translation}
+                </motion.p>
+              )}
+            </>
           )}
           
           {/* Audio Player Controls */}
@@ -415,6 +481,43 @@ export default function SurahDetail() {
             </div>
             
             <audio ref={audioRef} className="hidden" />
+          </div>
+          
+          {/* Surah Navigation */}
+          <div className="mt-6 flex justify-between items-center border-t border-gray-200 dark:border-gray-700 pt-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                if (surahId > 1) {
+                  window.location.href = `/surah/${surahId - 1}`;
+                }
+              }}
+              disabled={surahId === 1}
+              className="text-xs"
+            >
+              <span className="material-symbols-rounded mr-1 text-sm">chevron_left</span>
+              Previous Surah
+            </Button>
+            
+            <span className="text-sm text-gray-600 dark:text-gray-400">
+              Surah {surah.number} of 114
+            </span>
+            
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                if (surahId < 114) {
+                  window.location.href = `/surah/${surahId + 1}`;
+                }
+              }}
+              disabled={surahId === 114}
+              className="text-xs"
+            >
+              Next Surah
+              <span className="material-symbols-rounded ml-1 text-sm">chevron_right</span>
+            </Button>
           </div>
         </div>
       </div>

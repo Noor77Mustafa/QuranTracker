@@ -185,9 +185,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Bookmark routes
-  app.post("/api/bookmarks", async (req, res) => {
+  app.post("/api/bookmarks", isAuthenticated, async (req, res) => {
     try {
-      const bookmarkData = insertBookmarkSchema.parse(req.body);
+      const bookmarkData = insertBookmarkSchema.parse({
+        ...req.body,
+        userId: (req as any).user.id
+      });
       const bookmark = await dbStorage.createBookmark(bookmarkData);
       res.status(201).json(bookmark);
     } catch (error) {
@@ -199,9 +202,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/bookmarks/:userId", async (req, res) => {
+  app.get("/api/bookmarks", isAuthenticated, async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = (req as any).user.id;
       const bookmarks = await dbStorage.getBookmarksByUserId(userId);
       res.json(bookmarks);
     } catch (error) {
@@ -209,9 +212,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/bookmarks/:id", async (req, res) => {
+  app.delete("/api/bookmarks/:id", isAuthenticated, async (req, res) => {
     try {
       const bookmarkId = parseInt(req.params.id);
+      const userId = (req as any).user.id;
+      
+      // Get bookmark to verify ownership
+      const bookmarks = await dbStorage.getBookmarksByUserId(userId);
+      const bookmark = bookmarks.find(b => b.id === bookmarkId);
+      
+      if (!bookmark) {
+        return res.status(404).json({ message: "Bookmark not found" });
+      }
+      
       const success = await dbStorage.deleteBookmark(bookmarkId);
       
       if (!success) {
