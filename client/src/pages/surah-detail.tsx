@@ -501,7 +501,7 @@ export default function SurahDetail() {
             </Button>
             
             <span className="text-sm text-gray-600 dark:text-gray-400">
-              Surah {surah.number} of 114
+              Surah {surahId} of 114
             </span>
             
             <Button

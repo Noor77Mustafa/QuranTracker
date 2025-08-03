@@ -114,69 +114,6 @@ export default function ThemeSelector({ open, onOpenChange }: ThemeSelectorProps
     setSelectedTheme(themeId);
   };
 
-    const root = document.documentElement;
-    
-    // Apply theme colors as CSS variables
-    Object.entries(theme.colors).forEach(([key, value]) => {
-      if (key === 'primary') {
-        // Convert hex to HSL for shadcn compatibility
-        const hsl = hexToHSL(value);
-        root.style.setProperty('--primary', hsl);
-      } else if (key === 'background') {
-        const hsl = hexToHSL(value);
-        root.style.setProperty('--background', hsl);
-      } else if (key === 'foreground') {
-        const hsl = hexToHSL(value);
-        root.style.setProperty('--foreground', hsl);
-      } else if (key === 'accent') {
-        const hsl = hexToHSL(value);
-        root.style.setProperty('--accent', hsl);
-      } else if (key === 'secondary') {
-        const hsl = hexToHSL(value);
-        root.style.setProperty('--secondary', hsl);
-      }
-    });
-
-    // Save theme preference
-    localStorage.setItem("app-theme", themeId);
-    setSelectedTheme(themeId);
-  };
-
-  const hexToHSL = (hex: string): string => {
-    // Remove the # if present
-    hex = hex.replace('#', '');
-    
-    // Convert hex to RGB
-    const r = parseInt(hex.substring(0, 2), 16) / 255;
-    const g = parseInt(hex.substring(2, 4), 16) / 255;
-    const b = parseInt(hex.substring(4, 6), 16) / 255;
-    
-    const max = Math.max(r, g, b);
-    const min = Math.min(r, g, b);
-    let h = 0;
-    let s = 0;
-    const l = (max + min) / 2;
-    
-    if (max !== min) {
-      const d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-      
-      switch (max) {
-        case r:
-          h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
-          break;
-        case g:
-          h = ((b - r) / d + 2) / 6;
-          break;
-        case b:
-          h = ((r - g) / d + 4) / 6;
-          break;
-      }
-    }
-    
-    return `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
-  };
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md">
