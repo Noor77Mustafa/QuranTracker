@@ -50,7 +50,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[1],
     juzNumber: 1,
-    revelationOrder: 88
+    revelationOrder: 87
   },
   {
     id: 3,
@@ -62,7 +62,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[2],
     juzNumber: 3,
-    revelationOrder: 90
+    revelationOrder: 89
   },
   {
     id: 4,
@@ -74,7 +74,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[3],
     juzNumber: 4,
-    revelationOrder: 93
+    revelationOrder: 92
   },
   {
     id: 5,
@@ -86,7 +86,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[4],
     juzNumber: 6,
-    revelationOrder: 113
+    revelationOrder: 112
   },
   {
     id: 6,
@@ -122,7 +122,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[7],
     juzNumber: 9,
-    revelationOrder: 89
+    revelationOrder: 88
   },
   {
     id: 9,
@@ -134,7 +134,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[8],
     juzNumber: 10,
-    revelationOrder: 114
+    revelationOrder: 113
   },
   {
     id: 10,
@@ -182,7 +182,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[12],
     juzNumber: 13,
-    revelationOrder: 97
+    revelationOrder: 96
   },
   {
     id: 14,
@@ -242,7 +242,7 @@ export const surahs: Surah[] = [
     revelationType: "Meccan",
     arabicNumber: arabicNumbers[17],
     juzNumber: 15,
-    revelationOrder: undefined
+    revelationOrder: 69
   },
   {
     id: 19,
@@ -290,7 +290,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[21],
     juzNumber: 17,
-    revelationOrder: 104
+    revelationOrder: 103
   },
   {
     id: 23,
@@ -314,7 +314,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[23],
     juzNumber: 18,
-    revelationOrder: 103
+    revelationOrder: 102
   },
   {
     id: 25,
@@ -422,7 +422,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[32],
     juzNumber: 21,
-    revelationOrder: 91
+    revelationOrder: 90
   },
   {
     id: 34,
@@ -590,7 +590,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[46],
     juzNumber: 26,
-    revelationOrder: 96
+    revelationOrder: 95
   },
   {
     id: 48,
@@ -602,7 +602,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[47],
     juzNumber: 26,
-    revelationOrder: 112
+    revelationOrder: 111
   },
   {
     id: 49,
@@ -614,7 +614,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[48],
     juzNumber: 26,
-    revelationOrder: 107
+    revelationOrder: 106
   },
   {
     id: 50,
@@ -686,7 +686,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[54],
     juzNumber: 27,
-    revelationOrder: 98
+    revelationOrder: 97
   },
   {
     id: 56,
@@ -710,7 +710,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[56],
     juzNumber: 27,
-    revelationOrder: 95
+    revelationOrder: 94
   },
   {
     id: 58,
@@ -722,7 +722,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[57],
     juzNumber: 28,
-    revelationOrder: 106
+    revelationOrder: 105
   },
   {
     id: 59,
@@ -734,7 +734,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[58],
     juzNumber: 28,
-    revelationOrder: 102
+    revelationOrder: 101
   },
   {
     id: 60,
@@ -746,7 +746,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[59],
     juzNumber: 28,
-    revelationOrder: 92
+    revelationOrder: 91
   },
   {
     id: 61,
@@ -758,7 +758,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[60],
     juzNumber: 28,
-    revelationOrder: 110
+    revelationOrder: 109
   },
   {
     id: 62,
@@ -770,7 +770,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[61],
     juzNumber: 28,
-    revelationOrder: 111
+    revelationOrder: 110
   },
   {
     id: 63,
@@ -782,7 +782,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[62],
     juzNumber: 28,
-    revelationOrder: 105
+    revelationOrder: 104
   },
   {
     id: 64,
@@ -794,7 +794,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[63],
     juzNumber: 28,
-    revelationOrder: 109
+    revelationOrder: 108
   },
   {
     id: 65,
@@ -806,7 +806,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[64],
     juzNumber: 28,
-    revelationOrder: 100
+    revelationOrder: 99
   },
   {
     id: 66,
@@ -818,7 +818,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[65],
     juzNumber: 28,
-    revelationOrder: 108
+    revelationOrder: 107
   },
   {
     id: 67,
@@ -938,7 +938,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[75],
     juzNumber: 29,
-    revelationOrder: 99
+    revelationOrder: 98
   },
   {
     id: 77,
@@ -1202,7 +1202,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[97],
     juzNumber: 30,
-    revelationOrder: 101
+    revelationOrder: 100
   },
   {
     id: 99,
@@ -1214,7 +1214,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[98],
     juzNumber: 30,
-    revelationOrder: 94
+    revelationOrder: 93
   },
   {
     id: 100,
@@ -1346,7 +1346,7 @@ export const surahs: Surah[] = [
     revelationType: "Medinan",
     arabicNumber: arabicNumbers[109],
     juzNumber: 30,
-    revelationOrder: undefined
+    revelationOrder: 114
   },
   {
     id: 111,
