@@ -24,9 +24,11 @@ const ExploreCategory = lazy(() => import("@/pages/explore-category"));
 const Hadiths = lazy(() => import("@/pages/hadiths"));
 const HadithDetail = lazy(() => import("@/pages/hadith-detail"));
 const HadithCollection = lazy(() => import("@/pages/enhanced-hadith-collection"));
+const HadithPageView = lazy(() => import("@/pages/hadith-page-view"));
 const Duas = lazy(() => import("@/pages/duas"));
 const DuaDetail = lazy(() => import("@/pages/dua-detail"));
 const DuaCollection = lazy(() => import("@/pages/dua-collection"));
+const DuaPageView = lazy(() => import("@/pages/dua-page-view"));
 const Progress = lazy(() => import("@/pages/progress"));
 const ProfileGoals = lazy(() => import("@/pages/profile-goals"));
 
@@ -53,8 +55,10 @@ function Router() {
             <Route path="/bookmarks" component={Bookmarks} />
             <Route path="/hadiths" component={Hadiths} />
             <Route path="/hadith/collection/:collectionId" component={HadithCollection} />
+            <Route path="/hadith/:collection/:book" component={HadithPageView} />
             <Route path="/hadith/:id" component={HadithDetail} />
             <Route path="/duas" component={DuaCollection} />
+            <Route path="/duas/page-view" component={DuaPageView} />
             <Route path="/duas/:category" component={DuaCollection} />
             <Route path="/dua/:id" component={DuaDetail} />
             <Route path="/progress" component={Progress} />

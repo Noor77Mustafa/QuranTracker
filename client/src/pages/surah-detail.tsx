@@ -37,6 +37,8 @@ export default function SurahDetail() {
   const [showTranslation, setShowTranslation] = useState(true);
   const [showTransliteration, setShowTransliteration] = useState(false);
   const [viewMode, setViewMode] = useState<'stacked' | 'side-by-side'>('stacked');
+  const [readingMode, setReadingMode] = useState<'ayah' | 'page'>('ayah');
+  const [currentPage, setCurrentPage] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
   const [bookmarkNote, setBookmarkNote] = useState("");
   const [showBookmarkDialog, setShowBookmarkDialog] = useState(false);
@@ -320,11 +322,118 @@ export default function SurahDetail() {
                 />
                 <Label htmlFor="view-mode-toggle">Side-by-side</Label>
               </div>
+              
+              <div className="flex items-center space-x-2">
+                <Switch 
+                  id="reading-mode-toggle" 
+                  checked={readingMode === 'page'} 
+                  onCheckedChange={(checked) => setReadingMode(checked ? 'page' : 'ayah')}
+                  aria-label="Toggle reading mode"
+                />
+                <Label htmlFor="reading-mode-toggle">Page view</Label>
+              </div>
             </div>
           </div>
           
           {/* Ayah Content */}
-          {viewMode === 'side-by-side' ? (
+          {readingMode === 'page' ? (
+            // Page View - Show multiple ayahs per page
+            <div className="mb-6">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                  Page {currentPage} - Ayahs {((currentPage - 1) * 5) + 1} to {Math.min(currentPage * 5, surah.numberOfAyahs)}
+                </h3>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                    disabled={currentPage === 1}
+                  >
+                    <span className="material-symbols-rounded">chevron_left</span>
+                    Previous Page
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    disabled={currentPage * 5 >= surah.numberOfAyahs}
+                  >
+                    Next Page
+                    <span className="material-symbols-rounded">chevron_right</span>
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="space-y-6">
+                {Array.from({ length: 5 }, (_, i) => ((currentPage - 1) * 5) + i + 1)
+                  .filter(ayahNum => ayahNum <= surah.numberOfAyahs)
+                  .map(ayahNum => {
+                    const ayah = surah.ayahs[ayahNum - 1];
+                    if (!ayah) return null;
+                    
+                    return (
+                      <div key={ayahNum} className="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-0">
+                        <div className="flex justify-between items-start mb-2">
+                          <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                            Ayah {ayahNum}
+                          </span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              setCurrentAyah(ayahNum);
+                              handleBookmarkClick();
+                            }}
+                            className={isBookmarked(surahId, ayahNum) ? "text-primary" : ""}
+                          >
+                            <span className="material-symbols-rounded">
+                              {isBookmarked(surahId, ayahNum) ? "bookmark" : "bookmark_border"}
+                            </span>
+                          </Button>
+                        </div>
+                        
+                        {viewMode === 'side-by-side' ? (
+                          <div className="grid md:grid-cols-2 gap-4">
+                            <p className="font-amiri text-xl md:text-2xl leading-loose text-right arabic-text" lang="ar" dir="rtl">
+                              {ayah.text}
+                            </p>
+                            <div>
+                              {showTransliteration && (
+                                <p className="text-gray-600 dark:text-gray-400 italic mb-2">
+                                  {ayah.transliteration || "Transliteration not available"}
+                                </p>
+                              )}
+                              {showTranslation && (
+                                <p className="text-gray-700 dark:text-gray-300">
+                                  {ayah.translation}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            <p className="font-amiri text-xl md:text-2xl leading-loose text-right mb-3 arabic-text" lang="ar" dir="rtl">
+                              {ayah.text}
+                            </p>
+                            {showTransliteration && (
+                              <p className="text-gray-600 dark:text-gray-400 italic mb-2">
+                                {ayah.transliteration || "Transliteration not available"}
+                              </p>
+                            )}
+                            {showTranslation && (
+                              <p className="text-gray-700 dark:text-gray-300">
+                                {ayah.translation}
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          ) : viewMode === 'side-by-side' ? (
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               {/* Arabic Column */}
               <div>
