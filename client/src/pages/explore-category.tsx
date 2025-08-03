@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRoute, Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import { exploreCategories } from "@/lib/explore-data";
 
 interface Section {
@@ -12,6 +13,7 @@ interface CategoryContent {
   title: string;
   sections: Section[];
   relatedSurahs: number[];
+  customContent?: string;
 }
 
 // Simplified surah names for related surahs
@@ -114,7 +116,8 @@ export default function ExploreCategory() {
           content: "The Quran has 30 juz (parts). Reading one juz per month allows you to complete the Quran in a systematic way over the course of a year."
         }
       ],
-      relatedSurahs: [73, 20, 18]
+      relatedSurahs: [73, 20, 18],
+      customContent: "calendar"
     },
     "tafsir": {
       title: "Tafsir Collections",
@@ -221,6 +224,73 @@ export default function ExploreCategory() {
           <p className="text-gray-700 dark:text-gray-300">{section.content}</p>
         </div>
       ))}
+      
+      {/* Custom content for Calendar view */}
+      {content.customContent === 'calendar' && (
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-6">
+          <h3 className="text-lg font-semibold mb-4">Yearly Reading Calendar</h3>
+          
+          {/* Calendar Progress Overview */}
+          <div className="mb-6">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm text-gray-600 dark:text-gray-400">Overall Progress</span>
+              <span className="text-sm font-medium">Day {Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 1).getTime()) / (1000 * 60 * 60 * 24)) + 1} of 365</span>
+            </div>
+            <Progress value={(Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 1).getTime()) / (1000 * 60 * 60 * 24)) + 1) / 365 * 100} className="h-2" />
+          </div>
+          
+          {/* Monthly Juz Plan */}
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
+            {Array.from({ length: 12 }, (_, i) => {
+              const month = new Date(new Date().getFullYear(), i, 1);
+              const monthName = month.toLocaleString('default', { month: 'short' });
+              const currentMonth = new Date().getMonth();
+              const isPast = i < currentMonth;
+              const isCurrent = i === currentMonth;
+              const juzStart = Math.floor(i * 2.5) + 1;
+              const juzEnd = Math.min(Math.floor((i + 1) * 2.5), 30);
+              
+              return (
+                <div 
+                  key={i}
+                  className={`
+                    border rounded-lg p-3 text-center transition
+                    ${isPast ? 'bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600' : ''}
+                    ${isCurrent ? 'bg-primary/10 dark:bg-primary/20 border-primary' : 'border-gray-200 dark:border-gray-600'}
+                    ${!isPast && !isCurrent ? 'hover:bg-gray-50 dark:hover:bg-gray-700' : ''}
+                  `}
+                >
+                  <div className="font-medium text-sm">{monthName}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    Juz {juzStart}{juzEnd > juzStart ? `-${juzEnd}` : ''}
+                  </div>
+                  {isPast && (
+                    <span className="material-symbols-rounded text-green-500 text-sm mt-1">check_circle</span>
+                  )}
+                  {isCurrent && (
+                    <span className="material-symbols-rounded text-primary text-sm mt-1 animate-pulse">radio_button_checked</span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          
+          {/* Today's Reading */}
+          <div className="mt-6 bg-primary/5 dark:bg-primary/10 rounded-lg p-4">
+            <h4 className="font-medium mb-2 flex items-center">
+              <span className="material-symbols-rounded mr-2 text-primary">today</span>
+              Today's Reading Goal
+            </h4>
+            <div className="text-sm text-gray-600 dark:text-gray-300">
+              <p>Read approximately 2 pages (or ½ juz per month)</p>
+              <p className="mt-1">Current Juz: {Math.min(Math.floor(new Date().getMonth() * 2.5) + 1, 30)}</p>
+            </div>
+            <Link href="/read">
+              <Button className="w-full mt-3">Start Reading</Button>
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* Related Surahs */}
       <div className="mt-8">

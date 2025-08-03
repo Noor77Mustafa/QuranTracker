@@ -6,7 +6,7 @@ export default function QuranInYear() {
       <div className="flex justify-between items-center px-4 py-3 border-b border-gray-100 dark:border-gray-700">
         <h2 className="text-lg font-semibold">Quran in a Year</h2>
         <Link 
-          href="/explore/calendar"
+          href="/explore/quran-in-year"
           className="text-primary text-sm font-medium flex items-center"
         >
           <span>Calendar</span>
