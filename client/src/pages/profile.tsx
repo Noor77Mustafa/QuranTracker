@@ -33,6 +33,18 @@ export default function Profile() {
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
   const [activeTab, setActiveTab] = useState<'progress' | 'achievements' | 'history' | 'quests' | 'settings'>('progress');
   
+  // Fetch active quests from API
+  const { data: activeQuests = [] } = useQuery<any[]>({
+    queryKey: ['/api/quests/active'],
+    enabled: isAuthenticated
+  });
+  
+  // Fetch user's quest progress
+  const { data: userQuests = [] } = useQuery<any[]>({
+    queryKey: [`/api/user-quests/${authUser?.id}`],
+    enabled: isAuthenticated && !!authUser?.id
+  });
+  
   const [isGoalDialogOpen, setIsGoalDialogOpen] = useState(false);
   const [readingGoal, setReadingGoal] = useState<{
     pagesPerDay: number;
@@ -56,7 +68,7 @@ export default function Profile() {
   } : undefined;
 
   // Fetch reading progress for history tab
-  const { data: readingHistory = [], isLoading: historyLoading } = useQuery({
+  const { data: readingHistory = [], isLoading: historyLoading } = useQuery<any[]>({
     queryKey: ["/api/reading-progress", user?.id],
     enabled: !!user?.id && activeTab === 'history',
   });
@@ -394,50 +406,44 @@ export default function Profile() {
                 </h3>
                 
                 <div className="space-y-3">
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <div className="flex justify-between mb-2">
-                      <div>
-                        <h4 className="font-medium">Read 5 Pages</h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Read 5 pages from any surah</p>
+                  {activeQuests.filter((quest: any) => quest.type === 'daily').map((quest: any) => {
+                    const userQuest = userQuests.find((uq: any) => uq.questId === quest.id);
+                    const progress = userQuest?.progress || 0;
+                    const progressPercent = Math.min((progress / quest.targetValue) * 100, 100);
+                    const isCompleted = userQuest?.completed || false;
+                    
+                    return (
+                      <div key={quest.id} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <div className="flex justify-between mb-2">
+                          <div>
+                            <h4 className="font-medium">{quest.title}</h4>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">{quest.description}</p>
+                          </div>
+                          <div className={`text-sm font-medium flex items-center ${isCompleted ? 'text-green-500' : 'text-yellow-500'}`}>
+                            <span className="material-symbols-rounded mr-1">
+                              {isCompleted ? 'check_circle' : 'add_circle'}
+                            </span>
+                            +{quest.rewardXp} XP
+                          </div>
+                        </div>
+                        {isCompleted ? (
+                          <Button size="sm" variant="outline" className="w-full mt-2" disabled>Completed</Button>
+                        ) : (
+                          <div className="flex items-center justify-between">
+                            <Progress value={progressPercent} className="h-1 w-3/4" />
+                            <span className="text-sm text-gray-600 dark:text-gray-400">{progress}/{quest.targetValue}</span>
+                          </div>
+                        )}
                       </div>
-                      <div className="text-sm font-medium text-yellow-500 flex items-center">
-                        <span className="material-symbols-rounded mr-1">add_circle</span>
-                        +20 XP
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <Progress value={60} className="h-1 w-3/4" />
-                      <span className="text-sm text-gray-600 dark:text-gray-400">3/5</span>
-                    </div>
-                  </div>
+                    );
+                  })}
                   
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <div className="flex justify-between mb-1">
-                      <div>
-                        <h4 className="font-medium">Reflect on a Verse</h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Write a reflection on any verse</p>
-                      </div>
-                      <div className="text-sm font-medium text-green-500 flex items-center">
-                        <span className="material-symbols-rounded mr-1">check_circle</span>
-                        +15 XP
-                      </div>
+                  {activeQuests.filter((quest: any) => quest.type === 'daily').length === 0 && (
+                    <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                      <span className="material-symbols-rounded text-4xl mb-2">task_alt</span>
+                      <p>No daily quests available</p>
                     </div>
-                    <Button size="sm" variant="outline" className="w-full mt-2" disabled>Completed</Button>
-                  </div>
-                  
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <div className="flex justify-between mb-1">
-                      <div>
-                        <h4 className="font-medium">Listen to Recitation</h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Listen to at least 10 minutes of Quran</p>
-                      </div>
-                      <div className="text-sm font-medium text-yellow-500 flex items-center">
-                        <span className="material-symbols-rounded mr-1">add_circle</span>
-                        +25 XP
-                      </div>
-                    </div>
-                    <Button size="sm" className="w-full mt-2">Start Quest</Button>
-                  </div>
+                  )}
                 </div>
               </div>
               
@@ -449,46 +455,40 @@ export default function Profile() {
                 </h3>
                 
                 <div className="space-y-3">
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <div className="flex justify-between mb-2">
-                      <div>
-                        <h4 className="font-medium">Complete Al-Fatihah</h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Read all verses of Surah Al-Fatihah</p>
-                      </div>
-                      <div className="text-sm font-medium text-yellow-500 flex items-center">
-                        <span className="material-symbols-rounded mr-1">add_circle</span>
-                        +50 XP
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <Progress value={85} className="h-1 w-3/4" />
-                      <span className="text-sm text-gray-600 dark:text-gray-400">6/7</span>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <div className="flex justify-between mb-1">
-                      <div>
-                        <h4 className="font-medium">5-Day Streak</h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Read Quran for 5 consecutive days</p>
-                      </div>
-                      <div className="text-sm font-medium text-yellow-500 flex items-center">
-                        <span className="material-symbols-rounded mr-1">add_circle</span>
-                        +75 XP
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between mt-2">
-                      <div className="flex space-x-1">
-                        {[1, 2, 3, 4, 5].map((day) => (
-                          <div key={day} className={`w-8 h-8 rounded-full flex items-center justify-center 
-                            ${day <= streak ? 'bg-primary text-white' : 'bg-gray-200 dark:bg-gray-600 text-gray-400 dark:text-gray-500'}`}>
-                            {day}
+                  {activeQuests.filter((quest: any) => quest.type === 'weekly').map((quest: any) => {
+                    const userQuest = userQuests.find((uq: any) => uq.questId === quest.id);
+                    const progress = userQuest?.progress || 0;
+                    const progressPercent = Math.min((progress / quest.targetValue) * 100, 100);
+                    const isCompleted = userQuest?.completed || false;
+                    
+                    return (
+                      <div key={quest.id} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <div className="flex justify-between mb-2">
+                          <div>
+                            <h4 className="font-medium">{quest.title}</h4>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">{quest.description}</p>
                           </div>
-                        ))}
+                          <div className={`text-sm font-medium flex items-center ${isCompleted ? 'text-green-500' : 'text-yellow-500'}`}>
+                            <span className="material-symbols-rounded mr-1">
+                              {isCompleted ? 'check_circle' : 'add_circle'}
+                            </span>
+                            +{quest.rewardXp} XP
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <Progress value={progressPercent} className="h-1 w-3/4" />
+                          <span className="text-sm text-gray-600 dark:text-gray-400">{progress}/{quest.targetValue}</span>
+                        </div>
                       </div>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">{streak}/5</span>
+                    );
+                  })}
+                  
+                  {activeQuests.filter((quest: any) => quest.type === 'weekly').length === 0 && (
+                    <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                      <span className="material-symbols-rounded text-4xl mb-2">calendar_view_week</span>
+                      <p>No weekly quests available</p>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
               
@@ -499,23 +499,37 @@ export default function Profile() {
                   Monthly Challenge
                 </h3>
                 
-                <div className="bg-primary/10 dark:bg-primary/20 rounded-lg p-4 border border-primary/20">
-                  <h4 className="font-medium text-primary mb-1 flex items-center">
-                    <span className="material-symbols-rounded mr-1">trophy</span>
-                    Complete Juz Amma
-                  </h4>
-                  <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
-                    Read all surahs in the 30th Juz of the Quran this month
-                  </p>
+                {activeQuests && activeQuests.filter((quest: any) => quest.type === 'monthly').map((quest: any) => {
+                  const userQuest = userQuests?.find((uq: any) => uq.questId === quest.id);
+                  const progress = userQuest?.progress || 0;
+                  const progressPercent = Math.min((progress / quest.targetValue) * 100, 100);
                   
-                  <div className="flex justify-between items-center text-sm mb-2">
-                    <span className="text-gray-600 dark:text-gray-400">Progress: 8/37 surahs</span>
-                    <span className="font-medium text-primary">+500 XP</span>
+                  return (
+                    <div key={quest.id} className="bg-primary/10 dark:bg-primary/20 rounded-lg p-4 border border-primary/20">
+                      <h4 className="font-medium text-primary mb-1 flex items-center">
+                        <span className="material-symbols-rounded mr-1">trophy</span>
+                        {quest.title}
+                      </h4>
+                      <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
+                        {quest.description}
+                      </p>
+                      
+                      <div className="flex justify-between items-center text-sm mb-2">
+                        <span className="text-gray-600 dark:text-gray-400">Progress: {progress}/{quest.targetValue}</span>
+                        <span className="font-medium text-primary">+{quest.rewardXp} XP</span>
+                      </div>
+                      
+                      <Progress value={progressPercent} className="h-2" />
+                    </div>
+                  );
+                })}
+                
+                {activeQuests && activeQuests.filter((quest: any) => quest.type === 'monthly').length === 0 && (
+                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-8 text-center text-gray-500 dark:text-gray-400">
+                    <span className="material-symbols-rounded text-4xl mb-2">calendar_month</span>
+                    <p>No monthly challenges available</p>
                   </div>
-                  <Progress value={22} className="h-1 mb-3" />
-                  
-                  <Button variant="outline" className="w-full">View Challenge Details</Button>
-                </div>
+                )}
               </div>
             </div>
           )}
