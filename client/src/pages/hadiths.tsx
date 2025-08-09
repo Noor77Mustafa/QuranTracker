@@ -207,38 +207,38 @@ const HADITH_COLLECTIONS = [
 // Featured/popular hadiths for the home page
 const FEATURED_HADITHS = [
   {
-    id: "bukhari-1",
+    id: "bukhari-1-1-1",
     collection: "bukhari",
     collectionName: "Sahih al-Bukhari",
     bookNumber: 1,
     hadithNumber: 1,
-    chapterTitle: "How the Divine Revelation started being revealed to Allah's Messenger",
+    chapterTitle: "The beginning of the Divine Revelation",
     arabicText: "إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى",
     englishText: "The reward of deeds depends upon the intentions and every person will get the reward according to what he has intended.",
-    grade: "Sahih"
+    grade: "Sahih",
   },
   {
-    id: "nawawi40-13",
+    id: "nawawi40-5",
     collection: "nawawi40",
     collectionName: "40 Hadith Nawawi",
     bookNumber: 1,
-    hadithNumber: 13,
-    chapterTitle: "Brotherhood in Faith",
-    arabicText: "لاَ يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ",
-    englishText: "None of you [truly] believes until he loves for his brother what he loves for himself.",
-    grade: "Sahih"
+    hadithNumber: 5,
+    chapterTitle: "Rejection of Innovation",
+    arabicText: "مَنْ أَحْدَثَ فِي أَمْرِنَا هَذَا مَا لَيْسَ فِيهِ فَهُوَ رَدٌّ",
+    englishText: "He who innovates something in this matter of ours that is not part of it will have it rejected.",
+    grade: "Sahih",
   },
   {
-    id: "muslim-2553",
+    id: "muslim-1-1",
     collection: "muslim",
     collectionName: "Sahih Muslim",
-    bookNumber: 32,
-    hadithNumber: 2553,
-    chapterTitle: "On Virtue, Good Manners and Joining of the Ties of Relationship",
-    arabicText: "من نفس عن مؤمن كربة من كرب الدنيا نفس الله عنه كربة من كرب يوم القيامة",
-    englishText: "Whoever relieves a believer's distress of the distressful aspects of this world, Allah will rescue him from a difficulty of the difficulties of the Hereafter.",
-    grade: "Sahih"
-  }
+    bookNumber: 1,
+    hadithNumber: 1,
+    chapterTitle: "Concerning Divine Decree",
+    arabicText: "إِنَّ أَوَّلَ مَنْ تَكَلَّمَ فِي الْقَدَرِ بِالْبَصْرَةِ مَعْبَدٌ الْجُهَنِيُّ",
+    englishText: "It is narrated on the authority of Yahya b. Ya'mur about the first discussion on divine decree in Basra.",
+    grade: "Sahih",
+  },
 ];
 
 export default function Hadiths() {

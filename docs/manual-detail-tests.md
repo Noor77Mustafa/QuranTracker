@@ -4,7 +4,7 @@ Use these manual tests to verify that detail pages render the correct content.
 
 ## Hadith Detail
 
-- **Route:** `/hadith/bukhari-1`
+- **Route:** `/hadith/bukhari-1-1-1`
 - **Expected:** Displays the hadith about intentions.
 
 ## Dua Detail
