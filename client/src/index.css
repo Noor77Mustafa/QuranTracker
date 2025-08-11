@@ -131,7 +131,7 @@
   .nav-item-inactive {
     @apply text-gray-500;
   }
-  
+
   /* Button tap effect */
   .btn-tap-effect {
     @apply transition-transform active:scale-95;
@@ -149,6 +149,15 @@
   
   .responsive-card {
     @apply w-full max-w-sm mx-auto sm:max-w-md md:max-w-lg;
+  }
+
+  /* Islamic themed card and ayah styles */
+  .islamic-card {
+    @apply bg-gradient-to-br from-primary/5 to-secondary/5 border-2 border-primary/30 rounded-xl;
+  }
+
+  .ayah-border {
+    @apply border-r-4 border-primary/50 pr-4;
   }
   
   /* Smooth page transitions */

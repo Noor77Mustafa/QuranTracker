@@ -264,13 +264,13 @@ export default function SurahDetail() {
   }
   
   return (
-    <main id="main-content" className="container mx-auto px-4 py-4">
+    <main id="main-content" className="responsive-container max-w-screen-md py-4">
       {/* Search component */}
       <div className="mb-4">
         <SurahSearchIndex />
       </div>
       
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden mb-6">
+      <div className="islamic-card overflow-hidden mb-6">
         <div className="bg-primary text-white p-4">
           <div className="flex justify-between items-center">
             <div>
@@ -373,7 +373,7 @@ export default function SurahDetail() {
                     if (!ayah) return null;
                     
                     return (
-                      <div key={ayahNum} className="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-0">
+                      <div key={ayahNum} className="ayah-border border-b border-gray-200 dark:border-gray-700 pb-4 last:border-0">
                         <div className="flex justify-between items-start mb-2">
                           <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                             Ayah {ayahNum}
@@ -434,7 +434,7 @@ export default function SurahDetail() {
               </div>
             </div>
           ) : viewMode === 'side-by-side' ? (
-            <div className="grid md:grid-cols-2 gap-6 mb-6">
+            <div className="ayah-border grid md:grid-cols-2 gap-6 mb-6">
               {/* Arabic Column */}
               <div>
                 <motion.p 
@@ -479,9 +479,9 @@ export default function SurahDetail() {
               </div>
             </div>
           ) : (
-            <>
+            <div className="ayah-border mb-6">
               {/* Stacked View */}
-              <motion.p 
+              <motion.p
                 key={`arabic-${currentAyah}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -517,7 +517,7 @@ export default function SurahDetail() {
                   {currentAyahData.translation}
                 </motion.p>
               )}
-            </>
+            </div>
           )}
           
           {/* Audio Player Controls */}
