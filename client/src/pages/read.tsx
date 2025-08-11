@@ -50,7 +50,7 @@ export default function Read() {
   };
   
   return (
-    <main className="container mx-auto px-4 py-4">
+    <main className="responsive-container max-w-screen-md py-4">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-semibold">Quran Explorer</h1>
         <button 
@@ -90,16 +90,16 @@ export default function Read() {
       {displayType === "juz" ? (
         <div className="space-y-6">
           {Object.entries(surahsByJuz).map(([juzNumber, juzSurahs]) => (
-            <div key={juzNumber} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
+            <div key={juzNumber} className="islamic-card p-4">
               <h2 className="text-lg font-semibold mb-4 text-primary">
                 Juz {juzNumber}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {juzSurahs.map((surah) => (
-                  <Link 
-                    key={surah.id} 
+                  <Link
+                    key={surah.id}
                     href={`/surah/${surah.id}`}
-                    className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 hover:shadow-md transition flex justify-between"
+                    className="islamic-card p-3 hover:shadow-md transition flex justify-between"
                   >
                     <div>
                       <h3 className="font-medium text-sm">{surah.englishName}</h3>
@@ -125,10 +125,10 @@ export default function Read() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {sortedSurahs.map((surah) => (
-            <Link 
-              key={surah.id} 
+            <Link
+              key={surah.id}
               href={`/surah/${surah.id}`}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 hover:shadow-md transition flex justify-between"
+              className="islamic-card p-4 hover:shadow-md transition flex justify-between"
             >
               <div>
                 <h3 className="font-medium">{surah.englishName}</h3>
